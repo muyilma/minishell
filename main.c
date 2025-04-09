@@ -1,94 +1,72 @@
+#include "libft/libft.h"
 #include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef struct s_pro
 {
-	char			*str;
-	int				op;
-	int				pipe;
-	int				arg;
-	int				command;
-}					t_pro;
-
-typedef struct s_arg
-{
-	t_pro			**arg;
-	struct s_arg	*next;
-}					t_arg;
+	char	*str;
+	int		op;
+	int		pipe;
+	int		arg;
+	int		command;
+}			t_pro;
 
 int	main(void)
 {
-	t_arg	*hola;
-	t_arg	*temp;
+	t_pro	**hola;
 	char	*str;
-    int		i;
+	int		i;
 	int		j;
 	int		k;
 	int		l;
+	int		flag;
+	char	qut;
 
-	str = "< infile  grep m | < hola grep n | cat > adana.txt";
+	str = " < infile grep m | < hola grep n | cat > adana.txt";
 	i = 0;
-	j = 0;
 	k = 0;
-	l = 0;
-	while (i < 3)
+	hola=malloc(sizeof(t_pro *));
+	while (str[i])
 	{
-		if (i == 0)
+		while (str[i] == ' ')
+		i++;
+		j=i;
+		flag=0;
+		while (str[i] != ' ' && str[i] != '\0')
 		{
-			hola = malloc(sizeof(t_arg));
-			hola->next = NULL;
-			temp = hola;
-            i++;
-			continue ;
+			if (str[i] == 34 || str[i] == 39)
+			{
+				flag+=2;
+				qut = str[i];
+				i++;
+				while (str[i] != qut)
+				i++;
+				i++;
+			}
+			i++;
 		}
-		temp->next = malloc(sizeof(t_arg));
-		temp->next->next = NULL;
-		temp = temp->next;
-        i++;
+		//printf("----%d\n",k);
+		l = 0;
+		hola[k]=malloc(sizeof(t_pro));
+		hola[k]->str=malloc(i-j-flag+1);
+		while (j<i && str[i] != '\0')
+		{
+			if (str[j] == 34 || str[j] == 39)
+			{
+				j++;
+				continue;
+			}
+			hola[k]->str[l]=str[j];
+			l++;
+			j++;
+		}
+		hola[k]->str[l]='\0';
+		k++;
+		
 	}
-
-    temp=hola;
-    i=0;
-
-    while (temp!=NULL)
-    {
-        temp->arg=malloc(sizeof(t_pro));
-        while (str[i]!='|' && str[i]!='\0')
-        {
-            if ((str[i]==' ' && str[i+1]!=' ') || str[i+1]=='|' || str[i+1]=='\0')
-            {
-                temp->arg[j]=malloc(sizeof(t_pro));
-                temp->arg[j]->str=malloc(i-k);
-                while (k<=i)
-                {
-                    temp->arg[j]->str[l]=str[k];
-                    k++;
-                    l++;
-                }
-                temp->arg[j]->str[l]='\0';
-                l=0;
-                j++;
-            }
-            i++;
-            
-        }
-        i++;
-        j=0;
-        temp=temp->next;
-    }
-    
-    // temp=hola;
-    // i=0;
-    // while (temp!=NULL)
-    // {
-    //     while (temp->arg[i])
-    //     {
-    //         printf("%s\n",temp->arg[i]->str);
-    //         i++;
-    //     }
-    //     i=0;
-    //     temp=temp->next;
-    // }
-
+	i=-1;
+	k=-1;
+	while (hola[++k])
+		printf("%s\n", hola[k]->str);
 }
