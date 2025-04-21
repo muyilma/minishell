@@ -1,6 +1,6 @@
 NAME=minishell
 
-SRCS= minishell.c parser.c dollar_parse.c 
+SRCS= minishell.c parser.c dollar_parse.c arg_parse.c
 CFLAGS=-Wall -Wextra -Werror
 LIBFT=libft/libft.a
 

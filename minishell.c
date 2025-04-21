@@ -17,7 +17,7 @@ void	read_line(t_input *input)
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
-	input->input = readline("yaz:");
+	input->input = readline("hegulum:");
 	add_history(input->input);
 }
 

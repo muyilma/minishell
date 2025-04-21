@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include <readline/history.h>
 #include <readline/readline.h>
+#include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -110,4 +111,6 @@ void	ft_parser(t_input *input)
 		dollar_parse(input);
 	if (input->operator> 0)
 		opCounter(input);
+
+	arg_parse(input,ft_strlen(input->input),0);
 }
