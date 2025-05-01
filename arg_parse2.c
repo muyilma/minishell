@@ -87,9 +87,8 @@ void	arg_find(char *str, t_input *ipt, int k)
 				i++;
 		}
 		ipt->arg[k]->str[l] = malloc((i - j) - flag + 1);
-		// printf("%d\n",(i - j) - flag +1);
 		flag = 0;
-		arg_create(str, &ipt->arg[k]->str[l], i, j);
+		arg_create(str, &ipt->arg[k]->str[l], i -1, j);
 		l++;
 	}
 	ipt->arg[k]->str[l] = NULL;
