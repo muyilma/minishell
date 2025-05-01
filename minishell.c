@@ -46,7 +46,7 @@ void	ft_executer(t_input *input)
 	// 	}
 	// 	k++;
 	// }
-	execute_pipe(input->arg);
+	execute_pipe(input->arg, 0, 0, 0);
 	free(input->input);
 	free(input);
 }
