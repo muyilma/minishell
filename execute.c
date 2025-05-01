@@ -91,7 +91,7 @@ void	ft_execve(char **args)
 	base = pathc(args[0]);
 	if (!base)
 	{
-		perror("Command not found");
+		printf("Command not found:%s\n",args[0]);
 		exit(1);
 	}
 	execve(base, args, NULL);
@@ -99,16 +99,13 @@ void	ft_execve(char **args)
 	exit(1);
 }
 
-void	execute_pipe(t_pro **input)
+void	execute_pipe(t_pro **input, int s, int start, int i)
 {
 	int fd[2];
-	int prev_fd = -1;
+	int prev_fd;
 	pid_t pid;
-	int i = 0;
-	int start = 0;
-	int s;
 
-	s = 0;
+	prev_fd = -1;
 	while (input[s]->str[i] && input[s + 1])
 	{
 		if (input[s]->str[i + 1] == NULL)
@@ -146,6 +143,5 @@ void	execute_pipe(t_pro **input)
 		ft_execve(&input[s]->str[start]);
 	}
 	close(prev_fd);
-	while (wait(NULL) > 0)
-		;
+	while (wait(NULL) > 0);
 }

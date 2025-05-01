@@ -22,7 +22,7 @@ typedef struct s_input
 	t_pro	**arg;
 }			t_input;
 
-void		execute_pipe(t_pro **input);
+void	execute_pipe(t_pro **input, int s, int start, int i);
 void		arg_convert(t_input *ipt, char *str, int k);
 int			quotes_skip(char *str, int j);
 void		ft_parser(t_input *input);
