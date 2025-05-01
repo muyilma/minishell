@@ -83,7 +83,6 @@ void	ft_execve(char **args)
 	i = 0;
 	if (!args || !args[0])
 		exit(1);
-	printf("%sa\n",args[0]);
 	if (ft_strncmp(args[0], "echo", 5) == 0)
 	{
 		ft_echo(&args[1]);
