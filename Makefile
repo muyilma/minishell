@@ -1,14 +1,14 @@
 NAME=minishell
 
-SRCS= minishell.c parser.c dollar_parse.c arg_parse.c
-CFLAGS=-Wall -Wextra -Werror
+SRCS= minishell.c parser.c dollar_parse.c arg_parse.c arg_parse2.c execute.c
+CFLAGS=-g
 LIBFT=libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(SRCS) 
 	make -C ./libft -s
-	cc  -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline -lncurses $(LIBFT)
+	gcc -g   -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline -lncurses $(LIBFT)
 
 clean:
 	make clean -C ./libft -s
