@@ -75,13 +75,32 @@ void	ft_execve(char **args)
 	exit(1);
 }
 
-void	execute_pipe(t_pro **input, int s, int start, int i)
+void execute_last(t_pro **input, int s, int start, int prev_fd)
 {
-	int fd[2];
-	int prev_fd;
-	pid_t pid;
+    pid_t pid;
 
-	prev_fd = -1;
+    pid = fork();
+    if (pid == 0)
+    {
+        if (prev_fd != -1)
+        {
+            dup2(prev_fd, 0);
+            close(prev_fd);
+        }
+        handle_redirections(input[s]);
+        ft_execve(&input[s]->str[start]);
+    }
+    close(prev_fd);
+    while (wait(NULL) > 0);
+}
+
+void execute_pipe(t_pro **input, int s, int start, int i)
+{
+    int fd[2];
+    int prev_fd;
+    pid_t pid;
+
+    prev_fd = -1;
 	while (input[s]->str[i] && input[s + 1])
 	{
 		if (input[s]->str[i + 1] == NULL)
@@ -97,7 +116,8 @@ void	execute_pipe(t_pro **input, int s, int start, int i)
 				}
 				dup2(fd[1], 1);
 				close(fd[0]);
-				close(fd[1]);	
+				close(fd[1]);
+				handle_redirections(input[s]);
 				ft_execve(&input[s]->str[start]);
 			}
 			close(fd[1]);
@@ -108,16 +128,5 @@ void	execute_pipe(t_pro **input, int s, int start, int i)
 			break ;
 		i++;
 	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if (prev_fd != -1)
-		{
-			dup2(prev_fd, 0);
-			close(prev_fd);
-		}
-		ft_execve(&input[s]->str[start]);
-	}
-	close(prev_fd);
-	while (wait(NULL) > 0);
+    execute_last(input, s, start, prev_fd);
 }
