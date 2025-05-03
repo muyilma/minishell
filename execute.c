@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
 void	ft_free(char **str)
 {
 	int i;
@@ -67,7 +68,7 @@ void	ft_execve(char **args)
 	base = pathc(args[0]);
 	if (!base)
 	{
-		printf("Command not found:%s\n",args[0]);
+		printf("Command not found:%s\n", args[0]);
 		exit(1);
 	}
 	execve(base, args, NULL);
@@ -75,32 +76,33 @@ void	ft_execve(char **args)
 	exit(1);
 }
 
-void execute_last(t_pro **input, int s, int start, int prev_fd)
+void	execute_last(t_pro **input, int s, int start, int prev_fd)
 {
-    pid_t pid;
+	pid_t pid;
 
-    pid = fork();
-    if (pid == 0)
-    {
-        if (prev_fd != -1)
-        {
-            dup2(prev_fd, 0);
-            close(prev_fd);
-        }
-        handle_redirections(input[s]);
-        ft_execve(&input[s]->str[start]);
-    }
-    close(prev_fd);
-    while (wait(NULL) > 0);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (prev_fd != -1)
+		{
+			dup2(prev_fd, 0);
+			close(prev_fd);
+		}
+		handle_redirections(input[s]);
+		ft_execve(&input[s]->str[start]);
+	}
+	close(prev_fd);
+	while (wait(NULL) > 0)
+		;
 }
 
-void execute_pipe(t_pro **input, int s, int start, int i)
+void	execute_pipe(t_pro **input, int s, int start, int i)
 {
-    int fd[2];
-    int prev_fd;
-    pid_t pid;
+	int fd[2];
+	int prev_fd;
+	pid_t pid;
 
-    prev_fd = -1;
+	prev_fd = -1;
 	while (input[s]->str[i] && input[s + 1])
 	{
 		if (input[s]->str[i + 1] == NULL)
@@ -128,5 +130,5 @@ void execute_pipe(t_pro **input, int s, int start, int i)
 			break ;
 		i++;
 	}
-    execute_last(input, s, start, prev_fd);
+	execute_last(input, s, start, prev_fd);
 }

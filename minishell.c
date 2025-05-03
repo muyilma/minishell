@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void	read_line(t_input *input)
 {
 	input->input = NULL;
@@ -26,6 +27,47 @@ void	read_line(t_input *input)
 	add_history(input->input);
 }
 
+void	ft_executer_free(t_input *input)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	if (input->arg)
+	{
+		while (input->arg[i])
+		{
+			if (input->arg[i]->str)
+			{
+				while (input->arg[i]->str[j])
+				{
+					free(input->arg[i]->str[j]);
+					j++;
+				}
+				free(input->arg[i]->str);
+				j = 0;
+			}
+
+			if (input->arg[i]->append_outfile)
+				free(input->arg[i]->append_outfile);
+			if (input->arg[i]->heradock)
+				free(input->arg[i]->heradock);
+			if (input->arg[i]->infile)
+			{
+				printf("-----\n");
+				free(input->arg[i]->infile);
+			}
+			if (input->arg[i]->outfile)
+				free(input->arg[i]->outfile);
+			free(input->arg[i]);
+			i++;
+		}
+	}
+
+	free(input->arg);
+}
+
 void	ft_executer(t_input *input)
 {
 	// int	l;
@@ -46,8 +88,9 @@ void	ft_executer(t_input *input)
 	// 	}
 	// 	k++;
 	// }
-	execute_pipe(input->arg, 0, 0, 0);
 	free(input->input);
+	execute_pipe(input->arg, 0, 0, 0);
+	ft_executer_free(input);
 	free(input);
 }
 
@@ -63,7 +106,7 @@ void	ft_error(t_input *input)
 
 int	main(void)
 {
-	t_input	*input;
+	t_input *input;
 
 	while (1)
 	{
