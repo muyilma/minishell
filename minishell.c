@@ -90,7 +90,7 @@ void	ft_executer(t_input *input)
 	// }
 	free(input->input);
 	execute_pipe(input->arg, 0, 0, 0);
-	ft_executer_free(input);
+	//ft_executer_free(input);
 	free(input);
 }
 
