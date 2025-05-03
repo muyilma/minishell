@@ -101,6 +101,11 @@ void	arg_parse(t_input *ipt, int len, int k)
 				i++;
 			fakestr = ft_substr(ipt->input, j, i - j);
 			ipt->arg[k] = malloc(sizeof(t_pro));
+			ipt->arg[k]->append_outfile=NULL;
+			ipt->arg[k]->heradock=NULL;
+			ipt->arg[k]->infile=NULL;
+			ipt->arg[k]->outfile=NULL;
+			ipt->arg[k]->str=NULL;
 			if (!ipt->arg[k])
 				return ;
 			fakestr = redirect_convert(ipt, fakestr, k);

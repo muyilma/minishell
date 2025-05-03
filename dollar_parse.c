@@ -76,6 +76,7 @@ int	print_dollar(t_input *ipt, char point, int i)
 		return (i - 1);
 	return (i);
 }
+
 int	heredock_dollar(t_input *input, int i)
 {
 	i += 2;
@@ -100,8 +101,6 @@ void	dollar_parse(t_input *input)
 {
 	int	i;
 
-	if (input->error > 0)
-		return ;
 	i = 0;
 	while (input->input[i])
 	{
