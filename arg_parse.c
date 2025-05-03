@@ -84,6 +84,7 @@ void	arg_parse(t_input *ipt, int len, int k)
 	int		i;
 	int		j;
 	char	*fakestr;
+	char	*temp;
 
 	if (ipt->error > 0 || !ipt->input)
 		return ;
@@ -108,7 +109,9 @@ void	arg_parse(t_input *ipt, int len, int k)
 			ipt->arg[k]->str=NULL;
 			if (!ipt->arg[k])
 				return ;
+			temp=fakestr;
 			fakestr = redirect_convert(ipt, fakestr, k);
+			free(temp);
 			arg_convert(ipt, fakestr, k);
 			k++;
 			free(fakestr);
