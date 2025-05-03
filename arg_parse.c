@@ -111,7 +111,7 @@ void	arg_parse(t_input *ipt, int len, int k)
 				return ;
 			temp=fakestr;
 			fakestr = redirect_convert(ipt, fakestr, k);
-			free(temp);
+			//free(temp);
 			arg_convert(ipt, fakestr, k);
 			k++;
 			free(fakestr);

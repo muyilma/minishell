@@ -8,51 +8,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-
-void	ft_free(char **str)
-{
-	int i;
-
-	i = 0;
-	while (str[i] != 0)
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-char	*pathc(char *cmd)
-{
-	int i;
-	char *tmp = getenv("PATH");
-	if (!tmp)
-		return (NULL);
-
-	char **path = ft_split(tmp, ':');
-	if (!path)
-		return (NULL);
-
-	char *arg, *str;
-	i = 0;
-	while (path[i])
-	{
-		arg = ft_strjoin(path[i], "/");
-		str = ft_strjoin(arg, cmd);
-		free(arg);
-		if (access(str, X_OK) == 0)
-		{
-			ft_free(path);
-			return (str);
-		}
-		free(str);
-		i++;
-	}
-	ft_free(path);
-	return (NULL);
-}
-
-void	ft_execve(char **args)
+void	ft_execve(t_input *pro, char **args)
 {
 	int i;
 	char *base;
@@ -60,12 +16,8 @@ void	ft_execve(char **args)
 	i = 0;
 	if (!args || !args[0])
 		exit(1);
-	if (ft_strncmp(args[0], "echo", 5) == 0)
-	{
-		ft_echo(&args[1]);
-		exit(0);
-	}
-	base = pathc(args[0]);
+	built_in(args, pro->environ);
+	base = pathc(args[0], pro->environ);
 	if (!base)
 	{
 		printf("Command not found:%s\n", args[0]);
@@ -76,7 +28,7 @@ void	ft_execve(char **args)
 	exit(1);
 }
 
-void	execute_last(t_pro **input, int s, int start, int prev_fd)
+void	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
 
@@ -88,47 +40,52 @@ void	execute_last(t_pro **input, int s, int start, int prev_fd)
 			dup2(prev_fd, 0);
 			close(prev_fd);
 		}
-		handle_redirections(input[s]);
-		ft_execve(&input[s]->str[start]);
+		handle_redirections(pro->arg[s]);
+		ft_execve(pro, &pro->arg[s]->str[0]);
 	}
 	close(prev_fd);
 	while (wait(NULL) > 0)
 		;
 }
-
-void	execute_pipe(t_pro **input, int s, int start, int i)
+int 	execute_pipev2(t_input *pro, int s, int i, int prev_fd)
 {
 	int fd[2];
-	int prev_fd;
 	pid_t pid;
 
-	prev_fd = -1;
-	while (input[s]->str[i] && input[s + 1])
+	pipe(fd);
+	pid = fork();
+	if (pid == 0)
 	{
-		if (input[s]->str[i + 1] == NULL)
+		if (prev_fd != -1)
 		{
-			pipe(fd);
-			pid = fork();
-			if (pid == 0)
-			{
-				if (prev_fd != -1)
-				{
-					dup2(prev_fd, 0);
-					close(prev_fd);
-				}
-				dup2(fd[1], 1);
-				close(fd[0]);
-				close(fd[1]);
-				handle_redirections(input[s]);
-				ft_execve(&input[s]->str[start]);
-			}
-			close(fd[1]);
-			prev_fd = fd[0];
+			dup2(prev_fd, 0);
+			close(prev_fd);
+		}
+		dup2(fd[1], 1);
+		close(fd[0]);
+		close(fd[1]);
+		handle_redirections(pro->arg[s]);
+		ft_execve(pro, &pro->arg[s]->str[0]);
+	}
+	close(fd[1]);
+	prev_fd = fd[0];
+}
+
+void	execute_pipe(t_input *pro, int s, int i)
+{
+	int prev_fd;
+	
+	prev_fd = -1;
+	while (pro->arg[s]->str && pro->arg[s]->str[i] && pro->arg[s + 1])
+	{
+		if (pro->arg[s]->str[i + 1] == NULL)
+		{
+			execute_pipev2(pro, s, i, prev_fd);
 			s++;
 		}
-		if (input[s + 1] == NULL)
+		if (pro->arg[s + 1] == NULL)
 			break ;
 		i++;
 	}
-	execute_last(input, s, start, prev_fd);
+	execute_last(pro, s, prev_fd);
 }
