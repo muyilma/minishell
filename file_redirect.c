@@ -39,11 +39,7 @@ void	redirect_output(char *filename, int append)
 }
 
 void	handle_redirections(t_pro *pro)
-{
-    printf("infile: %p\n", pro->infile);
-    printf("outfile: %p\n", pro->outfile);
-    printf("append_outfile: %p\n", pro->append_outfile);
-       
+{      
 	if (pro->infile)
 		redirect_input(pro->infile);
     

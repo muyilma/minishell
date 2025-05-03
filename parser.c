@@ -86,44 +86,36 @@ int	op_checker(t_input *input, int i)
 		input->error = 3;
 	return (j); // burdaki +1'i sildin
 }
-void	opCounter(t_input *input)
+void	opCounter(t_input *a)
 {
 	int	i;
 
 	i = 0;
-	if (input->error > 0)
-		return ;
-	while (input->input[i])
+	while (a->input[i])
 	{
-		if (input->input[i] == 34 || input->input[i] == 39)
+		if (a->input[i] == 34 || a->input[i] == 39)
 		{
-			input->qut = input->input[i];
+			a->qut = a->input[i];
 			i++;
-			while (input->input[i] != input->qut)
+			while (a->input[i] != a->qut)
 				i++;
-			input->isalpha++;
+			a->isalpha++;
 		}
-		else if (input->input[i] == '|' || input->input[i] == '<'
-			|| input->input[i] == '>')
-		{
-			// printf("1-%s\n",input->input+i);
-			i = op_checker(input, i);
-		}
-		else if (input->input[i] != ' ')
-			input->isalpha++;
-		if (input->error > 0)
+		else if (a->input[i] == '|' || a->input[i] == '<' || a->input[i] == '>')
+			i = op_checker(a, i);
+		else if (a->input[i] != ' ')
+			a->isalpha++;
+		if (a->error > 0)
 			return ;
 		i++;
 	}
 }
 
-
-void	ft_parser(t_input *input)
+void	quotes_control(t_input *input)
 {
 	int	i;
 
 	i = -1;
-	empty_line(input);
 	while (input->input[++i])
 	{
 		if (input->input[i] == 34 || input->input[i] == 39)
@@ -139,9 +131,17 @@ void	ft_parser(t_input *input)
 	}
 	if (input->quotes % 2 != 0)
 		input->error = 2;
-	if (input->dollar > 0)
+}
+
+void	ft_parser(t_input *input)
+{
+	empty_line(input);
+	if (input->error == 0)
+		quotes_control(input);
+	if (input->dollar > 0 && input->error == 0)
 		dollar_parse(input);
-	if (input->operator> 0)
+	if (input->operator> 0 && input->error == 0)
 		opCounter(input);
-	arg_parse(input, ft_strlen(input->input), 0);
+	if (input->error == 0)
+		arg_parse(input, ft_strlen(input->input), 0);
 }
