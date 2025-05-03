@@ -69,7 +69,7 @@ void built_in(char **args, char **environ)
 
 	// if (ft_strncmp(args[0], "export", 7) == 0)
 	// {
-	// 	ft_export(&args[1]);
+	// 	ft_export(&args[1], e);
 	// 	exit(0);
 	// }
 }
