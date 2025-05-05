@@ -42,8 +42,10 @@ void	handle_redirections(t_pro *pro)
 {      
 	if (pro->infile)
 		redirect_input(pro->infile);
+    
 	if (pro->outfile)
 		redirect_output(pro->outfile, 0);
+    
     if (pro->append_outfile)
         redirect_output(pro->append_outfile, 1);
 }

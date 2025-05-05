@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 
-void	read_line(t_input *input)
+void	read_line(t_input *input,char **env)
 {
 	input->input = NULL;
 	input->isprint = 0;
@@ -18,6 +18,8 @@ void	read_line(t_input *input)
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
+	input->arg=NULL;
+	input->environ = env;
 	input->input = readline("hegulum:");
 	if (!input->input)
 	{
@@ -89,8 +91,11 @@ void	ft_executer(t_input *input)
 	// 	k++;
 	// }
 	free(input->input);
-	execute_pipe(input->arg, 0, 0, 0);
-	//ft_executer_free(input);
+	
+	execute_pipe(input, 0, 0);
+	// printf("---\n");
+	ft_executer_free(input);
+
 	free(input);
 }
 
@@ -104,15 +109,16 @@ void	ft_error(t_input *input)
 	free(input);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	t_input *input;
 
 	while (1)
 	{
 		input = malloc(sizeof(t_input));
-		read_line(input);
+		read_line(input,env);
 		ft_parser(input);
+
 		if (input->error == 0)
 			ft_executer(input);
 		else

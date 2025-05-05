@@ -30,3 +30,46 @@ void	ft_echo(char **args)
 	if (newline)
 		printf("\n");
 }
+void	ft_env(char **environ)
+{
+	int i;
+
+	i = 0;
+	while (environ[i])
+	{
+		printf("%s\n",environ[i]);
+		i++;
+	}
+}
+
+// void	ft_export(char**args, char **environ)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if(getenv(args))
+// 	{
+// 		setenv()
+// 	}
+// }
+
+void built_in(char **args, char **environ)
+{
+	if (ft_strncmp(args[0], "echo", 5) == 0)
+	{
+		ft_echo(&args[1]);
+		exit(0);
+	}
+
+	if (ft_strncmp(args[0], "env", 4) == 0)
+	{
+		ft_env(environ);
+		exit(0);
+	}
+
+	// if (ft_strncmp(args[0], "export", 7) == 0)
+	// {
+	// 	ft_export(&args[1], e);
+	// 	exit(0);
+	// }
+}
