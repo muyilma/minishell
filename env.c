@@ -8,16 +8,75 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-char	*ft_path(char **envp)
+char	*ft_getenv(char **env, char *name)
 {
-	int		i;
-	char	*path;
+	int	i;
+	int	len;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	if (!env || !name)
+		return (NULL);
+	len = ft_strlen(name);
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+			return (env[i] + len + 1);
 		i++;
-	path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
-	return (path);
+	}
+	return (NULL);
+}
+
+char	**ft_setenv(char **env, char *variable)
+{
+	int		i;
+	int		j;
+	char	*name;
+	char	*equal_sign;
+	char	**new_env;
+
+	if (!env || !variable)
+		return (env);
+	equal_sign = ft_strchr(variable, '=');
+	if (!equal_sign)
+		return (env);
+	j = equal_sign - variable;
+	name = malloc(j + 1);
+	if (!name)
+		return (env);
+	ft_strlcpy(name, variable, j + 1);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], name, j) == 0 && env[i][j] == '=')
+		{
+			env[i] = ft_strdup(variable);
+			free(name);
+			return (env);
+		}
+		i++;
+	}
+	new_env = malloc(sizeof(char *) * (i + 2));
+	if (!new_env)
+	{
+		free(name);
+		return (env);
+	}
+	j = 0;
+	while (j < i)
+	{
+		new_env[j] = env[j];
+		j++;
+	}
+	new_env[i] = ft_strdup(variable);
+	new_env[i + 1] = NULL;
+    j = 0;
+    while (new_env[j])
+	{
+        printf("%s\n",new_env[j]);
+		j++;
+	}
+	free(name);
+	return (new_env);
 }
 
 void	ft_free(char **str)
@@ -35,15 +94,17 @@ void	ft_free(char **str)
 
 char	*pathc(char *cmd, char **envp)
 {
-	int		i;
-	char	**path;
-	char	*arg;
-	char	*str;
-	char	*tmp;
+	int i;
+	char **path;
+	char *arg;
+	char *str;
+	char *path_value;
 
-	tmp = ft_path(envp);
-	path = ft_split(tmp, ':');
-	free(tmp);
+	path_value = ft_getenv(envp, "PATH");
+	if (!path_value)
+		return (NULL);
+
+	path = ft_split(path_value, ':');
 	i = -1;
 	while (path[++i])
 	{

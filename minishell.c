@@ -19,7 +19,7 @@ void	read_line(t_input *input,char **env)
 	input->quotes = 0;
 	input->dollar = 0;
 	input->arg=NULL;
-	input->environ = env;
+	input->env = env;
 	input->input = readline("hegulum:");
 	if (!input->input)
 	{
