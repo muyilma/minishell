@@ -86,37 +86,31 @@ void	arg_parse(t_input *ipt, int len, int k)
 	char	*fakestr;
 	char	*temp;
 
-	if (ipt->error > 0 || !ipt->input)
-		return ;
+
 	i = -1;
 	j = 0;
-	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 1));
+	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 2));//burası +1di
 	if (!ipt->arg)
 		return ;
-	while (ipt->input[++i] && i < len)
-	// len'i koymayınca fazladan 1 kere daha giriyor
+	while ( ipt->input[++i] && i < len)// len'i koymayınca fazladan 1 kere daha giriyor
 	{
 		if (ipt->input[i] == '|' || (ipt->input[i + 1] == '\0'))
 		{
 			if (ipt->input[i + 1] == '\0')
 				i++;
 			fakestr = ft_substr(ipt->input, j, i - j);
-			ipt->arg[k] = malloc(sizeof(t_pro));
-			ipt->arg[k]->append_outfile=NULL;
-			ipt->arg[k]->heradock=NULL;
-			ipt->arg[k]->infile=NULL;
-			ipt->arg[k]->outfile=NULL;
-			ipt->arg[k]->str=NULL;
+			ipt->arg[k] =ft_calloc(1,sizeof(t_pro));
 			if (!ipt->arg[k])
 				return ;
 			temp=fakestr;
 			fakestr = redirect_convert(ipt, fakestr, k);
-			//free(temp);
+			if (temp !=fakestr)
+				free(temp);
 			arg_convert(ipt, fakestr, k);
 			k++;
 			free(fakestr);
 			j = i + 1;
 		}
 	}
-	ipt->arg[k] = NULL;
+	ipt->arg[ipt->pipe+1] = NULL;
 }

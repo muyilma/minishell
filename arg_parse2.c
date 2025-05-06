@@ -40,21 +40,12 @@ void	arg_create(char *str, char **newstr, int i, int j)
 		{
 			qut = str[j++];
 			while (str[j] && str[j] != qut)
-			{
-				(*newstr)[k] = str[j];
-				j++;
-				k++;
-			}
+				(*newstr)[k++] = str[j++];
 			if (str[j])
 				j++;
 		}
 		else
-		{
-			(*newstr)[k] = str[j];
-			// printf("--%c---\n",(*newstr)[k]);
-			k++;
-			j++;
-		}
+			(*newstr)[k++] = str[j++];
 	}
 	(*newstr)[k] = '\0';
 }
