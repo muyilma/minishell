@@ -104,8 +104,6 @@ void	ft_print_sorted_env(char **env)
 	}
 	free(sorted_env);
 }
-
-// EXPORT komutunu gerçekleştirir - args'ın doğru pointer pozisyonunu korur
 void	ft_export(char **args, t_input *pro)
 {
 	int		i;
@@ -153,7 +151,7 @@ void	ft_export(char **args, t_input *pro)
 }
 
 // built_in fonksiyonunu güncelle
-void	built_in(char **args, t_input *pro)
+int	built_in(char **args, t_input *pro)
 {
 	if (ft_strncmp(args[0], "echo", 5) == 0)
 	{
@@ -164,12 +162,13 @@ void	built_in(char **args, t_input *pro)
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
 		ft_env(pro->env);
-		exit(0);
+		return (1);
 	}
 
 	if (ft_strncmp(args[0], "export", 7) == 0)
 	{
 		ft_export(&args[1], pro);
-		exit(0);
+		return (1);
 	}
+	return (0);
 }

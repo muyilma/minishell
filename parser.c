@@ -142,6 +142,8 @@ void	ft_parser(t_input *input)
 		dollar_parse(input);
 	if (input->operator> 0 && input->error == 0)
 		opCounter(input);
-	if (input->error == 0)
+	if (input->error == 0){
+		
 		arg_parse(input, ft_strlen(input->input), 0);
+	}
 }
