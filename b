@@ -1,0 +1,15 @@
+a
+arg_parse2.c
+arg_parse.c
+b
+built_in.c
+dollar_parse.c
+env.c
+execute.c
+file_redirect.c
+libft
+Makefile
+minishell
+minishell.c
+minishell.h
+parser.c

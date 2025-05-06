@@ -18,9 +18,10 @@ void	read_line(t_input *input,char **env)
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
-	input->arg=NULL;
 	input->env = env;
-	input->input = readline("hegulum:");
+	input->arg=NULL;
+	
+	input->input = readline("----hegulum:");
 	if (!input->input)
 	{
 		perror("hata");
@@ -94,7 +95,7 @@ void	ft_executer(t_input *input)
 	
 	execute_pipe(input, 0, 0);
 	// printf("---\n");
-	ft_executer_free(input);
+	//ft_executer_free(input);
 
 	free(input);
 }
@@ -112,13 +113,11 @@ void	ft_error(t_input *input)
 int	main(int ac, char **av, char **env)
 {
 	t_input *input;
-
 	while (1)
 	{
 		input = malloc(sizeof(t_input));
 		read_line(input,env);
 		ft_parser(input);
-
 		if (input->error == 0)
 			ft_executer(input);
 		else
