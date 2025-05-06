@@ -30,9 +30,7 @@ char	**ft_setenv(char **env, char *variable)
 {
 	int		i;
 	int		j;
-	char	*name;
 	char	*equal_sign;
-	char	**new_env;
 
 	if (!env || !variable)
 		return (env);
@@ -40,43 +38,19 @@ char	**ft_setenv(char **env, char *variable)
 	if (!equal_sign)
 		return (env);
 	j = equal_sign - variable;
-	name = malloc(j + 1);
-	if (!name)
-		return (env);
-	ft_strlcpy(name, variable, j + 1);
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], name, j) == 0 && env[i][j] == '=')
+		if (ft_strncmp(env[i], variable, j) == 0 && env[i][j] == '=')
 		{
 			env[i] = ft_strdup(variable);
-			free(name);
 			return (env);
 		}
 		i++;
 	}
-	new_env = malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-	{
-		free(name);
-		return (env);
-	}
-	j = 0;
-	while (j < i)
-	{
-		new_env[j] = env[j];
-		j++;
-	}
-	new_env[i] = ft_strdup(variable);
-	new_env[i + 1] = NULL;
-    j = 0;
-    while (new_env[j])
-	{
-        printf("%s\n",new_env[j]);
-		j++;
-	}
-	free(name);
-	return (new_env);
+	env[i] = ft_strdup(variable);
+	env[i + 1] = NULL;
+	return (env);
 }
 
 void	ft_free(char **str)
