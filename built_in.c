@@ -135,7 +135,6 @@ void	ft_export(char **args, t_input *pro)
 		}
 		else
 		{
-			// Sadece NAME formatında - yalnızca değişken yoksa ekle
 			if (!ft_getenv(pro->env, args[i]))
 			{
 				variable = ft_strjoin(args[i], "=");
