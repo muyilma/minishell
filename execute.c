@@ -16,8 +16,8 @@ void	ft_execve(t_input *pro, char **args)
 	i = 0;
 	if (!args || !args[0])
 		exit(1);
-	built_in(args, pro->environ);
-	base = pathc(args[0], pro->environ);
+	built_in(args, pro);
+	base = pathc(args[0], pro->env);
 	if (!base)
 	{
 		printf("Command not found:%s\n", args[0]);

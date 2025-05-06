@@ -19,7 +19,7 @@ typedef struct s_input
 	int		error;
 	int		dollar;
 	int		quotes;
-	char **environ;
+	char **env;
 	t_pro	**arg;
 }			t_input;
 
@@ -30,6 +30,7 @@ void		ft_parser(t_input *input);
 void		dollar_parse(t_input *input);
 void		arg_parse(t_input *ipt, int len, int k);
 void		handle_redirections(t_pro *pro);
-void 		built_in(char **args, char **environ);
-void		ft_export(char**args);
+void built_in(char **args, t_input *pro);
 char		*pathc(char *cmd, char **envp);
+char **ft_setenv(char **env, char *variable);
+char *ft_getenv(char **env, char *name);
