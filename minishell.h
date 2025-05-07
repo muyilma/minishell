@@ -32,5 +32,6 @@ void		arg_parse(t_input *ipt, int len, int k);
 void		handle_redirections(t_pro *pro);
 int	built_in(char **args, t_input *pro);
 char		*pathc(char *cmd, char **envp);
-char	**ft_setenv(char **env, char *variable);
+char	**ft_setenv(char **env, char *variable, int e);
 char *ft_getenv(char **env, char *name);
+void	ft_export(char **args, t_input *pro);

@@ -48,7 +48,8 @@ void	execute_last(t_input *pro, int s, int prev_fd)
 	while (wait(NULL) > 0)
 		;
 }
-void execute_pipev2(t_input *pro, int s, int i, int *prev_fd) {
+void execute_pipev2(t_input *pro, int s, int i, int *prev_fd) 
+{
     int fd[2];
     pid_t pid;
 
