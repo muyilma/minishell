@@ -16,7 +16,7 @@ int	quotes_skip(char *str, int j)
 		qut = str[i++];
 		while (str[i] && str[i] != qut)
 			i++;
-		if (str[i])
+		if (str[i] == qut)
 			i++;
 	}
 	return (i);
