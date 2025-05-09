@@ -77,7 +77,16 @@ char	*redirect_convert(t_input *ipt, char *str, int k)
 	return (str);
 }
 
-
+void arg_print(char *str,int i)
+{
+	int j=0;
+	while (str[j] && j <=i)
+	{
+		printf("%c",str[j]);
+	}
+		printf("\n");
+	
+}
 
 void	arg_parse(t_input *ipt, int len, int k)
 {
@@ -94,8 +103,13 @@ void	arg_parse(t_input *ipt, int len, int k)
 		return ;
 	while ( ipt->input[++i] && i < len)// len'i koymayınca fazladan 1 kere daha giriyor
 	{
-		if (ipt->input[i] == '|' || (ipt->input[i + 1] == '\0'))
+		if (ipt->input[i] == 34 || ipt->input[i] == 39){
+			i = quotes_skip(ipt->input, i);	
+			i--;
+		}
+		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || (ipt->input[i + 1] == '\0'))
 		{
+	
 			if (ipt->input[i + 1] == '\0')
 				i++;
 			fakestr = ft_substr(ipt->input, j, i - j);
