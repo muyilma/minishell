@@ -31,25 +31,60 @@ void	ft_echo(char **args)
 		printf("\n");
 }
 
-void	ft_env(char **env, char *args)
+void	ft_unset(char **args, t_input *pro)
 {
 	int	i;
-
-	i = 0;
-	if (args)
-	{
-		perror("env hatası");
+	int	j;
+	int	len;
+	
+	if (!args || !pro->env)
 		return ;
-	}
-		
-	while (env[i])
+	
+	i = 0;
+	while (args[i])
 	{
-		printf("%s\n", env[i]);
+		len = ft_strlen(args[i]);
+		j = 0;
+		while (pro->env[j])
+		{
+			if (ft_strncmp(pro->env[j], args[i], len) == 0 && 
+			    pro->env[j][len] == '=')
+			{
+				while (pro->env[j + 1])
+				{
+					pro->env[j] = pro->env[j + 1];
+					j++;
+				}
+				pro->env[j] = NULL;
+				break;
+			}
+			j++;
+		}
 		i++;
 	}
 }
 
+void	ft_env(char **env, char **args, t_input *pro)
+{
+	int	i;
 
+	i = 0;
+	if (args && args[0])
+	{
+		if (ft_strchr(args[0], '=') == NULL)
+		{
+			perror("env:");
+			exit(0);
+		}
+		ft_export(&args[0], pro, 1);
+	}
+	while (env[i])
+	{
+		if(ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
+		i++;
+	}
+}
 
 // built_in fonksiyonunu güncelle
 int	built_in(char **args, t_input *pro)
@@ -62,19 +97,19 @@ int	built_in(char **args, t_input *pro)
 
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
-		ft_env(pro->env, args[1]);
+		ft_env(pro->env, &args[1], pro);
 		exit(0);
 	}
 
-	if (ft_strncmp(args[0], "export", 7) == 0)
+	if (ft_strncmp(args[0], "export", 6) == 0)
 	{
-		ft_export(&args[1], pro);
+		ft_export(&args[1], pro, 0);
 		return (1);
 	}
 
-	if (ft_strncmp(args[0], "unset", 7) == 0)
+	if (ft_strncmp(args[0], "unset", 5) == 0)
 	{
-		ft_export(&args[1], pro);
+		ft_unset(&args[1], pro);
 		return (1);
 	}
 	return (0);

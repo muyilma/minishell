@@ -5,7 +5,6 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 char	*ft_getenv(char **env, char *name)
