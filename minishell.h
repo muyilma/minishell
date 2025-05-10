@@ -34,4 +34,5 @@ int	built_in(char **args, t_input *pro);
 char		*pathc(char *cmd, char **envp);
 char	**ft_setenv(char **env, char *variable, int e);
 char *ft_getenv(char **env, char *name);
-void	ft_export(char **args, t_input *pro);
+void	ft_export(char **args, t_input *pro , int envflag);
+void	ft_print_sorted_env(char **env);

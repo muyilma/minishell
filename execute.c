@@ -45,7 +45,6 @@ void	execute_last(t_input *pro, int s, int prev_fd)
 		}
 		handle_redirections(pro->arg[s]);
 		ft_execve(pro, pro->arg[s]->str);
-		exit(1);
 	}
 
 	if (prev_fd != -1)
@@ -73,7 +72,7 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 		close(fd[1]);
 		handle_redirections(pro->arg[cmd_index]);
 		ft_execve(pro, pro->arg[cmd_index]->str);
-		exit(1);
+
 	}
 	close(fd[1]);
 	if (*prev_fd != -1)
