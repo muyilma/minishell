@@ -140,6 +140,8 @@ void	ft_parser(t_input *input)
 		quotes_control(input);
 	if (input->dollar > 0 && input->error == 0)
 		dollar_parse(input);
+
+
 	if (input->operator> 0 && input->error == 0)
 		opCounter(input);
 	if (input->error == 0){

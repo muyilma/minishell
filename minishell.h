@@ -19,11 +19,12 @@ typedef struct s_input
 	int		error;
 	int		dollar;
 	int		quotes;
+	int 	exit_code;
 	char **env;
 	t_pro	**arg;
 }			t_input;
 
-void		execute_pipe(t_input *pro, int s, int i);
+int	execute_pipe(t_input *pro, int start_idx, int cmd_idx);
 void		arg_convert(t_input *ipt, char *str, int k);
 int			quotes_skip(char *str, int j);
 void		ft_parser(t_input *input);
