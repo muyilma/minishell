@@ -1,11 +1,13 @@
 #include "minishell.h"
+#include "libft/libft.h"
+
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 
-void	read_line(t_input *input,char **env)
+void	read_line(t_input *input,char **env,int code)
 {
 	input->input = NULL;
 	input->isprint = 0;
@@ -20,8 +22,9 @@ void	read_line(t_input *input,char **env)
 	input->dollar = 0;
 	input->env = env;
 	input->arg=NULL;
-	
-	input->input = readline("----hegulum:");
+	input->exit_code=code;
+
+	input->input = readline("minishell:");
 	if (!input->input)
 	{
 		perror("hata");
@@ -71,33 +74,16 @@ void	ft_executer_free(t_input *input)
 	free(input->arg);
 }
 
-void	ft_executer(t_input *input)
+int	ft_executer(t_input *input)
 {
-	// int	l;
-	// int k;
-	// k = 0;
-	// l = 0;
-	// while (input->arg[k])
-	// {
-	// 	if (input->arg[k]->str)
-	// 	{
-	// 		while (input->arg[k]->str[l])
-	// 		{
-	// 			printf("ipt->arg[%d]->str[%d] %s\n", k, l,
-	// 				input->arg[k]->str[l]);
-	// 			l++;
-	// 		}
-	// 		l=0;
-	// 	}
-	// 	k++;
-	// }
+	
 	free(input->input);
 	
 	execute_pipe(input, 0, 0);
-	// printf("---\n");
 	//ft_executer_free(input);
 
 	free(input);
+	
 }
 
 void	ft_error(t_input *input)
@@ -113,13 +99,16 @@ void	ft_error(t_input *input)
 int	main(int ac, char **av, char **env)
 {
 	t_input *input;
+	int exit_code;
+
+	exit_code=0;
 	while (1)
 	{
 		input = malloc(sizeof(t_input));
-		read_line(input,env);
+		read_line(input,env,exit_code);
 		ft_parser(input);
 		if (input->error == 0)
-			ft_executer(input);
+			exit_code=ft_executer(input);
 		else
 			ft_error(input);
 	}

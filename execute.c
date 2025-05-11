@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 
-void	ft_execve(t_input *pro, char **args)
+int	ft_execve(t_input *pro, char **args)
 {
 	int i;
 	char *base;
@@ -18,12 +18,12 @@ void	ft_execve(t_input *pro, char **args)
 	if (!args || !args[0])
 		exit(1);
 	if (built_in(args, pro) == 1)
-		return ;
+		return (0);
 	base = pathc(args[0], pro->env);
 	if (!base)
 	{
 		printf("Command not found: %s\n", args[0]);
-		exit(1);
+		exit(126);
 	}
 	execve(base, args, pro->env);
 	perror("execve failed");
@@ -31,9 +31,10 @@ void	ft_execve(t_input *pro, char **args)
 	exit(1);
 }
 
-void	execute_last(t_input *pro, int s, int prev_fd)
+int	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
+	int exit;
 
 	pid = fork();
 	if (pid == 0)
@@ -44,13 +45,14 @@ void	execute_last(t_input *pro, int s, int prev_fd)
 			close(prev_fd);
 		}
 		handle_redirections(pro->arg[s]);
-		ft_execve(pro, pro->arg[s]->str);
+		exit = ft_execve(pro, pro->arg[s]->str);
 	}
 
 	if (prev_fd != -1)
 		close(prev_fd);
 	while (wait(NULL) > 0)
 		;
+	return (exit);
 }
 
 void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
@@ -80,15 +82,15 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 	*prev_fd = fd[0];
 }
 
-void	execute_pipe(t_input *pro, int start_idx, int cmd_idx)
+int	execute_pipe(t_input *pro, int start_idx, int cmd_idx)
 {
 	int prev_fd = -1;
 	int i = start_idx;
 
 	if (pro->pipe == 0 && pro->arg[start_idx])
 	{
-		execute_last(pro, start_idx, -1);
-		return ;
+		
+		return (execute_last(pro, start_idx, -1));
 	}
 	while (pro->arg[i] && pro->arg[i + 1])
 	{
@@ -96,7 +98,7 @@ void	execute_pipe(t_input *pro, int start_idx, int cmd_idx)
 		i++;
 	}
 	if (pro->arg[i])
-		execute_last(pro, i, prev_fd);
+		return (execute_last(pro, i, prev_fd));
 	else if (prev_fd != -1)
 		close(prev_fd);
 }

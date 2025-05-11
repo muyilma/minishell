@@ -83,6 +83,7 @@ void arg_print(char *str,int i)
 	while (str[j] && j <=i)
 	{
 		printf("%c",str[j]);
+		j++;
 	}
 		printf("\n");
 	
