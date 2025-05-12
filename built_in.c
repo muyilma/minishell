@@ -112,5 +112,23 @@ int	built_in(char **args, t_input *pro)
 		ft_unset(&args[1], pro);
 		return (1);
 	}
+
+	if (ft_strncmp(args[0], "cd", 3) == 0)
+    {
+        ft_cd(&args[1], pro);
+        return (1);
+    }
+
+    if (ft_strncmp(args[0], "pwd", 4) == 0)
+    {
+        ft_pwd();
+        exit (1);
+    }
+
+	if (ft_strncmp(args[0], "exit", 5) == 0)
+    {
+        ft_exit(&args[1]);
+        exit(0);
+    }
 	return (0);
 }

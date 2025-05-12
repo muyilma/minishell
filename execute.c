@@ -8,6 +8,19 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+int	wait_child(pid_t pid)
+{
+	int	status;
+	int	exit_code;
+
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+	{
+		exit_code = WEXITSTATUS(status);
+		if (exit_code != 0)
+			return(exit_code);
+	}
+}
 
 int	ft_execve(t_input *pro, char **args)
 {
@@ -19,11 +32,18 @@ int	ft_execve(t_input *pro, char **args)
 		exit(1);
 	if (built_in(args, pro) == 1)
 		return (0);
-	base = pathc(args[0], pro->env);
-	if (!base)
+	if (access(args[0], X_OK) == 0)
+		base = args[0];
+	else
 	{
-		printf("Command not found: %s\n", args[0]);
-		exit(126);
+		base = pathc(args[0], pro->env);
+		if (!base)
+		{
+			write(2,"command not found:",19);
+			write(2,args[0],ft_strlen(args[0]));
+			write(2,"\n",2);
+			exit(127);
+		}
 	}
 	execve(base, args, pro->env);
 	perror("execve failed");
@@ -34,7 +54,6 @@ int	ft_execve(t_input *pro, char **args)
 int	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
-	int exit;
 
 	pid = fork();
 	if (pid == 0)
@@ -45,14 +64,13 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 			close(prev_fd);
 		}
 		handle_redirections(pro->arg[s]);
-		exit = ft_execve(pro, pro->arg[s]->str);
+		ft_execve(pro, pro->arg[s]->str);
 	}
 
 	if (prev_fd != -1)
 		close(prev_fd);
-	while (wait(NULL) > 0)
-		;
-	return (exit);
+
+	return (wait_child(pid));
 }
 
 void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
@@ -88,10 +106,7 @@ int	execute_pipe(t_input *pro, int start_idx, int cmd_idx)
 	int i = start_idx;
 
 	if (pro->pipe == 0 && pro->arg[start_idx])
-	{
-		
 		return (execute_last(pro, start_idx, -1));
-	}
 	while (pro->arg[i] && pro->arg[i + 1])
 	{
 		execute_command(pro, i, &prev_fd);

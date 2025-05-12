@@ -76,22 +76,22 @@ void	ft_executer_free(t_input *input)
 
 int	ft_executer(t_input *input)
 {
-	
+	int exit;
 	free(input->input);
 	
-	execute_pipe(input, 0, 0);
+	exit = execute_pipe(input, 0, 0);
 	//ft_executer_free(input);
 
 	free(input);
-	
+	return (exit);
 }
 
 void	ft_error(t_input *input)
 {
 	if (input->error == 2)
-		printf("minishell: open quotes \"\'");
+		perror("minishell: open quotes \"\'");
 	else if (input->error == 3)
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		perror("minishell: syntax error near unexpected token `newline'\n");
 	free(input->input);
 	free(input);
 }
@@ -108,7 +108,9 @@ int	main(int ac, char **av, char **env)
 		read_line(input,env,exit_code);
 		ft_parser(input);
 		if (input->error == 0)
-			exit_code=ft_executer(input);
+		{
+			exit_code = ft_executer(input);
+		}
 		else
 			ft_error(input);
 	}
