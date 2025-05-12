@@ -30,8 +30,7 @@ int	ft_execve(t_input *pro, char **args)
 	i = 0;
 	if (!args || !args[0])
 		exit(1);
-	if (built_in(args, pro) == 1)
-		return (0);
+	built_in(args, pro);
 	if (access(args[0], X_OK) == 0)
 		base = args[0];
 	else
@@ -55,6 +54,8 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
 
+	if (built_in2(pro->arg[s]->str, pro) == 1)
+		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -77,7 +78,6 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 {
 	int fd[2];
 	pid_t pid;
-
     pipe(fd);
 	pid = fork();
 	if (pid == 0)

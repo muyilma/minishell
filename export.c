@@ -11,6 +11,8 @@ int	ft_export_parser(char *args)
 	int	i;
 
 	i = 0;
+	if (!args[i + 1] && args[i] == '=')
+		return (1);
 	if (args[0] >= '0' && args[0] <= '9')
 		return (1);
 	while (args[i] && (args[i] != '=' || (args[i] == '=' && i == 0)))
@@ -64,13 +66,17 @@ void	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 void	ft_export(char **args, t_input *pro , int envflag)
 {
 	int	i;
-
+	
+	i = 0;
 	if (!args || !args[0])
 	{
-		ft_print_sorted_env(pro->env);
-		exit(0);
+		while (pro->env[i])
+		{
+			printf("declare -x %s\n", pro->env[i]);
+			i++;
+		}
+		exit (0);
 	}
-	i = 0;
 	while (args[i])
 	{
 		ft_process_export_arg(args[i], pro, envflag);
