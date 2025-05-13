@@ -5,10 +5,8 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
-// pwd komutu - mevcut çalışma dizinini yazdırır
 void ft_pwd(void)
 {
     char    cwd[1024];
@@ -62,11 +60,7 @@ void ft_cd(char **args, t_input *pro)
 
     // Dizin değiştir
     if (chdir(path) != 0)
-    {
-        perror("cd");
         return;
-    }
-
     // Yeni dizini al
     if (getcwd(cwd, sizeof(cwd)) == NULL)
     {

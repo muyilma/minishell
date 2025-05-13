@@ -35,7 +35,7 @@ int	ft_execve(t_input *pro, char **args)
 		base = args[0];
 	else
 	{
-		base = pathc(args[0], pro->env);
+		base = pathc(args[0], pro->env, -1);
 		if (!base)
 		{
 			write(2,"command not found:",19);
