@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 int	convert_input(t_input *input, char *veriable, int plen, int i)
 {
 	char *newinput;

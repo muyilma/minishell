@@ -74,9 +74,8 @@ void	ft_free(char **str)
 	free(str);
 }
 
-char	*pathc(char *cmd, char **envp)
+char	*pathc(char *cmd, char **envp, int i)
 {
-	int i;
 	char **path;
 	char *arg;
 	char *str;
@@ -87,7 +86,6 @@ char	*pathc(char *cmd, char **envp)
 		return (NULL);
 
 	path = ft_split(path_value, ':');
-	i = -1;
 	while (path[++i])
 	{
 		arg = ft_strjoin(path[i], "/");
