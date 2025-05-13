@@ -32,24 +32,21 @@ void	ft_env(char **env, char **args, t_input *pro)
 
 void	built_in3(char **args, t_input *pro)
 {
-
 	if (ft_strncmp(args[0], "unset", 5) == 0)
-		{
-			ft_unset(&args[1], pro);
-			exit(0);
-		}
-	
-		if (ft_strncmp(args[0], "export", 7) == 0)
-		{
-			ft_export(&args[1], pro, 0);
-			exit(0);
-		}
-	
-		if (ft_strncmp(args[0], "pwd", 4) == 0)
-		{
-			ft_pwd();
-			exit(0);
-		}
+	{
+		ft_unset(&args[1], pro);
+		exit(0);
+	}
+	if (ft_strncmp(args[0], "export", 7) == 0)
+	{
+		ft_export(&args[1], pro, 0);
+		exit(0);
+	}
+	if (ft_strncmp(args[0], "pwd", 4) == 0)
+	{
+		ft_pwd();
+		exit(0);
+	}
 }
 
 void	built_in(char **args, t_input *pro)
@@ -80,6 +77,8 @@ void	built_in(char **args, t_input *pro)
 
 int	built_in2(char **args, t_input *pro)
 {
+	if (!args || !args[0])
+		return (1);
 	if (ft_strncmp(args[0], "exit", 5) == 0)
     {
         ft_exit(&args[1]);
