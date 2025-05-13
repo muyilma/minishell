@@ -54,8 +54,8 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
 
-	if (built_in2(pro->arg[s]->str, pro) == 1)
-		return (0);
+	if ((pro->pipe == 0) && built_in2(pro->arg[s]->str, pro) == 1)
+			return (1);
 	pid = fork();
 	if (pid == 0)
 	{
