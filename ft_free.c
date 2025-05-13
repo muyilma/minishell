@@ -2,6 +2,7 @@
 #include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int	quotes_skip(char *str, int j)
 {
@@ -54,10 +55,27 @@ void	redirect_free(t_input *input, int i)
 		free(input->arg[i]->outfile);
 }
 
+void	ft_print_error(char *str, char **arg, int flag, int exit_code)
+{
+	if (flag = 0)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, arg[0], ft_strlen(arg[0]));
+		write(2, "\n", 2);
+		exit(exit_code);
+	}
+	else if (flag = 1)
+	{
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 2);
+		exit(exit_code);
+	}
+}
+
 void	ft_executer_free(t_input *input)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -75,7 +93,6 @@ void	ft_executer_free(t_input *input)
 				free(input->arg[i]->str);
 				j = 0;
 			}
-
 			redirect_free(input, i);
 			free(input->arg[i]);
 			i++;
