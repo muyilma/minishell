@@ -29,15 +29,16 @@ int	ft_export_parser(char *args)
 	return (0);
 }
 
-void	ft_process_export_arg(char *arg, t_input *pro, int envflag)
+int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 {
 	char	*equal_sign;
 	char	*variable;
 
 	if ((ft_export_parser(arg) == 1) && envflag == 0)
 	{
-		perror("export error");
-		return ;
+		write(2,arg,ft_strlen(arg));
+		write(2,": not a valid identifier",25);
+		return (1);
 	}
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign)
@@ -63,10 +64,10 @@ void	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 	}
 }
 
-void	ft_export(char **args, t_input *pro , int envflag)
+int	ft_export(char **args, t_input *pro , int envflag)
 {
 	int	i;
-	
+	int ex;
 	i = 0;
 	if (!args || !args[0])
 	{
@@ -79,7 +80,8 @@ void	ft_export(char **args, t_input *pro , int envflag)
 	}
 	while (args[i])
 	{
-		ft_process_export_arg(args[i], pro, envflag);
+		ex = ft_process_export_arg(args[i], pro, envflag);
 		i++;
 	}
+	return (ex);
 }

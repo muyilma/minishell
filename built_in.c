@@ -47,14 +47,14 @@ void ft_echo(char **args) {
         printf("\n");
 }
 
-void	ft_unset(char **args, t_input *pro)
+int	ft_unset(char **args, t_input *pro)
 {
 	int	i;
 	int	j;
 	int	len;
 	
 	if (!args || !pro->env)
-		return ;
+		return (1);
 	
 	i = 0;
 	while (args[i])
@@ -78,6 +78,7 @@ void	ft_unset(char **args, t_input *pro)
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	ft_env(char **env, char **args, t_input *pro)
@@ -141,7 +142,7 @@ void	built_in(char **args, t_input *pro)
 		exit(0);
 	}
 
-    if (ft_strncmp(args[0], "pwd", 4) == 0)
+    if (ft_strneqcmp(args[0], "pwd", 4) == 0)
     {
         ft_pwd();
         exit(0);
@@ -163,14 +164,8 @@ int	built_in2(char **args, t_input *pro)
     }
 
 	if (ft_strncmp(args[0], "unset", 5) == 0)
-	{
-		ft_unset(&args[1], pro);
-		return (1);
-	}
+		return (ft_unset(&args[1], pro));
 
 	if (ft_strncmp(args[0], "export", 7) == 0)
-	{
-		ft_export(&args[1], pro, 0);
-		return (1);
-	}
+		return (ft_export(&args[1], pro, 0));
 }
