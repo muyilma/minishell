@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 static int	word_count(char *str)
 {
-	int	i;
-	int	count;
+	int i;
+	int count;
 
 	count = 0;
 	i = 0;
@@ -30,8 +31,8 @@ static int	word_count(char *str)
 
 void	arg_create(char *str, char **newstr, int i, int j)
 {
-	int		k;
-	char	qut;
+	int k;
+	char qut;
 
 	k = 0;
 	while (j <= i)
@@ -50,12 +51,27 @@ void	arg_create(char *str, char **newstr, int i, int j)
 	(*newstr)[k] = '\0';
 }
 
+int	arg_find2(char *str, int i, int *flag)
+{
+	while (str[i] && str[i] != ' ')
+	{
+		if (str[i] == 34 || str[i] == 39)
+		{
+			*flag += 2;
+			i = quotes_skip(str, i);
+		}
+		else
+			i++;
+	}
+	return (i);
+}
+
 void	arg_find(char *str, t_input *ipt, int k)
 {
-	int	i;
-	int	j;
-	int	l;
-	int	flag;
+	int i;
+	int j;
+	int l;
+	int flag;
 
 	i = 0;
 	l = 0;
@@ -67,19 +83,11 @@ void	arg_find(char *str, t_input *ipt, int k)
 		if (!str[i])
 			break ;
 		j = i;
-		while (str[i] && str[i] != ' ')
-		{
-			if (str[i] == 34 || str[i] == 39)
-			{
-				flag += 2;
-				i = quotes_skip(str, i);
-			}
-			else
-				i++;
-		}
+		if (str[i] && str[i] != ' ')
+			i = arg_find2(str, i, &flag);
 		ipt->arg[k]->str[l] = malloc((i - j) - flag + 1);
 		flag = 0;
-		arg_create(str, &ipt->arg[k]->str[l], i -1, j);
+		arg_create(str, &ipt->arg[k]->str[l], i - 1, j);
 		l++;
 	}
 	ipt->arg[k]->str[l] = NULL;

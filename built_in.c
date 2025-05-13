@@ -142,7 +142,7 @@ void	built_in(char **args, t_input *pro)
 		exit(0);
 	}
 
-    if (ft_strneqcmp(args[0], "pwd", 4) == 0)
+    if (ft_strncmp(args[0], "pwd", 4) == 0)
     {
         ft_pwd();
         exit(0);
