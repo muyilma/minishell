@@ -4,7 +4,7 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <unistd.h>
 
 void	read_line(t_input *input, char **env, int code)
 {
@@ -22,7 +22,6 @@ void	read_line(t_input *input, char **env, int code)
 	input->env = env;
 	input->arg = NULL;
 	input->exit_code = code;
-
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
@@ -31,8 +30,6 @@ void	read_line(t_input *input, char **env, int code)
 	}
 	add_history(input->input);
 }
-
-
 
 int	ft_executer(t_input *input)
 {
@@ -47,9 +44,9 @@ int	ft_executer(t_input *input)
 void	ft_error(t_input *input)
 {
 	if (input->error == 2)
-		perror("minishell: open quotes \"\'");
+		write(2,"minishell: open quotes \"\'",26);
 	else if (input->error == 3)
-		perror("minishell: syntax error near unexpected token `newline'\n");
+		write(2,"minishell: syntax error near unexpected token `newline'\n",57);
 	free(input->input);
 	free(input);
 }

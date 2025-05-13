@@ -6,8 +6,6 @@
 #include <stdlib.h>
 
 
-
-
 int	quotes_operator_counter(t_input *a, int i)
 {
 	if (a->input[i] == 34)
@@ -72,6 +70,19 @@ int	op_checker(t_input *input, int i)
 	}
 	while (input->input[++i] && input->input[i] != '|')
 	{
+		if (input->input[i] == 34 || input->input[i] == 39){
+			i = quotes_skip(input->input, i);
+			input->after_str++;
+		}
+		if (input->input[i] == '<' || input->input[i] == '>')
+		{
+			if (input->after_str==0){
+				input->error=3;
+				break;
+			}
+			else
+				break;
+		}
 		if (input->input[i] != ' ')
 			input->after_str++;
 	}
@@ -105,8 +116,6 @@ void	opCounter(t_input *a)
 		i++;
 	}
 }
-
-
 
 void	ft_parser(t_input *input)
 {
