@@ -56,7 +56,7 @@ int	find_path(t_input *input, int i, int point)
 		j++;
 	}
 	path = ft_substr(input->input, i + 1, j - i);
-	veriable = getenv(path);
+	veriable = ft_getenv(input->env, path);
 	i = convert_input(input, veriable, ft_strlen(path), i);
 	free(path);
 	return (i);

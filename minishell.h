@@ -42,5 +42,6 @@ void	ft_exit(char **args);
 int	built_in2(char **args, t_input *pro);
 void	quotes_control(t_input *input);
 void	ft_executer_free(t_input *input);
+void	ft_print_error(char *str, char **arg, int flag, int exit_code);
 void ft_echo(char **args, int i, int newline);
 int	ft_unset(char **args, t_input *pro);
