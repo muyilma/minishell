@@ -3,11 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 char	*strcut(char *str, int start, int end, int size)
 {
-	int		i;
-	int		j;
-	char	*newstr;
+	int i;
+	int j;
+	char *newstr;
 
 	if (size <= 0)
 		return (NULL);
@@ -30,9 +31,9 @@ char	*strcut(char *str, int start, int end, int size)
 
 char	*redirect_skip(char **redirect, char *str, int *t)
 {
-	int	j;
-	int	k;
-	int	i;
+	int j;
+	int k;
+	int i;
 
 	i = *t;
 	j = i;
@@ -45,7 +46,10 @@ char	*redirect_skip(char **redirect, char *str, int *t)
 	while (str[i] != ' ' && str[i] != '\0')
 	{
 		if (str[i] == 34 || str[i] == 39)
+		{
 			i = quotes_skip(str, i);
+			i--;
+		}
 		i++;
 	}
 	*redirect = ft_substr(str, k, i - k);
@@ -56,7 +60,7 @@ char	*redirect_skip(char **redirect, char *str, int *t)
 
 char	*redirect_convert(t_input *ipt, char *str, int k)
 {
-	int	i;
+	int i;
 
 	i = -1;
 	while (str[++i])
@@ -77,55 +81,51 @@ char	*redirect_convert(t_input *ipt, char *str, int k)
 	return (str);
 }
 
-void arg_print(char *str,int i)
+int	arg_parse2(t_input *ipt, int i, int j, int k)
 {
-	int j=0;
-	while (str[j] && j <=i)
-	{
-		printf("%c",str[j]);
-		j++;
-	}
-		printf("\n");
-	
+	char *fakestr;
+	char *temp;
+
+	if (ipt->input[i + 1] == '\0')
+		i++;
+	fakestr = ft_substr(ipt->input, j, i - j);
+	ipt->arg[k] = ft_calloc(1, sizeof(t_pro));
+	if (!ipt->arg[k])
+		return (0);
+	temp = fakestr;
+	fakestr = redirect_convert(ipt, fakestr, k);
+	// if (temp !=fakestr)
+	// 	free(temp);
+	arg_convert(ipt, fakestr, k);
+	free(fakestr);
+	return (i);
 }
 
 void	arg_parse(t_input *ipt, int len, int k)
 {
-	int		i;
-	int		j;
-	char	*fakestr;
-	char	*temp;
-
+	int i;
+	int j;
 
 	i = -1;
 	j = 0;
-	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 2));//burası +1di
+	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 2)); // burası +1di
 	if (!ipt->arg)
 		return ;
-	while ( ipt->input[++i] && i < len)// len'i koymayınca fazladan 1 kere daha giriyor
+	while (ipt->input[++i] && i < len)
+	// len'i koymayınca fazladan 1 kere daha giriyor
 	{
-		if (ipt->input[i] == 34 || ipt->input[i] == 39){
-			i = quotes_skip(ipt->input, i);	
+		if (ipt->input[i] == 34 || ipt->input[i] == 39)
+		{
+			i = quotes_skip(ipt->input, i);
 			i--;
 		}
-		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || (ipt->input[i + 1] == '\0'))
+		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || (ipt->input[i
+				+ 1] == '\0'))
 		{
-	
-			if (ipt->input[i + 1] == '\0')
-				i++;
-			fakestr = ft_substr(ipt->input, j, i - j);
-			ipt->arg[k] =ft_calloc(1,sizeof(t_pro));
-			if (!ipt->arg[k])
-				return ;
-			temp=fakestr;
-			fakestr = redirect_convert(ipt, fakestr, k);
-			// if (temp !=fakestr)
-			// 	free(temp);
-			arg_convert(ipt, fakestr, k);
+			i = arg_parse2(ipt, i, j, k);
 			k++;
-			free(fakestr);
 			j = i + 1;
 		}
 	}
-	ipt->arg[ipt->pipe+1] = NULL;
+	ipt->arg[ipt->pipe + 1] = NULL;
 }

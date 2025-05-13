@@ -5,46 +5,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	quotes_skip(char *str, int j)
-{
-	int		i;
-	char	qut;
 
-	i = j;
-	if (str[i] == 34 || str[i] == 39)
+
+
+int	quotes_operator_counter(t_input *a, int i)
+{
+	if (a->input[i] == 34)
 	{
-		qut = str[i++];
-		while (str[i] && str[i] != qut)
+		i++;
+		a->isprint++;
+		while (a->input[i] != 34)
+		{
+			if (a->input[i] == '$')
+				a->dollar++;
 			i++;
-		if (str[i] == qut)
-			i++;
+		}
+	}
+	if (a->input[i] == 39)
+	{
+		i = quotes_skip(a->input, i);
+		a->isprint++;
 	}
 	return (i);
 }
 
 void	empty_line(t_input *a)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (a->input[i])
 	{
-		if (a->input[i] == 34)
-		{
-			i++;
-			a->isprint++;
-			while (a->input[i] != 34)
-			{
-				if (a->input[i] == '$')
-					a->dollar++;
-				i++;
-			}
-		}
-		if (a->input[i] == 39)
-		{
-			i = quotes_skip(a->input, i);
-			a->isprint++;
-		}
+		if (a->input[i] == 34 || a->input[i] == 39)
+			i = quotes_operator_counter(a, i);
 		if (a->input[i] != ' ')
 			a->isprint++;
 		if (a->input[i] == '$')
@@ -61,7 +54,7 @@ void	empty_line(t_input *a)
 
 int	op_checker(t_input *input, int i)
 {
-	int	j;
+	int j;
 
 	j = i;
 	input->after_str = 0;
@@ -86,9 +79,10 @@ int	op_checker(t_input *input, int i)
 		input->error = 3;
 	return (j); // burdaki +1'i sildin
 }
+
 void	opCounter(t_input *a)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (a->input[i])
@@ -101,7 +95,8 @@ void	opCounter(t_input *a)
 				i++;
 			a->isalpha++;
 		}
-		else if (a->input[i] == '|' || a->input[i] == '<' || a->input[i] == '>')
+		else if (a->input[i] == '|' || a->input[i] == '<'
+			|| a->input[i] == '>')
 			i = op_checker(a, i);
 		else if (a->input[i] != ' ')
 			a->isalpha++;
@@ -111,27 +106,7 @@ void	opCounter(t_input *a)
 	}
 }
 
-void	quotes_control(t_input *input)
-{
-	int	i;
 
-	i = -1;
-	while (input->input[++i])
-	{
-		if (input->input[i] == 34 || input->input[i] == 39)
-		{
-			input->quotes++;
-			input->qut = input->input[i];
-			i++;
-			while (input->input[i] != input->qut && input->input[i] != '\0')
-				i++;
-			if (input->input[i] == input->qut)
-				input->quotes++;
-		}
-	}
-	if (input->quotes % 2 != 0)
-		input->error = 2;
-}
 
 void	ft_parser(t_input *input)
 {
@@ -140,12 +115,8 @@ void	ft_parser(t_input *input)
 		quotes_control(input);
 	if (input->dollar > 0 && input->error == 0)
 		dollar_parse(input);
-
-
 	if (input->operator> 0 && input->error == 0)
 		opCounter(input);
-	if (input->error == 0){
-		
+	if (input->error == 0)
 		arg_parse(input, ft_strlen(input->input), 0);
-	}
 }

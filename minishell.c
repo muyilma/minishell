@@ -1,13 +1,12 @@
-#include "minishell.h"
 #include "libft/libft.h"
-
+#include "minishell.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 
-void	read_line(t_input *input,char **env,int code)
+void	read_line(t_input *input, char **env, int code)
 {
 	input->input = NULL;
 	input->isprint = 0;
@@ -21,8 +20,8 @@ void	read_line(t_input *input,char **env,int code)
 	input->quotes = 0;
 	input->dollar = 0;
 	input->env = env;
-	input->arg=NULL;
-	input->exit_code=code;
+	input->arg = NULL;
+	input->exit_code = code;
 
 	input->input = readline("minishell:");
 	if (!input->input)
@@ -33,55 +32,14 @@ void	read_line(t_input *input,char **env,int code)
 	add_history(input->input);
 }
 
-void	ft_executer_free(t_input *input)
-{
-	int i;
-	int j;
 
-	i = 0;
-	j = 0;
-	if (input->arg)
-	{
-		while (input->arg[i])
-		{
-			if (input->arg[i]->str)
-			{
-				while (input->arg[i]->str[j])
-				{
-					free(input->arg[i]->str[j]);
-					j++;
-				}
-				free(input->arg[i]->str);
-				j = 0;
-			}
-
-			if (input->arg[i]->append_outfile)
-				free(input->arg[i]->append_outfile);
-			if (input->arg[i]->heradock)
-				free(input->arg[i]->heradock);
-			if (input->arg[i]->infile)
-			{
-				printf("-----\n");
-				free(input->arg[i]->infile);
-			}
-			if (input->arg[i]->outfile)
-				free(input->arg[i]->outfile);
-			free(input->arg[i]);
-			i++;
-		}
-	}
-
-	free(input->arg);
-}
 
 int	ft_executer(t_input *input)
 {
 	int exit;
 	free(input->input);
-	
 	exit = execute_pipe(input, 0, 0);
-	//ft_executer_free(input);
-
+	ft_executer_free(input);
 	free(input);
 	return (exit);
 }
@@ -101,11 +59,11 @@ int	main(int ac, char **av, char **env)
 	t_input *input;
 	int exit_code;
 
-	exit_code=0;
+	exit_code = 0;
 	while (1)
 	{
 		input = malloc(sizeof(t_input));
-		read_line(input,env,exit_code);
+		read_line(input, env, exit_code);
 		ft_parser(input);
 		if (input->error == 0)
 		{
