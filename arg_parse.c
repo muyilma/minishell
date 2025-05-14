@@ -101,14 +101,22 @@ char *redirect_convert(t_input *ipt, char *str, int k, int *flag)
 	{
 		if (str[i] == 34 || str[i] == 39)
 			i = quotes_skip(str, i);
-		if (str[i] == '<' && str[i + 1] == '<')
-			str = redirect_skip(&ipt->arg[k]->heradock, str, &i, flag - 1);
+   
+		if (str[i] == '<' && str[i + 1] == '<'){
+			*flag=-1;
+			str = redirect_skip(&ipt->arg[k]->heradock, str, &i, flag);
+		}
 		else if (str[i] == '<')
 			str = redirect_skip(&ipt->arg[k]->infile, str, &i, flag);
-		else if (str[i] == '>' && str[i + 1] == '>')
-			str = redirect_skip(&ipt->arg[k]->append_outfile, str, &i, flag + 1);
-		else if (str[i] == '>')
-			str = redirect_skip(&ipt->arg[k]->outfile, str, &i, flag + 1);
+		else if (str[i] == '>' && str[i + 1] == '>'){
+
+			*flag=1;
+			str = redirect_skip(&ipt->arg[k]->append_outfile, str, &i, flag);
+		}
+		else if (str[i] == '>'){
+			*flag=1;
+			str = redirect_skip(&ipt->arg[k]->outfile, str, &i, flag );
+		}
 		if (!str)
 			return (NULL);
 		if (*flag != 0){

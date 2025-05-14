@@ -13,7 +13,7 @@ void	redirect_input(char *filename)
     
 	if (fd == -1)
 	{
-		perror("minishell");
+		ft_print_error("minishell: ",": No such file or directory",&filename,2);
 		exit(1);
 	}
 	dup2(fd, 0);
@@ -30,7 +30,7 @@ void	redirect_output(char *filename, int append)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror("minishell");
+		ft_print_error("minishell: ",": No such file or directory",&filename,2);
 		exit(1);
 	}
 	dup2(fd, 1);

@@ -46,7 +46,7 @@ void ft_echo(char **args, int i, int newline)
     ft_echo2(args, i, newline);
 }
 
-int	ft_unset2(t_input *pro, int j)
+void	ft_unset2(t_input *pro, int j)
 {
     while (pro->env[j + 1])
 	{

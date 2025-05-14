@@ -20,7 +20,6 @@ void read_line(t_input *input, char **env, int code)
 	input->input = NULL;
 	input->isprint = 0;
 	input->isalpha = 0;
-	input->redirect_error = 0;
 	input->pipe = 0;
 	input->error = 0;
 	input->operator = 0;
@@ -63,6 +62,7 @@ int ft_executer(t_input *input)
 	// 		printf("ipt->arg[%d]->infile %s\n",k,input->arg[k]->infile);
 	// 	if (input->arg[k]->outfile)
 	// 		printf("ipt->arg[%d]->outfile %s\n",k,input->arg[k]->outfile);
+
 	// 	k++;
 	// }
 	int exit;

@@ -40,7 +40,7 @@ int	ft_export(char **args, t_input *pro, int envflag);
 int	ft_cd(char **args, t_input *pro);
 void	ft_pwd(void);
 int ft_exit(char **args);
-int	built_in2(char **args, t_input *pro);
+int	built_in2(char **args, t_input *pro, t_pro *arg);
 void	quotes_control(t_input *input);
 void	ft_executer_free(t_input *input);
 void	ft_print_error(char *base, char *str, char **arg, int flag);

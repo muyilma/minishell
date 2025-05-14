@@ -8,17 +8,18 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
 int	wait_child(pid_t pid)
 {
-	int	status;
-	int	exit_code;
+	int status;
+	int exit_code;
 
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
 		exit_code = WEXITSTATUS(status);
 		if (exit_code != 0)
-			return(exit_code);
+			return (exit_code);
 	}
 }
 
@@ -38,12 +39,12 @@ int	ft_execve(t_input *pro, char **args)
 		base = pathc(args[0], pro->env, -1);
 		if (!base)
 		{
-			ft_print_error(NULL,": command not found", args, 0);
+			ft_print_error(NULL, ": command not found", args, 0);
 			exit(127);
 		}
 	}
 	execve(base, args, pro->env);
-	ft_print_error(NULL,": Is a directory", args, 2);
+	ft_print_error(NULL, ": Is a directory", args, 2);
 	free(base);
 	exit(126);
 }
@@ -51,9 +52,12 @@ int	ft_execve(t_input *pro, char **args)
 int	execute_last(t_input *pro, int s, int prev_fd)
 {
 	pid_t pid;
+	int res;
 
-	if ((pro->pipe == 0) && built_in2(pro->arg[s]->str, pro) == 1)
-			return (1);
+	if ((pro->pipe == 0))
+		res = built_in2(pro->arg[s]->str, pro,pro->arg[s]);
+	if ((res == 1) || (res == 0))
+		return (res);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -65,10 +69,8 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 		handle_redirections(pro->arg[s]);
 		ft_execve(pro, pro->arg[s]->str);
 	}
-
 	if (prev_fd != -1)
 		close(prev_fd);
-
 	return (wait_child(pid));
 }
 
@@ -76,7 +78,7 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 {
 	int fd[2];
 	pid_t pid;
-    pipe(fd);
+	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -90,7 +92,6 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 		close(fd[1]);
 		handle_redirections(pro->arg[cmd_index]);
 		ft_execve(pro, pro->arg[cmd_index]->str);
-
 	}
 	close(fd[1]);
 	if (*prev_fd != -1)
