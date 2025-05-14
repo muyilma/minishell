@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void ft_exit(char **args)
+int ft_exit(char **args)
 {
     int exit_status;
     int i;
@@ -20,16 +20,16 @@ void ft_exit(char **args)
     exit_status = ft_atoi(args[0]);
     if (args[1])
     {
-        printf("exit: too many arguments\n");
-        return;
+        ft_print_error(NULL,"exit: too many arguments", NULL, 1);
+        return(1);
     }
     i = 0;
     while (args[0][i])
     {
         if (!ft_isdigit(args[0][i]) && !(i == 0 && (args[0][i] == '-' || args[0][i] == '+')))
         {
-            printf("exit: %s: numeric argument required\n", args[0]);
-            exit(255);
+            ft_print_error("bash: exit:",": numeric argument required", args, 2);
+            exit(2);
         }
         i++;
     }

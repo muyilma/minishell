@@ -81,13 +81,11 @@ int	built_in2(char **args, t_input *pro)
 		return (1);
 	if (ft_strncmp(args[0], "exit", 5) == 0)
     {
-        ft_exit(&args[1]);
-        return (1);
+        return (ft_exit(&args[1]));
     }
 	if (ft_strncmp(args[0], "cd", 3) == 0)
     {
-        ft_cd(&args[1], pro);
-        return (1);
+        return (ft_cd(&args[1], pro));
     }
 	if (ft_strncmp(args[0], "unset", 5) == 0)
 		return (ft_unset(&args[1], pro));

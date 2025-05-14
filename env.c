@@ -22,6 +22,7 @@ char	*ft_getenv(char **env, char *name)
 			return (env[i] + len + 1);
 		i++;
 	}
+	
 	return (NULL);
 }
 char	**ft_setenv2(char **env, char *variable, int e, int j)

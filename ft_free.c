@@ -55,21 +55,22 @@ void	redirect_free(t_input *input, int i)
 		free(input->arg[i]->outfile);
 }
 
-void	ft_print_error(char *str, char **arg, int flag, int exit_code)
+void	ft_print_error(char *base, char *str, char **arg, int flag)
 {
-	if (flag = 0)
+	if (flag == 0)
 	{
-		write(2, str, ft_strlen(str));
 		write(2, arg[0], ft_strlen(arg[0]));
-		write(2, "\n", 2);
-		exit(exit_code);
-	}
-	else if (flag = 1)
-	{
 		write(2, str, ft_strlen(str));
-		write(2, "\n", 2);
-		exit(exit_code);
 	}
+	else if (flag == 1)
+		write(2, str, ft_strlen(str));
+	else if (flag == 2)
+	{
+		write(2, base, ft_strlen(base));
+		write(2, arg[0], ft_strlen(arg[0]));
+		write(2, str, ft_strlen(str));
+	}
+	write(2, "\n", 2);
 }
 
 void	ft_executer_free(t_input *input)
