@@ -18,7 +18,7 @@ void ft_echo2(char **args, int i, int newline)
     
     if (newline)
         printf("\n");
-} 
+}
 void ft_echo(char **args, int i, int newline) 
 {
     int j;

@@ -28,7 +28,18 @@ int	ft_export_parser(char *args)
 	}
 	return (0);
 }
-
+int	ft_process_export_arg2(char *arg, t_input *pro, int envflag, char	*variable)
+{
+	if (!ft_getenv(pro->env, arg))
+	{
+		variable = ft_strjoin(arg, "=");
+		if (variable)
+		{
+			pro->env = ft_setenv(pro->env, variable, 1);
+			free(variable);
+		}
+	}
+}
 int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 {
 	char	*equal_sign;
@@ -36,8 +47,7 @@ int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 
 	if ((ft_export_parser(arg) == 1) && envflag == 0)
 	{
-		write(2,arg,ft_strlen(arg));
-		write(2,": not a valid identifier",25);
+		ft_print_error("minishell: export: ", " : not a valid identifier", &arg, 2);
 		return (1);
 	}
 	equal_sign = ft_strchr(arg, '=');
@@ -52,15 +62,7 @@ int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 	}
 	else
 	{
-		if (!ft_getenv(pro->env, arg))
-		{
-			variable = ft_strjoin(arg, "=");
-			if (variable)
-			{
-				pro->env = ft_setenv(pro->env, variable, 1);
-				free(variable);
-			}
-		}
+		ft_process_export_arg2(arg, pro, envflag, variable);
 	}
 }
 

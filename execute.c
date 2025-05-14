@@ -38,16 +38,14 @@ int	ft_execve(t_input *pro, char **args)
 		base = pathc(args[0], pro->env, -1);
 		if (!base)
 		{
-			write(2,"command not found:",19);
-			write(2,args[0],ft_strlen(args[0]));
-			write(2,"\n",2);
+			ft_print_error(NULL,": command not found", args, 0);
 			exit(127);
 		}
 	}
 	execve(base, args, pro->env);
-	perror("execve failed");
+	ft_print_error(NULL,": Is a directory", args, 2);
 	free(base);
-	exit(1);
+	exit(126);
 }
 
 int	execute_last(t_input *pro, int s, int prev_fd)
