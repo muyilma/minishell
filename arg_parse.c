@@ -101,6 +101,7 @@ char *redirect_convert(t_input *ipt, char *str, int k, int *flag)
 	{
 		if (str[i] == 34 || str[i] == 39)
 			i = quotes_skip(str, i);
+   
 		if (str[i] == '<' && str[i + 1] == '<'){
 			*flag=-1;
 			str = redirect_skip(&ipt->arg[k]->heradock, str, &i, flag);

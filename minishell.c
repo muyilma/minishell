@@ -62,8 +62,7 @@ int ft_executer(t_input *input)
 	// 		printf("ipt->arg[%d]->infile %s\n",k,input->arg[k]->infile);
 	// 	if (input->arg[k]->outfile)
 	// 		printf("ipt->arg[%d]->outfile %s\n",k,input->arg[k]->outfile);
-	// 	if (input->arg[k]->append_outfile)
-	// 		printf("ipt->arg[%d]->appedoutfile %s\n",k,input->arg[k]->append_outfile);
+
 	// 	k++;
 	// }
 	int exit;
