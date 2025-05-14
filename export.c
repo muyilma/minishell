@@ -78,7 +78,7 @@ int	ft_export(char **args, t_input *pro , int envflag)
 			printf("declare -x %s\n", pro->env[i]);
 			i++;
 		}
-		exit (0);
+		return (0);
 	}
 	while (args[i])
 	{

@@ -40,6 +40,7 @@ int	ft_cd4(t_input *pro, char *old_cwd, char *cwd)
 
 int	ft_cd3(t_input *pro, char *old_cwd, char *cwd, char *path)
 {
+
 	if (access(path, F_OK) != 0)
 	{
 		ft_print_error("minishell: cd:", ": No such file or directory", &path,
