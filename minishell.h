@@ -20,6 +20,7 @@ typedef struct s_input
 	int dollar;
 	int quotes;
 	int exit_code;
+	int redirect_error;
 	char **env;
 	t_pro **arg;
 } t_input;
