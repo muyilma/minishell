@@ -101,8 +101,8 @@ void	arg_convert(t_input *ipt, char *str, int k)
 		return ;
 	count = word_count(str);
 	ipt->arg[k]->str = malloc(sizeof(char *) * (count + 1));
-	ipt->arg[k]->str[count] = NULL;
 	if (!ipt->arg[k]->str)
 		return ;
+	ipt->arg[k]->str[count] = NULL;
 	arg_find(str, ipt, k);
 }

@@ -105,6 +105,8 @@ int	execute_pipe(t_input *pro, int start_idx, int cmd_idx)
 	int prev_fd = -1;
 	int i = start_idx;
 
+	if (!pro->arg[0])
+		return 0;
 	if (pro->pipe == 0 && pro->arg[start_idx])
 		return (execute_last(pro, start_idx, -1));
 	while (pro->arg[i] && pro->arg[i + 1])

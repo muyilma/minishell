@@ -67,7 +67,7 @@ char	*redirect_create(char *s, unsigned int start, int len, int flag)
 	char qut;
 	int j;
 
-	j=0;
+	j = 0;
 	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
@@ -195,7 +195,9 @@ int	arg_parse2(t_input *ipt, int i, int j, int k)
 	// 	free(temp);
 	// printf("flag=%d\n",flag);
 	if (flag == 0)
+	{
 		arg_convert(ipt, fakestr, k);
+	}
 	free(fakestr);
 	return (i);
 }
@@ -204,7 +206,9 @@ void	arg_parse(t_input *ipt, int len, int k)
 {
 	int i;
 	int j;
+	int flag;
 
+	flag = 0;
 	i = -1;
 	j = 0;
 	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 2)); // burası +1di
@@ -213,6 +217,7 @@ void	arg_parse(t_input *ipt, int len, int k)
 	while (ipt->input[++i] && i < len)
 	// len'i koymayınca fazladan 1 kere daha giriyor
 	{
+		flag++;
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)
 		{
 			i = quotes_skip(ipt->input, i);
@@ -226,5 +231,8 @@ void	arg_parse(t_input *ipt, int len, int k)
 			j = i + 1;
 		}
 	}
-	ipt->arg[ipt->pipe + 1] = NULL;
+	if (flag == 0)
+		ipt->arg[ipt->pipe] = NULL;
+	else
+		ipt->arg[ipt->pipe + 1] = NULL;
 }

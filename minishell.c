@@ -33,7 +33,7 @@ void read_line(t_input *input, char **env, int code)
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
-		ft_print_error(NULL, "exit", NULL, 1);
+		//ft_print_error(NULL, "exit", NULL, 1);
 		exit(0);
 	}
 	add_history(input->input);
@@ -65,6 +65,17 @@ int ft_executer(t_input *input)
 
 	// 	k++;
 	// }
+	// printf("---\n");
+	// if (input->arg[0])
+	// {
+	// 	printf("oluştu\n");
+	// }
+	// else
+	// {
+		
+	// 	printf("oluşmadı\n");
+	// }
+	// printf("---\n");
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0, 0);
