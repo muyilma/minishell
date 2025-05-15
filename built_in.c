@@ -88,6 +88,7 @@ int built_in2(char **args, t_input *pro, t_pro *arg)
 	int original_stdout;
 	int original_stdin;
 
+	
 	built_in2_redirection(args, arg, &original_stdout, &original_stdin);
     if (ft_strncmp(args[0], "exit", 5) == 0)
         result = ft_exit(&args[1]);
