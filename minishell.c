@@ -68,6 +68,7 @@ int ft_executer(t_input *input)
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0, 0);
+
 	ft_executer_free(input);
 	free(input);
 	return (exit);

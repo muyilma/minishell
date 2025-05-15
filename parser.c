@@ -53,7 +53,9 @@ void	empty_line(t_input *a)
 int	op_checker(t_input *input, int i)
 {
 	int j;
+	int flag;
 
+	flag=0;
 	j = i;
 	input->after_str = 0;
 	if (input->input[i] == '|' && input->isalpha == 0)
@@ -76,18 +78,23 @@ int	op_checker(t_input *input, int i)
 		}
 		if (input->input[i] == '<' || input->input[i] == '>')
 		{
-			if (input->after_str==0){
+			if (input->after_str==0 && flag!=0){//flag koyuldu
+			//	printf("%d\n",flag);
 				input->error=3;
 				break;
 			}
 			else
 				break;
+			flag++;
 		}
 		if (input->input[i] != ' ')
 			input->after_str++;
 	}
-	if (input->after_str == 0)
+	if (input->after_str == 0 && flag!=0){// flag koyuldu
+		//printf("%d\n",flag);
+
 		input->error = 3;
+	}
 	return (j); // burdaki +1'i sildin
 }
 
