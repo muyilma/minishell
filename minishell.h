@@ -51,3 +51,6 @@ int	ft_cd(char **args, t_input *pro);
 int	ft_export(char **args, t_input *pro, int envflag);
 char	**ft_setenv(char **env, char *variable, int e);
 char	*ft_getenv(char **env, char *name);
+int check_directory_access(char *path, char **error_msg);
+char *check_command_access(char *cmd, char **env, char **error_msg);
+int check_redirect_access(char *filename, int mode, char **error_msg);

@@ -23,30 +23,31 @@ int	wait_child(pid_t pid)
 	}
 }
 
-int	ft_execve(t_input *pro, char **args)
+int ft_execve(t_input *pro, char **args)
 {
-	int i;
-	char *base;
-
-	i = 0;
-	if (!args || !args[0])
-		exit(1);
-	built_in(args, pro);
-	if (access(args[0], X_OK) == 0)
-		base = args[0];
-	else
-	{
-		base = pathc(args[0], pro->env, -1);
-		if (!base)
-		{
-			ft_print_error(NULL, ": command not found", args, 0);
-			exit(127);
-		}
-	}
-	execve(base, args, pro->env);
-	ft_print_error(NULL, ": Is a directory", args, 2);
-	free(base);
-	exit(126);
+    char *base;
+    char *error_msg;
+    
+    if (!args || !args[0])
+        exit(1);
+    
+    built_in(args, pro);
+    base = check_command_access(args[0], pro->env, &error_msg);
+    if (!base)
+    {
+        ft_print_error("minishell:", error_msg, args, 2);
+        if (ft_strncmp(error_msg, ": command not found", 19) == 0 || ft_strncmp(error_msg, ": No such file or directory", 19) == 0)
+            exit(127);
+        else if (ft_strncmp(error_msg, ": Permission denied", 19) == 0 || ft_strncmp(error_msg, ": Is a directory", 19) == 0)
+            exit(126);
+        else
+            exit(1);
+    }
+    
+    execve(base, args, pro->env);
+    free(base);
+    ft_print_error("minishell:", ": Failed to execute command", args, 2);
+    exit(0);
 }
 
 int	execute_last(t_input *pro, int s, int prev_fd)

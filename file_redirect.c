@@ -5,36 +5,64 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	redirect_input(char *filename)
+void redirect_input(char *filename)
 {
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
+    int fd;
+    char *error_msg;
     
-	if (fd == -1)
-	{
-		ft_print_error("minishell: ",": No such file or directory",&filename,2);
-		exit(1);
-	}
-	dup2(fd, 0);
-	close(fd);
+    if (check_redirect_access(filename, 0, &error_msg) == -1)
+    {
+        ft_print_error("minishell:", error_msg, &filename, 2);
+        exit(1);
+    }
+    
+    fd = open(filename, O_RDONLY);
+    if (fd == -1)
+    {
+        ft_print_error("minishell:", ": Failed to open file", &filename, 2);
+        exit(1);
+    }
+    
+    if (dup2(fd, 0) == -1)
+    {
+        close(fd);
+        ft_print_error("minishell:", ": Failed to redirect input", &filename, 2);
+        exit(1);
+    }
+    
+    close(fd);
 }
 
-void	redirect_output(char *filename, int append)
+void redirect_output(char *filename, int append)
 {
-	int	fd;
+    int fd;
+    char *error_msg;
     
-	if (append)
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		ft_print_error("minishell: ",": No such file or directory",&filename,2);
-		exit(1);
-	}
-	dup2(fd, 1);
-	close(fd);
+    if (check_redirect_access(filename, append ? 2 : 1, &error_msg) == -1)
+    {
+        ft_print_error("minishell:", error_msg, &filename, 2);
+        exit(1);
+    }
+    
+    if (append)
+        fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    else
+        fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    
+    if (fd == -1)
+    {
+        ft_print_error("minishell:", ": Failed to open file", &filename, 2);
+        exit(1);
+    }
+    
+    if (dup2(fd, 1) == -1)
+    {
+        close(fd);
+        ft_print_error("minishell:", ": Failed to redirect output", &filename, 2);
+        exit(1);
+    }
+    
+    close(fd);
 }
 
 void	handle_redirections(t_pro *pro)
