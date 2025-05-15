@@ -7,15 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	ft_pwd(void)
-{
-	char	cwd[1024];
-
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		printf("%s\n", cwd);
-	else
-		ft_print_error(NULL,"pwd not found", NULL, 1);
-}
 int	ft_cd4(t_input *pro, char *old_cwd, char *cwd)
 {
 	char	*new_pwd;
