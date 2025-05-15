@@ -36,6 +36,8 @@ int ft_cd3(t_input *pro, char *old_cwd, char *cwd, char *path)
     if (!check_directory_access(path, &error_msg))
     {
         ft_print_error("minishell: cd:", error_msg, &path, 2);
+		if (ft_strncmp(error_msg, ": Permission denied", 19) == 0)
+			return(126);
         return (1);
     }
     
