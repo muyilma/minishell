@@ -1,13 +1,12 @@
 #include "libft/libft.h"
 #include "minishell.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <fcntl.h>
 #include <unistd.h>
 
-int redirect_control(char *redirect, int flag)
+
+int	redirect_control(char *redirect, int flag)
 {
 	int fd;
 
@@ -27,16 +26,17 @@ int redirect_control(char *redirect, int flag)
 		if (fd == -1)
 			return (1);
 
-		if (access(redirect, W_OK) == -1){
+		if (access(redirect, W_OK) == -1)
+		{
 			close(fd);
-			return (1);	
+			return (1);
 		}
 		close(fd);
 	}
 	return (0);
 }
 
-char *strcut(char *str, int start, int end, int size)
+char	*strcut(char *str, int start, int end, int size)
 {
 	int i;
 	int j;
@@ -52,7 +52,7 @@ char *strcut(char *str, int start, int end, int size)
 	while (str[++i])
 	{
 		if (i >= start && i <= end)
-			continue;
+			continue ;
 		newstr[j] = str[i];
 		j++;
 	}
@@ -60,13 +60,58 @@ char *strcut(char *str, int start, int end, int size)
 	free(str);
 	return (newstr);
 }
+char	*redirect_create(char *s, unsigned int start, int len, int flag)
+{
+	char *a;
+	unsigned int i;
+	char qut;
+	int j;
 
-char *redirect_skip(char **redirect, char *str, int *t, int *flag)
+	j=0;
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_calloc(sizeof(char), 1));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	a = malloc((len * sizeof(char) + 1) - flag);
+	if (a == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (s[start + i] == 34 || s[start + i] == 39)
+		{
+			qut = s[start + i];
+			i++;
+			while (s[start + i] && s[start + i] != qut)
+			{
+				a[j] = s[start + i];
+				j++;
+				i++;
+			}
+			if (s[start + i] == qut)
+				i++;
+		}
+		else
+		{
+			a[j] = s[start + i];
+			j++;
+			i++;
+		}
+	}
+	a[i] = '\0';
+	return (a);
+}
+
+char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 {
 	int j;
 	int k;
 	int i;
+	int quotes;
 
+	quotes = 0;
 	i = *t;
 	j = i;
 	i++;
@@ -80,11 +125,12 @@ char *redirect_skip(char **redirect, char *str, int *t, int *flag)
 		if (str[i] == 34 || str[i] == 39)
 		{
 			i = quotes_skip(str, i);
+			quotes += 2;
 			i--;
 		}
 		i++;
 	}
-	*redirect = ft_substr(str, k, i - k);
+	*redirect = redirect_create(str, k, i - k, *flag);
 	if (*flag != -1)
 		*flag = redirect_control(*redirect, *flag);
 	str = strcut(str, j, i, ft_strlen(str) - (i - j));
@@ -92,7 +138,7 @@ char *redirect_skip(char **redirect, char *str, int *t, int *flag)
 	return (str);
 }
 
-char *redirect_convert(t_input *ipt, char *str, int k, int *flag)
+char	*redirect_convert(t_input *ipt, char *str, int k, int *flag)
 {
 	int i;
 
@@ -101,33 +147,36 @@ char *redirect_convert(t_input *ipt, char *str, int k, int *flag)
 	{
 		if (str[i] == 34 || str[i] == 39)
 			i = quotes_skip(str, i);
-   
-		if (str[i] == '<' && str[i + 1] == '<'){
-			*flag=-1;
+
+		if (str[i] == '<' && str[i + 1] == '<')
+		{
+			*flag = -1;
 			str = redirect_skip(&ipt->arg[k]->heradock, str, &i, flag);
 		}
 		else if (str[i] == '<')
 			str = redirect_skip(&ipt->arg[k]->infile, str, &i, flag);
-		else if (str[i] == '>' && str[i + 1] == '>'){
-
-			*flag=1;
+		else if (str[i] == '>' && str[i + 1] == '>')
+		{
+			*flag = 1;
 			str = redirect_skip(&ipt->arg[k]->append_outfile, str, &i, flag);
 		}
-		else if (str[i] == '>'){
-			*flag=1;
-			str = redirect_skip(&ipt->arg[k]->outfile, str, &i, flag );
+		else if (str[i] == '>')
+		{
+			*flag = 1;
+			str = redirect_skip(&ipt->arg[k]->outfile, str, &i, flag);
 		}
 		if (!str)
 			return (NULL);
-		if (*flag != 0){
-			//printf("girdi flag=%d\n",*flag);
+		if (*flag != 0)
+		{
+			// printf("girdi flag=%d\n",*flag);
 			return (NULL);
 		}
 	}
 	return (str);
 }
 
-int arg_parse2(t_input *ipt, int i, int j, int k)
+int	arg_parse2(t_input *ipt, int i, int j, int k)
 {
 	char *fakestr;
 	char *temp;
@@ -144,14 +193,14 @@ int arg_parse2(t_input *ipt, int i, int j, int k)
 	fakestr = redirect_convert(ipt, fakestr, k, &flag);
 	// if (temp !=fakestr)
 	// 	free(temp);
-	//printf("flag=%d\n",flag);
+	// printf("flag=%d\n",flag);
 	if (flag == 0)
 		arg_convert(ipt, fakestr, k);
 	free(fakestr);
 	return (i);
 }
 
-void arg_parse(t_input *ipt, int len, int k)
+void	arg_parse(t_input *ipt, int len, int k)
 {
 	int i;
 	int j;
@@ -160,7 +209,7 @@ void arg_parse(t_input *ipt, int len, int k)
 	j = 0;
 	ipt->arg = malloc(sizeof(t_pro *) * (ipt->pipe + 2)); // burası +1di
 	if (!ipt->arg)
-		return;
+		return ;
 	while (ipt->input[++i] && i < len)
 	// len'i koymayınca fazladan 1 kere daha giriyor
 	{
@@ -169,7 +218,8 @@ void arg_parse(t_input *ipt, int len, int k)
 			i = quotes_skip(ipt->input, i);
 			i--;
 		}
-		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || (ipt->input[i + 1] == '\0'))
+		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || (ipt->input[i
+				+ 1] == '\0'))
 		{
 			i = arg_parse2(ipt, i, j, k);
 			k++;
