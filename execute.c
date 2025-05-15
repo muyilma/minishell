@@ -36,9 +36,9 @@ int ft_execve(t_input *pro, char **args)
     if (!base)
     {
         ft_print_error("minishell:", error_msg, args, 2);
-        if (ft_strncmp(error_msg, ": command not found", 19) == 0)
+        if (ft_strncmp(error_msg, ": command not found", 19) == 0 || ft_strncmp(error_msg, ": No such file or directory", 19) == 0)
             exit(127);
-        else if (ft_strncmp(error_msg, ": Permission denied", 19) == 0)
+        else if (ft_strncmp(error_msg, ": Permission denied", 19) == 0 || ft_strncmp(error_msg, ": Is a directory", 19) == 0)
             exit(126);
         else
             exit(1);
@@ -47,7 +47,7 @@ int ft_execve(t_input *pro, char **args)
     execve(base, args, pro->env);
     free(base);
     ft_print_error("minishell:", ": Failed to execute command", args, 2);
-    exit(126);
+    exit(0);
 }
 
 int	execute_last(t_input *pro, int s, int prev_fd)
