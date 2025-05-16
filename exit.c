@@ -21,7 +21,7 @@ int ft_exit(char **args)
     if (args[1])
     {
         ft_print_error(NULL,"exit: too many arguments", NULL, 1);
-        return(127);
+        return(1);
     }
     i = 0;
     while (args[0][i])

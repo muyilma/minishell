@@ -91,6 +91,13 @@ void redirect_output(char *filename)
 
 void handle_redirections(t_pro *pro)
 {
+    if (pro->heradock)
+    {
+        if (redirect_heredoc_to_stdin(pro->heradock) == -1)
+        {
+            exit(1);
+        }
+    }
     if (pro->infile)
         redirect_input(pro->infile);
     
@@ -99,4 +106,6 @@ void handle_redirections(t_pro *pro)
     
     if (pro->append_outfile)
         redirect_output_append(pro->append_outfile);
+
+    
 }
