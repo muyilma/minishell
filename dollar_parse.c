@@ -67,18 +67,19 @@ int	print_dollar(t_input *ipt, char point, int i)
 	int flag;
 
 	flag = 0;
-	while (ipt->input[++i] != '"' && flag == 0)
+	//printf("--%c---%c--\n",point,ipt->input[i] );
+	while (ipt->input[i]  && ipt->input[i++] != '"' && flag == 0)
 	{
 		if (point == '$')
 			flag = 1;
-		if (ipt->input[i] == '$')
+		if (ipt->input[i-1] == '$')
 		{
-			if (ft_isdigit(ipt->input[i + 1]))
-				i = find_path(ipt, i, 1);
-			else if (ft_isalpha(ipt->input[i + 1]) || ipt->input[i + 1] == '_')
-				i = find_path(ipt, i, 0);
-			else if (ipt->input[i + 1] == '?')
-				i = find_path(ipt, i, 0);
+			if (ft_isdigit(ipt->input[i ]))
+				i = find_path(ipt, i-1, 1);
+			else if (ft_isalpha(ipt->input[i ]) || ipt->input[i ] == '_')
+				i = find_path(ipt, i-1, 0);
+			else if (ipt->input[i] == '?')
+				i = find_path(ipt, i -1, 0);
 		}
 	}
 	if (point == '$')
@@ -115,18 +116,16 @@ void	dollar_parse(t_input *input)
 	while (input->input[i])
 	{
 		if (input->input[i] == '"')
-			i = print_dollar(input, input->input[i], i);
+			i = print_dollar(input, input->input[i], i+1);
 		if (input->input[i] == '\'')
 		{
-			i++;
-			while (input->input[i] != '\'')
-				i++;
-			i++;
+			i=quotes_skip(input->input,i);
+			i--;
 		}
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 			i = heredock_dollar(input, i);
 		if (input->input[i] == '$')
-			i = print_dollar(input, input->input[i], i - 1);
+			i = print_dollar(input, input->input[i], i);
 		i++;
 	}
 }
