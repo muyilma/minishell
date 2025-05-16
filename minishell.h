@@ -43,7 +43,7 @@ char	*pathc(char *cmd, char **envp, int i);;
 int	execute_pipe(t_input *pro, int start_idx, int cmd_idx);
 void	ft_pwd(void);
 int	built_in2(char **args, t_input *pro, t_pro *arg);
-void ft_echo(char **args, int i, int newline);
+void ft_echo(char **args);
 int	ft_unset(char **args, t_input *pro);
 void	ft_env(char **env, char **args, t_input *pro);
 int ft_exit(char **args);

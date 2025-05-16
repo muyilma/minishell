@@ -6,43 +6,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+int is_valid_n_flag(char *str)
+{
+    int i = 1;
+
+    if (!str || str[0] != '-' || str[1] == '\0')
+        return 0;
+
+    while (str[i])
+    {
+        if (str[i] != 'n')
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
 void ft_echo2(char **args, int i, int newline)
 {
     while (args[i]) 
-	{
+    {
         printf("%s", args[i]);
         if (args[i + 1])
             printf(" ");
         i++;
     }
-    
+
     if (newline)
         printf("\n");
 }
-void ft_echo(char **args, int i, int newline) 
-{
-    int j;
-    int valid_n_flag;
 
-    if (args[0] && args[0][0] == '-') 
-	{
-        j = 1;
-        valid_n_flag = 1;
-        while (args[0][j]) 
-		{
-            if (args[0][j] != 'n')
-			{
-                valid_n_flag = 0;
-                break;
-            }
-            j++;
-        }
-        if (valid_n_flag && j > 1) 
-		{
-            newline = 0;
-            i = 1;
-        }
+void ft_echo(char **args)
+{
+    int i = 0;
+    int newline = 1;
+
+    while (args[i] && is_valid_n_flag(args[i]))
+    {
+        newline = 0;
+        i++;
     }
+
     ft_echo2(args, i, newline);
 }
 
