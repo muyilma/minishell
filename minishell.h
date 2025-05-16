@@ -37,7 +37,8 @@ void	ft_executer_free(t_input *input);
 
 
 
-void	handle_redirections(t_pro *pro);
+
+void handle_redirections(t_pro *pro);
 void	built_in(char **args, t_input *pro);
 char	*pathc(char *cmd, char **envp, int i);;
 int	execute_pipe(t_input *pro, int start_idx, int cmd_idx);
@@ -54,3 +55,6 @@ char	*ft_getenv(char **env, char *name);
 int check_directory_access(char *path, char **error_msg);
 char *check_command_access(char *cmd, char **env, char **error_msg);
 int check_redirect_access(char *filename, int mode, char **error_msg);
+int check_access(char *path, int mode);
+int file_exists(char *path);
+int redirect_heredoc_to_stdin(char *delimiter);
