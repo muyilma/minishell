@@ -11,7 +11,7 @@ int	ft_export_parser(char *args)
 	int	i;
 
 	i = 0;
-	if (!args[i + 1] && args[i] == '=')
+	if (args[i] == '=')
 		return (1);
 	if (args[0] >= '0' && args[0] <= '9')
 		return (1);
