@@ -43,9 +43,7 @@ int ft_execve(t_input *pro, char **args)
         else
             exit(1);
     }
-    
     execve(base, args, pro->env);
-	
     free(base);
     ft_print_error("minishell:", ": Failed to execute command", args, 2);
     exit(0);
