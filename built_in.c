@@ -68,12 +68,12 @@ int built_in2_redirection2(int *original_stdout, int *original_stdin)
 }
 int built_in2_redirection(char **args, t_pro *arg, int *original_stdout, int *original_stdin)
 {
-	int *fd;
+	int fd;
 
 	*original_stdin = -1;
 	*original_stdout = -1;
-	if (arg->heradock)
-		heredoc_write(fd,arg->heradock,0);
+	//if (arg->heradock)
+	//	heredoc_write(fd,arg->heradock,0);
     if (arg->infile || arg->outfile || arg->append_outfile)
     {
         if (arg->outfile || arg->append_outfile)
