@@ -64,6 +64,7 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 	pid = fork();
 	if (pid == 0)
 	{
+		heredoc_control(pro->arg[s]);
 		if (prev_fd != -1)
 		{
 			dup2(prev_fd, 0);
@@ -81,10 +82,12 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 {
 	int fd[2];
 	pid_t pid;
+
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
+		heredoc_control(pro->arg[cmd_index]);
 		if (*prev_fd != -1)
 		{
 			dup2(*prev_fd, 0);

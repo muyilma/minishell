@@ -152,6 +152,7 @@ char	*redirect_convert(t_input *ipt, char *str, int k, int *flag)
 		{
 			*flag = -1;
 			str = redirect_skip(&ipt->arg[k]->heradock, str, &i, flag);
+			*flag = 0;
 		}
 		else if (str[i] == '<')
 			str = redirect_skip(&ipt->arg[k]->infile, str, &i, flag);
