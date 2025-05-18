@@ -65,7 +65,7 @@ int	arg_find2(char *str, int i, int *flag)
 	return (i);
 }
 
-void	arg_find(char *str, t_input *ipt, int k)
+void	arg_find(char *str, t_shell *ipt, int k)
 {
 	int i;
 	int j;
@@ -92,7 +92,7 @@ void	arg_find(char *str, t_input *ipt, int k)
 	ipt->arg[k]->str[l] = NULL;
 }
 
-void	arg_convert(t_input *ipt, char *str, int k)
+void	arg_convert(t_shell *ipt, char *str, int k)
 {
 	int count;
 

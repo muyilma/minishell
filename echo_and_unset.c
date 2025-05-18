@@ -50,7 +50,7 @@ void ft_echo(char **args)
     ft_echo2(args, i, newline);
 }
 
-void	ft_unset2(t_input *pro, int j)
+void	ft_unset2(t_shell *pro, int j)
 {
     while (pro->env[j + 1])
 	{
@@ -60,7 +60,7 @@ void	ft_unset2(t_input *pro, int j)
 	pro->env[j] = NULL;
 }
 
-int	ft_unset(char **args, t_input *pro)
+int	ft_unset(char **args, t_shell *pro)
 {
 	int	i;
 	int	j;

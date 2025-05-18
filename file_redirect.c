@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void redirect_input(char *filename)
+void redirect_shell(char *filename)
 {
     int fd;
     char *error_msg;
@@ -78,7 +78,7 @@ void redirect_output(char *filename)
         exit(1);
     }
 }
-void heredoc_control(t_pro *pro)
+void heredoc_control(t_cmd *pro)
 {
     if (pro->heradock)
     {
@@ -88,10 +88,10 @@ void heredoc_control(t_pro *pro)
         }
     }
 }
-void handle_redirections(t_pro *pro)
+void handle_redirections(t_cmd *pro)
 {
     if (pro->infile)
-        redirect_input(pro->infile);
+        redirect_shell(pro->infile);
     
     if (pro->outfile)
         redirect_output(pro->outfile);

@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 
-void	built_in3(char **args, t_input *pro)
+void	built_in3(char **args, t_shell *pro)
 {
 	if (ft_strncmp(args[0], "unset", 5) == 0)
 	{
@@ -28,7 +28,7 @@ void	built_in3(char **args, t_input *pro)
 	}
 }
 
-void	built_in(char **args, t_input *pro)
+void	built_in(char **args, t_shell *pro)
 {
 	if (ft_strncmp(args[0], "echo", 5) == 0)
 	{
@@ -66,7 +66,7 @@ int built_in2_redirection2(int *original_stdout, int *original_stdin)
         close(*original_stdin);
     }
 }
-int built_in2_redirection(char **args, t_pro *arg, int *original_stdout, int *original_stdin)
+int built_in2_redirection(char **args, t_cmd *arg, int *original_stdout, int *original_stdin)
 {
 	int fd;
 
@@ -86,7 +86,7 @@ int built_in2_redirection(char **args, t_pro *arg, int *original_stdout, int *or
    		}
 	}
 }
-int built_in2(char **args, t_input *pro, t_pro *arg)
+int built_in2(char **args, t_shell *pro, t_cmd *arg)
 {
 	int result;
 	int original_stdout;
