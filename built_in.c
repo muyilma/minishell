@@ -67,33 +67,36 @@ int built_in2_redirection2(int *original_stdout, int *original_stdin)
     }
 }
 int built_in2_redirection(char **args, t_pro *arg, int *original_stdout, int *original_stdin)
-{	
+{
+	int fd;
+
 	*original_stdin = -1;
 	*original_stdout = -1;
-
-    if (arg->infile || arg->outfile || arg->append_outfile)
-    {
-        if (arg->outfile || arg->append_outfile)
-            *original_stdout = dup(1);
-        
-        if (arg->infile)
-            *original_stdin = dup(0);
-        
-        handle_redirections(arg);
-    }
+	//if (arg->heradock)
+	//	heredoc_write(fd,arg->heradock,0);
+	if(ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "cd", 3) == 0 || ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "export", 7) == 0)
+	{
+		if (arg->infile || arg->outfile || arg->append_outfile)
+    	{
+       	 	if (arg->outfile || arg->append_outfile)
+            	*original_stdout = dup(1);
+        	if (arg->infile)
+            	*original_stdin = dup(0);
+        	handle_redirections(arg);
+   		}
+	}
 }
 int built_in2(char **args, t_input *pro, t_pro *arg)
 {
 	int result;
 	int original_stdout;
 	int original_stdin;
-
 	
 	built_in2_redirection(args, arg, &original_stdout, &original_stdin);
     if (ft_strncmp(args[0], "exit", 5) == 0)
         result = ft_exit(&args[1]);
     else if (ft_strncmp(args[0], "cd", 3) == 0)
-    {
+	{
         if (args[2])
         {
             ft_print_error(NULL, "minishell: cd: too many arguments", NULL, 1);

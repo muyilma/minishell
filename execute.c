@@ -30,7 +30,6 @@ int ft_execve(t_input *pro, char **args)
     
     if (!args || !args[0])
         exit(1);
-    
     built_in(args, pro);
     base = check_command_access(args[0], pro->env, &error_msg);
     if (!base)
@@ -43,9 +42,7 @@ int ft_execve(t_input *pro, char **args)
         else
             exit(1);
     }
-    
     execve(base, args, pro->env);
-	
     free(base);
     ft_print_error("minishell:", ": Failed to execute command", args, 2);
     exit(0);
@@ -64,6 +61,7 @@ int	execute_last(t_input *pro, int s, int prev_fd)
 	pid = fork();
 	if (pid == 0)
 	{
+		heredoc_control(pro->arg[s]);
 		if (prev_fd != -1)
 		{
 			dup2(prev_fd, 0);
@@ -81,10 +79,12 @@ void	execute_command(t_input *pro, int cmd_index, int *prev_fd)
 {
 	int fd[2];
 	pid_t pid;
+
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
+		heredoc_control(pro->arg[cmd_index]);
 		if (*prev_fd != -1)
 		{
 			dup2(*prev_fd, 0);
