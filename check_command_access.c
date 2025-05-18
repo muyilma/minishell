@@ -5,14 +5,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
-/**
- * Komut çalıştırma için erişim kontrolü yapar
- * @param cmd Çalıştırılacak komut
- * @param env Çevre değişkenleri
- * @param error_msg Hata mesajını alacak pointer
- * @return Komut çalıştırılabilir ise komutun tam yolu, değilse NULL döner
- */
-char *check_command_cmd_access(char *cmd, char **env)
+
+char *check_command_cmd_access(char *cmd)
 {
     struct stat cmd_stat;
     int stat_result;
@@ -31,6 +25,7 @@ char *check_command_cmd_access(char *cmd, char **env)
         }
         return (NULL);
     }
+    return(NULL);
 }
 char *check_command_access(char *cmd, char **env, char **error_msg)
 {
@@ -39,7 +34,7 @@ char *check_command_access(char *cmd, char **env, char **error_msg)
     if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/') || 
         (cmd[0] == '.' && cmd[1] == '.' && cmd[2] == '/'))
     {
-        *error_msg = check_command_cmd_access(cmd, env);
+        *error_msg = check_command_cmd_access(cmd);
         if(*error_msg == NULL)
             return (ft_strdup(cmd));
         return (NULL);

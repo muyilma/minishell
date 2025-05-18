@@ -52,7 +52,7 @@ void	built_in(char **args, t_shell *pro)
 	}
 	built_in3(args, pro);
 }
-int built_in2_redirection2(int *original_stdout, int *original_stdin)
+void built_in2_redirection2(int *original_stdout, int *original_stdin)
 {
 	if (*original_stdout != -1)
     {
@@ -66,10 +66,8 @@ int built_in2_redirection2(int *original_stdout, int *original_stdin)
         close(*original_stdin);
     }
 }
-int built_in2_redirection(char **args, t_cmd *arg, int *original_stdout, int *original_stdin)
+void built_in2_redirection(char **args, t_cmd *arg, int *original_stdout, int *original_stdin)
 {
-	int fd;
-
 	*original_stdin = -1;
 	*original_stdout = -1;
 	//if (arg->heradock)
