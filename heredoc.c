@@ -6,11 +6,32 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status)
+{
+    char    *input;
 
+    while (1)
+    {
+        input = readline("> ");
+        if (!input)
+        {
+            heredoc_status = -1;
+            break;
+        }
+        if (strcmp(input, delimiter) == 0)
+        {
+            free(input);
+            break;
+        }
+        write(*fd, input, ft_strlen(input));
+        write(*fd, "\n", 1);
+        free(input);
+    }
+    return (heredoc_status);
+}
 int redirect_heredoc_to_stdin(char *delimiter)
 {
     int     fd[2];
-    char    *input;
     int     heredoc_status;
 
     heredoc_status = 0;
@@ -19,41 +40,14 @@ int redirect_heredoc_to_stdin(char *delimiter)
         perror("minishell: pipe");
         return (-1);
     }
-    
-    // Setup signal handling for heredoc
-    // You may need to add signal handling functions
-    
-    while (1)
-    {
-        input = readline("> ");
-        if (!input) // Handle EOF (Ctrl+D)
-        {
-            heredoc_status = -1;
-            break;
-        }
-        
-        if (strcmp(input, delimiter) == 0)
-        {
-            free(input);
-            break;
-        }
-        
-        // Write input line followed by a single newline
-        write(fd[1], input, ft_strlen(input));
-        write(fd[1], "\n", 1); // Write only 1 newline character
-        free(input);
-    }
-    
-    close(fd[1]); // Close write end
-    
+    redirect_heredoc_write(&fd[1],delimiter, heredoc_status);
+    close(fd[1]);
     if (heredoc_status == -1)
     {
-        close(fd[0]); // Close read end if interrupted
+        close(fd[0]);
         return (-1);
     }
-    
-    // Redirect stdin to read from pipe
-    dup2(fd[0], STDIN_FILENO);
+    dup2(fd[0], 0);
     close(fd[0]);
     
     return (0);
