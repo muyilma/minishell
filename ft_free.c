@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	quotes_skip(char *str, int j)
+int	quotes_skip(char *str, int j, int flag)
 {
 	int		i;
 	char	qut;
@@ -18,6 +18,8 @@ int	quotes_skip(char *str, int j)
 		if (str[i] == qut)
 			i++;
 	}
+	if (flag == 1)
+		return (i - 1);
 	return (i);
 }
 

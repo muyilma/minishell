@@ -27,10 +27,10 @@ typedef struct s_input
 
 
 void	arg_convert(t_input *ipt, char *str, int k);
-int	quotes_skip(char *str, int j);
+int	quotes_skip(char *str, int j,int flag);
 void	ft_parser(t_input *input);
 void	dollar_parse(t_input *input);
-void	arg_parse(t_input *ipt, int len, int k);
+void	arg_parse(t_input *ipt, int len, int k,int flag);
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	quotes_control(t_input *input);
 void	ft_executer_free(t_input *input);
@@ -54,7 +54,9 @@ char	**ft_setenv(char **env, char *variable, int e);
 char	*ft_getenv(char **env, char *name);
 int check_directory_access(char *path, char **error_msg);
 char *check_command_access(char *cmd, char **env, char **error_msg);
-int check_redirect_access(char *filename, int mode, char **error_msg);
+int check_redirect_access(char *filename, char **error_msg);
 int check_access(char *path, int mode);
 int file_exists(char *path);
 int redirect_heredoc_to_stdin(char *delimiter);
+void heredoc_control(t_pro *pro);
+int check_redirect_access_input(char *filename, char **error_msg);

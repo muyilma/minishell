@@ -3,14 +3,14 @@ NAME=minishell
 
 SRCS= minishell.c parser.c dollar_parse.c arg_parse.c arg_parse2.c execute.c built_in.c file_redirect.c env.c export.c cd.c ft_free.c echo_and_unset.c exit.c env_and_pwd.c file_control.c check_redirect_adress.c check_command_access.c heredoc.c
 
-CFLAGS=-g
+CFLAGS=
 LIBFT=libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(SRCS) 
 	make -C ./libft -s
-	gcc -g   -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline -lncurses $(LIBFT)
+	gcc -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline -lncurses $(LIBFT)
 
 clean:
 	make clean -C ./libft -s
