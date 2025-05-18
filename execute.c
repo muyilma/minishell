@@ -30,7 +30,6 @@ int ft_execve(t_input *pro, char **args)
     
     if (!args || !args[0])
         exit(1);
-    
     built_in(args, pro);
     base = check_command_access(args[0], pro->env, &error_msg);
     if (!base)
