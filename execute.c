@@ -21,6 +21,7 @@ int	wait_child(pid_t pid)
 		if (exit_code != 0)
 			return (exit_code);
 	}
+	return (0);
 }
 
 int ft_execve(t_shell *pro, char **args)
@@ -102,7 +103,7 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 	*prev_fd = fd[0];
 }
 
-int	execute_pipe(t_shell *pro, int start_idx, int cmd_idx)
+int	execute_pipe(t_shell *pro, int start_idx)
 {
 	int prev_fd = -1;
 	int i = start_idx;
@@ -120,4 +121,5 @@ int	execute_pipe(t_shell *pro, int start_idx, int cmd_idx)
 		return (execute_last(pro, i, prev_fd));
 	else if (prev_fd != -1)
 		close(prev_fd);
+	return (0);
 }

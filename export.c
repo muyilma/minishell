@@ -28,7 +28,7 @@ int	ft_export_parser(char *args)
 	}
 	return (0);
 }
-int	ft_cmdcess_export_arg2(char *arg, t_shell *pro, int envflag, char	*variable)
+void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char	*variable)
 {
 	if (!ft_getenv(pro->env, arg))
 	{
@@ -62,8 +62,9 @@ int	ft_cmdcess_export_arg(char *arg, t_shell *pro, int envflag)
 	}
 	else
 	{
-		ft_cmdcess_export_arg2(arg, pro, envflag, variable);
+		ft_cmdcess_export_arg2(arg, pro,variable);
 	}
+	return (0);
 }
 
 int	ft_export(char **args, t_shell *pro , int envflag)

@@ -43,7 +43,7 @@ int	ft_executer(t_shell *input)
 {
 	int exit;
 	free(input->input);
-	exit = execute_pipe(input, 0, 0);
+	exit = execute_pipe(input, 0);
 
 	ft_executer_free(input);
 	free(input);

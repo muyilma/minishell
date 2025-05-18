@@ -41,7 +41,7 @@ char	*redirect_find(char **redirect, char *str, int *i, int *flag);
 void handle_redirections(t_cmd *pro);
 void	built_in(char **args, t_shell *pro);
 char	*pathc(char *cmd, char **envp, int i);;
-int	execute_pipe(t_shell *pro, int start_idx, int cmd_idx);
+int	execute_pipe(t_shell *pro, int start_idx);
 void	ft_pwd(void);
 int	built_in2(char **args, t_shell *pro, t_cmd *arg);
 void ft_echo(char **args);
