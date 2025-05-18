@@ -17,7 +17,7 @@ void	ft_pwd(void)
 		ft_print_error(NULL,"pwd not found", NULL, 1);
 }
 
-void	ft_env(char **env, char **args, t_input *pro)
+void	ft_env(char **env, char **args, t_shell *pro)
 {
 	int i;
 

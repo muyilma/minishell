@@ -16,7 +16,7 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	read_line(t_input *input, char **env, int code)
+void	read_line(t_shell *input, char **env, int code)
 {
 	input->input = NULL;
 	input->isprint = 0;
@@ -39,7 +39,7 @@ void	read_line(t_input *input, char **env, int code)
 	add_history(input->input);
 }
 
-int	ft_executer(t_input *input)
+int	ft_executer(t_shell *input)
 {
 	int exit;
 	free(input->input);
@@ -50,7 +50,7 @@ int	ft_executer(t_input *input)
 	return (exit);
 }
 
-void	ft_error(t_input *input)
+void	ft_error(t_shell *input)
 {
 	if (input->error == 2)
 		write(2, "minishell: open quotes \"\'", 26);
@@ -63,14 +63,14 @@ void	ft_error(t_input *input)
 
 int	main(int ac, char **av, char **env)
 {
-	t_input *input;
+	t_shell *input;
 	int exit_code;
 
 	signal(SIGINT, handle_sigint);
 	exit_code = 0;
 	while (1)
 	{
-		input = malloc(sizeof(t_input));
+		input = malloc(sizeof(t_shell));
 		read_line(input, env, exit_code);
 		ft_parser(input);
 		if (input->error == 0)

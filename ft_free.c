@@ -23,7 +23,7 @@ int	quotes_skip(char *str, int j, int flag)
 	return (i);
 }
 
-void	quotes_control(t_input *input)
+void	quotes_control(t_shell *input)
 {
 	int	i;
 
@@ -45,7 +45,7 @@ void	quotes_control(t_input *input)
 		input->error = 2;
 }
 
-void	redirect_free(t_input *input, int i)
+void	redirect_free(t_shell *input, int i)
 {
 	if (input->arg[i]->append_outfile)
 		free(input->arg[i]->append_outfile);
@@ -75,7 +75,7 @@ void	ft_print_error(char *base, char *str, char **arg, int flag)
 	write(2, "\n", 2);
 }
 
-void	ft_executer_free(t_input *input)
+void	ft_executer_free(t_shell *input)
 {
 	int	i;
 	int	j;

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	ft_cd4(t_input *pro, char *old_cwd, char *cwd)
+int	ft_cd4(t_shell *pro, char *old_cwd, char *cwd)
 {
 	char	*new_pwd;
 	char	*new_oldpwd;
@@ -29,7 +29,7 @@ int	ft_cd4(t_input *pro, char *old_cwd, char *cwd)
 	return (0);
 }
 
-int ft_cd3(t_input *pro, char *old_cwd, char *cwd, char *path)
+int ft_cd3(t_shell *pro, char *old_cwd, char *cwd, char *path)
 {
     char *error_msg;
     
@@ -56,7 +56,7 @@ int ft_cd3(t_input *pro, char *old_cwd, char *cwd, char *path)
     return (ft_cd4(pro, old_cwd, cwd));
 }
 
-int	ft_cd2(t_input *pro, char **path)
+int	ft_cd2(t_shell *pro, char **path)
 {
 	path[0] = ft_getenv(pro->env, "OLDPWD");
 	if (!path)
@@ -68,7 +68,7 @@ int	ft_cd2(t_input *pro, char **path)
 	return (0);
 }
 
-int	ft_cd(char **args, t_input *pro)
+int	ft_cd(char **args, t_shell *pro)
 {
 	char	*path;
 	int		exit;

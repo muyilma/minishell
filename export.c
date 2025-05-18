@@ -28,7 +28,7 @@ int	ft_export_parser(char *args)
 	}
 	return (0);
 }
-int	ft_process_export_arg2(char *arg, t_input *pro, int envflag, char	*variable)
+int	ft_cmdcess_export_arg2(char *arg, t_shell *pro, int envflag, char	*variable)
 {
 	if (!ft_getenv(pro->env, arg))
 	{
@@ -40,7 +40,7 @@ int	ft_process_export_arg2(char *arg, t_input *pro, int envflag, char	*variable)
 		}
 	}
 }
-int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
+int	ft_cmdcess_export_arg(char *arg, t_shell *pro, int envflag)
 {
 	char	*equal_sign;
 	char	*variable;
@@ -62,11 +62,11 @@ int	ft_process_export_arg(char *arg, t_input *pro, int envflag)
 	}
 	else
 	{
-		ft_process_export_arg2(arg, pro, envflag, variable);
+		ft_cmdcess_export_arg2(arg, pro, envflag, variable);
 	}
 }
 
-int	ft_export(char **args, t_input *pro , int envflag)
+int	ft_export(char **args, t_shell *pro , int envflag)
 {
 	int	i;
 	int ex;
@@ -82,7 +82,7 @@ int	ft_export(char **args, t_input *pro , int envflag)
 	}
 	while (args[i])
 	{
-		ex = ft_process_export_arg(args[i], pro, envflag);
+		ex = ft_cmdcess_export_arg(args[i], pro, envflag);
 		i++;
 	}
 	return (ex);
