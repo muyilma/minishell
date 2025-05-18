@@ -27,10 +27,10 @@ typedef struct s_input
 
 
 void	arg_convert(t_input *ipt, char *str, int k);
-int	quotes_skip(char *str, int j);
+int	quotes_skip(char *str, int j,int flag);
 void	ft_parser(t_input *input);
 void	dollar_parse(t_input *input);
-void	arg_parse(t_input *ipt, int len, int k);
+void	arg_parse(t_input *ipt, int len, int k,int flag);
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	quotes_control(t_input *input);
 void	ft_executer_free(t_input *input);

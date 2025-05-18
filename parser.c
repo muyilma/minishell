@@ -25,13 +25,13 @@ int	quotes_operator_counter(t_input *a, int i)
 	}
 	if (a->input[i] == 39)
 	{
-		i = quotes_skip(a->input, i);
+		i = quotes_skip(a->input, i,0);
 		a->isprint++;
 	}
-	return (i);
+	return (i-1);
 }
 
-void	empty_line(t_input *a)
+void	check_empty_line(t_input *a)
 {
 	int i;
 
@@ -39,10 +39,7 @@ void	empty_line(t_input *a)
 	while (a->input[i])
 	{
 		if (a->input[i] == 34 || a->input[i] == 39)
-		{
 			i = quotes_operator_counter(a, i);
-			i--;
-		}
 		if (a->input[i] != ' ')
 			a->isprint++;
 		if (a->input[i] == '$')
@@ -57,12 +54,39 @@ void	empty_line(t_input *a)
 		a->error = 1;
 }
 
+int op_checker2(t_input *input,int i,int j)
+{
+	int flag;
+
+	flag=0;
+	while (input->input[++i] && input->input[i] != '|')
+	{
+		if (input->input[i] == 34 || input->input[i] == 39)
+		{
+			i = quotes_skip(input->input, i,0);
+			input->after_str++;
+		}
+		if (input->input[i] == '<' || input->input[i] == '>')
+		{
+			if (input->after_str == 0 && flag !=0)
+			{ 
+				input->error = 3;
+				break ;
+			}
+			flag++;
+		}
+		if (input->input[i] != ' ')
+			input->after_str++;
+	}
+	if (input->after_str == 0)
+		input->error = 3;
+	return (j); // burdaki +1'i sildin
+}
+
 int	op_checker(t_input *input, int i)
 {
 	int j;
-	int flag;
 
-	flag = 0;
 	j = i;
 	input->after_str = 0;
 	if (input->input[i] == '|' && input->isalpha == 0)
@@ -77,35 +101,7 @@ int	op_checker(t_input *input, int i)
 			j++;
 		}
 	}
-	while (input->input[++i] && input->input[i] != '|')
-	{
-
-		if (input->input[i] == 34 || input->input[i] == 39)
-		{
-			i = quotes_skip(input->input, i);
-			input->after_str++;
-		}
-		if (input->input[i] == '<' || input->input[i] == '>')
-		{
-			if (input->after_str == 0 && flag !=0)
-			{ // flag koyuldu
-				//	printf("%d\n",flag);
-				input->error = 3;
-				break ;
-			}
-
-			flag++;
-		}
-		if (input->input[i] != ' ')
-			input->after_str++;
-	}
-	if (input->after_str == 0)
-	{ // flag koyuldu
-		// printf("%d\n",flag);
-
-		input->error = 3;
-	}
-	return (j); // burdaki +1'i sildin
+	return op_checker2(input,i,j);
 }
 
 void	opCounter(t_input *a)
@@ -136,7 +132,7 @@ void	opCounter(t_input *a)
 
 void	ft_parser(t_input *input)
 {
-	empty_line(input);
+	check_empty_line(input);
 	if (input->error == 0)
 		quotes_control(input);
 	if (input->dollar > 0 && input->error == 0)
@@ -144,5 +140,5 @@ void	ft_parser(t_input *input)
 	if (input->operator> 0 && input->error == 0)
 		opCounter(input);
 	if (input->error == 0)
-		arg_parse(input, ft_strlen(input->input), 0);
+		arg_parse(input, ft_strlen(input->input), 0,0);
 }

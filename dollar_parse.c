@@ -67,7 +67,6 @@ int	print_dollar(t_input *ipt, char point, int i)
 	int flag;
 
 	flag = 0;
-	//printf("--%c---%c--\n",point,ipt->input[i] );
 	while (ipt->input[i]  && ipt->input[i++] != '"' && flag == 0)
 	{
 		if (point == '$')
@@ -118,10 +117,7 @@ void	dollar_parse(t_input *input)
 		if (input->input[i] == '"')
 			i = print_dollar(input, input->input[i], i+1);
 		if (input->input[i] == '\'')
-		{
-			i=quotes_skip(input->input,i);
-			i--;
-		}
+			i=quotes_skip(input->input,i,1);
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 			i = heredock_dollar(input, i);
 		if (input->input[i] == '$')
