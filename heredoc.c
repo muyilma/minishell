@@ -49,7 +49,6 @@ int redirect_heredoc_to_stdin(char *delimiter)
     }
     dup2(fd[0], 0);
     close(fd[0]);
-    
     return (0);
 }
 

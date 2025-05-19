@@ -73,6 +73,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 	}
 	if (prev_fd != -1)
 		close(prev_fd);
+	dup2(pro->original_stdin,0);
 	return (wait_child(pid));
 }
 

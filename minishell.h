@@ -10,6 +10,7 @@ typedef struct s_pro
 typedef struct s_input
 {
 	char *input;
+	int original_stdin;
 	int after_str;
 	char qut;
 	int isprint;
