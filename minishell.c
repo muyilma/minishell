@@ -18,6 +18,7 @@ void	handle_sigint(int sig)
 
 void	read_line(t_shell *input, char **env, int code)
 {
+	input->original_stdin = dup(0);
 	input->input = NULL;
 	input->isprint = 0;
 	input->isalpha = 0;
@@ -44,7 +45,6 @@ int	ft_executer(t_shell *input)
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
-
 	ft_executer_free(input);
 	free(input);
 	return (exit);
@@ -79,5 +79,6 @@ int	main(int ac, char **av, char **env)
 		}
 		else
 			ft_error(input);
+		
 	}
 }
