@@ -1,7 +1,7 @@
 NAME=minishell
 
 
-SRCS= minishell.c parser.c dollar_expand.c token_find.c operator_redirect.c arg_parse2.c execute.c built_in.c file_redirect.c env.c export.c cd.c ft_free.c echo_and_unset.c exit.c env_and_pwd.c file_control.c check_redirect_access.c check_command_access.c heredoc.c
+SRCS= minishell.c parser/parser.c parser/dollar_expand.c parser/token_find.c parser/operator_redirect.c parser/arg_parse2.c parser/ft_free.c  executer/execute.c executer/built_in.c executer/file_redirect.c executer/env.c executer/export.c executer/cd.c executer/echo_and_unset.c executer/exit.c executer/env_and_pwd.c executer/file_control.c executer/check_redirect_access.c executer/check_command_access.c executer/heredoc.c
 
 CFLAGS=
 LIBFT=libft/libft.a
