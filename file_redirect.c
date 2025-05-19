@@ -78,7 +78,7 @@ void redirect_output(char *filename)
         exit(1);
     }
 }
-void heredoc_control(t_cmd *pro)
+int heredoc_control(t_cmd *pro)
 {
     if (pro->heradock)
     {
@@ -86,7 +86,9 @@ void heredoc_control(t_cmd *pro)
         {
            	exit(1);
         }
+        return (1);
     }
+    return (0);
 }
 void handle_redirections(t_cmd *pro)
 {

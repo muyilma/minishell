@@ -15,6 +15,7 @@ int	wait_child(pid_t pid)
 	int exit_code;
 
 	waitpid(pid, &status, 0);
+	wait(NULL);
 	if (WIFEXITED(status))
 	{
 		exit_code = WEXITSTATUS(status);
@@ -23,7 +24,6 @@ int	wait_child(pid_t pid)
 	}
 	return (0);
 }
-
 int ft_execve(t_shell *pro, char **args)
 {
     char *base;
@@ -62,8 +62,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		heredoc_control(pro->arg[s]);
-		if (prev_fd != -1)
+		if ((heredoc_control(pro->arg[s]) == 0) && prev_fd != -1)
 		{
 			dup2(prev_fd, 0);
 			close(prev_fd);
@@ -85,8 +84,7 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		heredoc_control(pro->arg[cmd_index]);
-		if (*prev_fd != -1)
+		if ((heredoc_control(pro->arg[cmd_index]) == 0) && *prev_fd != -1)
 		{
 			dup2(*prev_fd, 0);
 			close(*prev_fd);

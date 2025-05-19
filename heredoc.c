@@ -18,7 +18,7 @@ int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status)
             heredoc_status = -1;
             break;
         }
-        if (strcmp(input, delimiter) == 0)
+        if (ft_strncmp(input, delimiter,ft_strlen(delimiter)) == 0)
         {
             free(input);
             break;

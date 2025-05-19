@@ -58,6 +58,6 @@ int check_redirect_access(char *filename, char **error_msg);
 int check_access(char *path, int mode);
 int file_exists(char *path);
 int redirect_heredoc_to_stdin(char *delimiter);
-void heredoc_control(t_cmd *pro);
+int heredoc_control(t_cmd *pro);
 int check_redirect_access_input(char *filename, char **error_msg);
 int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status);
