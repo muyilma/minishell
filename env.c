@@ -14,12 +14,12 @@ char	*ft_getenv(char **env, char *name)
 
 	i = 0;
 	if (!env || !name)
-		return (NULL);
+	return (NULL);
 	len = ft_strlen(name);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-			return (env[i] + len + 1);
+		return (env[i] + len + 1);
 		i++;
 	}
 	
