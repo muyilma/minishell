@@ -59,10 +59,11 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 		res = built_in2(pro->arg[s]->str, pro,pro->arg[s]);
 	if (res != 2)
 		return (res);
+	res = heredoc_control(pro->arg[s]);
 	pid = fork();
 	if (pid == 0)
 	{
-		if ((heredoc_control(pro->arg[s]) == 0) && prev_fd != -1)
+		if (res == 1 && prev_fd != -1)
 		{
 			dup2(prev_fd, 0);
 			close(prev_fd);
@@ -79,12 +80,14 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 {
 	int fd[2];
 	pid_t pid;
+	int heredoc;
 
+	heredoc = heredoc_control(pro->arg[cmd_index]);
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		if ((heredoc_control(pro->arg[cmd_index]) == 0) && *prev_fd != -1)
+		if (heredoc == 1 && *prev_fd != -1)
 		{
 			dup2(*prev_fd, 0);
 			close(*prev_fd);
@@ -121,3 +124,4 @@ int	execute_pipe(t_shell *pro, int start_idx)
 		close(prev_fd);
 	return (0);
 }
+
