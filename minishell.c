@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
-
 int		g_signal_exit = 0;
 
 void	handle_sigint(int sig)
@@ -16,7 +14,11 @@ void	handle_sigint(int sig)
 	(void)sig;
 	if (g_signal_exit == 1){
 		write(1, "\n", 1);
-		exit (0) ;
+		g_signal_exit=23;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		return;
 	}
 	else if (g_signal_exit == 2)
 	{
@@ -51,6 +53,7 @@ void	read_line(t_shell *input, char **env, int code)
 	if (!input->input)
 	{
 		ft_print_error(NULL, "exit", NULL, 1);
+		free(input);
 		exit(0);
 	}
 	add_history(input->input);
@@ -58,11 +61,11 @@ void	read_line(t_shell *input, char **env, int code)
 
 int	ft_executer(t_shell *input)
 {
+
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
 	ft_executer_free(input);
-	free(input);
 	return (exit);
 }
 

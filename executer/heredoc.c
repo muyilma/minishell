@@ -25,8 +25,10 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	while (1)
 	{
 		input = readline("> ");
-		if (!input)
+		printf("---\n");
+		if (!input || g_signal_exit==23)
 		{
+			printf("222222222\n");
 			write(2, "minishell: warning: here-document at line by", 45);
 			ft_print_error("end-of-file (wanted `", "')", &delimiter, 2);
 			heredoc_status = -1;
@@ -49,6 +51,7 @@ int	redirect_heredoc_to_stdin(char *delimiter)
 	int	fd[2];
 	int	heredoc_status;
 
+	g_signal_exit=1;
 	heredoc_status = 0;
 	if (pipe(fd) == -1)
 	{

@@ -1,6 +1,6 @@
 extern int g_signal_exit;
 
-typedef struct s_pro
+typedef struct s_cmd
 {
 	char **str;
 	char *outfile;
@@ -9,7 +9,7 @@ typedef struct s_pro
 	char *append_outfile;
 } t_cmd;
 
-typedef struct s_input
+typedef struct s_shell
 {
 	char *input;
 	int original_stdin;
@@ -41,7 +41,7 @@ char	*redirect_find(char **redirect, char *str, int *i, int *flag);
 
 
 
-void handle_redirections(t_cmd *pro);
+void	handle_redirections(t_shell *shell,t_cmd *pro);
 void	built_in(char **args, t_shell *pro);
 char	*pathc(char *cmd, char **envp, int i);;
 int	execute_pipe(t_shell *pro, int start_idx);
@@ -64,3 +64,4 @@ int redirect_heredoc_to_stdin(char *delimiter);
 int heredoc_control(t_cmd *pro);
 int check_redirect_access_input(char *filename, char **error_msg);
 int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status);
+void error_and_allocate(t_shell *pro, int exit_code);

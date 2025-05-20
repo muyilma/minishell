@@ -102,4 +102,5 @@ void	ft_executer_free(t_shell *input)
 		}
 	}
 	free(input->arg);
+	free(input);
 }

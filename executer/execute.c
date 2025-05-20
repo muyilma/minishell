@@ -30,12 +30,16 @@ int	ft_execve(t_shell *pro, char **args)
 	char	*error_msg;
 
 	if (!args || !args[0])
+	{
+		ft_executer_free(pro);
 		exit(1);
+	}
 	built_in(args, pro);
 	base = check_command_access(args[0], pro->env, &error_msg);
 	if (!base)
-	{
+	{			
 		ft_print_error("minishell:", error_msg, args, 2);
+		ft_executer_free(pro);
 		if (ft_strncmp(error_msg, ": command not found", 19) == 0
 			|| ft_strncmp(error_msg, ": No such file or directory", 19) == 0)
 			exit(127);
@@ -48,6 +52,7 @@ int	ft_execve(t_shell *pro, char **args)
 	execve(base, args, pro->env);
 	free(base);
 	ft_print_error("minishell:", ": Failed to execute command", args, 2);
+	ft_executer_free(pro);
 	exit(0);
 }
 
@@ -58,9 +63,12 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 
 	res = 2;
 	if ((pro->pipe == 0) && pro->arg[s]->str && pro->arg[s]->str[0])
+	{
 		res = built_in2(pro->arg[s]->str, pro, pro->arg[s]);
+	}
 	if (res != 2)
 		return (res);
+	
 	res = heredoc_control(pro->arg[s]);
 	pid = fork();
 	if (pid == 0)
@@ -70,7 +78,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 			dup2(prev_fd, 0);
 			close(prev_fd);
 		}
-		handle_redirections(pro->arg[s]);
+		handle_redirections(pro,pro->arg[s]);
 		ft_execve(pro, pro->arg[s]->str);
 	}
 	if (prev_fd != -1)
@@ -98,7 +106,7 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 		dup2(fd[1], 1);
 		close(fd[0]);
 		close(fd[1]);
-		handle_redirections(pro->arg[cmd_index]);
+		handle_redirections(pro,pro->arg[cmd_index]);
 		ft_execve(pro, pro->arg[cmd_index]->str);
 	}
 	close(fd[1]);
