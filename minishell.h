@@ -1,3 +1,5 @@
+extern int g_signal_exit;
+
 typedef struct s_pro
 {
 	char **str;

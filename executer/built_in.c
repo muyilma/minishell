@@ -29,8 +29,10 @@ void	built_in3(char **args, t_shell *pro)
 
 void	built_in(char **args, t_shell *pro)
 {
-	if (ft_strncmp(args[0], "echo", 5) == 0)
+	if (ft_strncmp(args[0], "echo", 5) == 0){
+		ft_executer_free(pro);
 		ft_echo(&args[1]);
+	}
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
 		ft_env(pro->env, &args[1], pro);
