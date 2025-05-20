@@ -10,6 +10,7 @@
 
 void	handle_sigint(int sig)
 {
+	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -52,6 +53,7 @@ int	ft_executer(t_shell *input)
 
 void	ft_error(t_shell *input)
 {
+	
 	if (input->error == 2)
 		write(2, "minishell: open quotes \"\'", 26);
 	else if (input->error == 3)
@@ -66,7 +68,10 @@ int	main(int ac, char **av, char **env)
 	t_shell *input;
 	int exit_code;
 
+	(void)av;
+	(void)ac;
 	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT,SIG_IGN);
 	exit_code = 0;
 	while (1)
 	{

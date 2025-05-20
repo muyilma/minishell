@@ -14,12 +14,12 @@ void	ft_pwd(void)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
 	else
-		ft_print_error(NULL,"pwd not found", NULL, 1);
+		ft_print_error(NULL, "pwd not found", NULL, 1);
 }
 
 void	ft_env(char **env, char **args, t_shell *pro)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (args && args[0])

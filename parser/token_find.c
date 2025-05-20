@@ -34,7 +34,7 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 int	token_find(t_shell *ipt, int i, int j, int k)
 {
 	char *fakestr;
-	char *temp;
+	//char *temp;
 	int flag;
 
 	flag = 0;
@@ -44,7 +44,7 @@ int	token_find(t_shell *ipt, int i, int j, int k)
 	ipt->arg[k] = ft_calloc(1, sizeof(t_cmd));
 	if (!ipt->arg[k])
 		return (0);
-	temp = fakestr;
+	//temp = fakestr;
 	fakestr = redirect_convert(ipt, fakestr, k, &flag);
 	// if (temp !=fakestr)
 	// 	free(temp);

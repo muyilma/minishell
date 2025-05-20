@@ -14,21 +14,21 @@ char	*ft_getenv(char **env, char *name)
 
 	i = 0;
 	if (!env || !name)
-	return (NULL);
+		return (NULL);
 	len = ft_strlen(name);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-		return (env[i] + len + 1);
+			return (env[i] + len + 1);
 		i++;
 	}
-	
 	return (NULL);
 }
+
 char	**ft_setenv2(char **env, char *variable, int e, int j)
 {
-	int i;
-	char    *new_var;
+	int		i;
+	char	*new_var;
 
 	i = 0;
 	while (env[i])
@@ -41,14 +41,14 @@ char	**ft_setenv2(char **env, char *variable, int e, int j)
 		i++;
 	}
 	if (e == 1)
-    {
-        new_var = ft_substr(variable, 0, j);
-        env[i] = new_var;
-    }
-    else
-    {
-        env[i] = ft_strdup(variable);
-    }
+	{
+		new_var = ft_substr(variable, 0, j);
+		env[i] = new_var;
+	}
+	else
+	{
+		env[i] = ft_strdup(variable);
+	}
 	env[i + 1] = NULL;
 	return (env);
 }
@@ -57,14 +57,14 @@ char	**ft_setenv(char **env, char *variable, int e)
 {
 	int		j;
 	char	*equal_sign;
-	
+
 	if (!env || !variable)
 		return (env);
 	equal_sign = ft_strchr(variable, '=');
 	if (!equal_sign)
 		return (env);
 	j = equal_sign - variable;
-    return (ft_setenv2(env, variable, e, j));
+	return (ft_setenv2(env, variable, e, j));
 }
 
 void	ft_free(char **str)
@@ -82,15 +82,14 @@ void	ft_free(char **str)
 
 char	*pathc(char *cmd, char **envp, int i)
 {
-	char **path;
-	char *arg;
-	char *str;
-	char *path_value;
+	char	**path;
+	char	*arg;
+	char	*str;
+	char	*path_value;
 
 	path_value = ft_getenv(envp, "PATH");
 	if (!path_value)
 		return (NULL);
-
 	path = ft_split(path_value, ':');
 	while (path[++i])
 	{
