@@ -8,13 +8,28 @@
 #include <unistd.h>
 
 
+
+int		g_signal_exit = 0;
+
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (g_signal_exit == 1){
+		write(1, "\n", 1);
+		exit (0) ;
+	}
+	else if (g_signal_exit == 2)
+	{
+		write(1, "\n", 1);
+		return ;
+	}
+	else if (g_signal_exit == 0)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void	read_line(t_shell *input, char **env, int code)
@@ -51,7 +66,7 @@ int	ft_executer(t_shell *input)
 	return (exit);
 }
 
-void	ft_error(t_shell *input)
+int	ft_error(t_shell *input)
 {
 	
 	if (input->error == 2)
@@ -61,6 +76,7 @@ void	ft_error(t_shell *input)
 			57);
 	free(input->input);
 	free(input);
+	return (2);
 }
 
 int	main(int ac, char **av, char **env)
@@ -83,7 +99,6 @@ int	main(int ac, char **av, char **env)
 			exit_code = ft_executer(input);
 		}
 		else
-			ft_error(input);
-		
+			exit_code=ft_error(input);
 	}
 }
