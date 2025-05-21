@@ -29,28 +29,30 @@ char	**ft_setenv2(char **env, char *variable, int e, int j)
 {
 	int		i;
 	char	*new_var;
+	char    **new_env;
 
+	new_env = copy_env(env);
 	i = 0;
-	while (env[i])
+	while (new_env[i])
 	{
-		if (ft_strncmp(env[i], variable, j) == 0 && env[i][j] == '=')
+		if (ft_strncmp(new_env[i], variable, j) == 0 && new_env[i][j] == '=')
 		{
-			env[i] = ft_strdup(variable);
-			return (env);
+			new_env[i] = ft_strdup(variable);
+			return (new_env);
 		}
 		i++;
 	}
 	if (e == 1)
 	{
 		new_var = ft_substr(variable, 0, j);
-		env[i] = new_var;
+		new_env[i] = new_var;
 	}
 	else
 	{
-		env[i] = ft_strdup(variable);
+		new_env[i] = ft_strdup(variable);
 	}
-	env[i + 1] = NULL;
-	return (env);
+	new_env[i + 1] = NULL;
+	return (new_env);
 }
 
 char	**ft_setenv(char **env, char *variable, int e)
@@ -67,11 +69,14 @@ char	**ft_setenv(char **env, char *variable, int e)
 	return (ft_setenv2(env, variable, e, j));
 }
 
+
 void	ft_free(char **str)
 {
 	int	i;
 
 	i = 0;
+	if (!str)
+		return;
 	while (str[i] != 0)
 	{
 		free(str[i]);

@@ -37,7 +37,7 @@ void	built_in(char **args, t_shell *pro)
 	}
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
-		ft_env(pro->env, &args[1], pro);
+		ft_env(&args[1], pro);
 		error_and_allocate(pro,0);
 	}
 	if (ft_strncmp(args[0], "exit", 5) == 0)

@@ -17,7 +17,7 @@ void	ft_pwd(void)
 		ft_print_error(NULL, "pwd not found", NULL, 1);
 }
 
-void	ft_env(char **env, char **args, t_shell *pro)
+void	ft_env(char **args, t_shell *pro)
 {
 	int	i;
 
@@ -31,10 +31,10 @@ void	ft_env(char **env, char **args, t_shell *pro)
 		}
 		ft_export(&args[0], pro, 1);
 	}
-	while (env[i])
+	while (pro->env[i])
 	{
-		if (ft_strchr(env[i], '='))
-			printf("%s\n", env[i]);
+		if (ft_strchr(pro->env[i], '='))
+			printf("%s\n", pro->env[i]);
 		i++;
 	}
 }
