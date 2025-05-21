@@ -120,7 +120,7 @@ void	dollar_expand(t_shell *input)
 		if (input->input[i] == '"')
 			i = print_dollar(input, input->input[i], i + 1);
 		if (input->input[i] == '\'')
-			i = quotes_skip(input->input, i, 1);
+			i = quotes_skip(input->input, i, 1,0);
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 			i = heredock_dollar(input, i);
 		if (input->input[i] == '$')

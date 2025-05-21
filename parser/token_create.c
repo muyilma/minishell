@@ -20,7 +20,7 @@ static int	word_count(char *str)
 		while (str[i] && str[i] != ' ' && str[i] != '\t')
 		{
 			if (str[i] == 34 || str[i] == 39)
-				i = quotes_skip(str, i,0);
+				i = quotes_skip(str, i,0,0);
 			else
 				i++;
 		}
@@ -50,29 +50,12 @@ void	arg_create(char *str, char **newstr, int i, int j)
 	(*newstr)[k] = '\0';
 }
 
-int	arg_find2(char *str, int i, int *flag)
+void	arg_find(char *str, t_shell *ipt, int k,int i)
 {
-	while (str[i] && str[i] != ' ' && str[i] != '\t')
-	{
-		if (str[i] == 34 || str[i] == 39)
-		{
-			*flag += 2;
-			i = quotes_skip(str, i,0);
-		}
-		else
-			i++;
-	}
-	return (i);
-}
-
-void	arg_find(char *str, t_shell *ipt, int k)
-{
-	int i;
 	int j;
 	int l;
 	int flag;
 
-	i = 0;
 	l = 0;
 	flag = 0;
 	while (str[i])
@@ -82,8 +65,12 @@ void	arg_find(char *str, t_shell *ipt, int k)
 		if (!str[i])
 			break ;
 		j = i;
-		if (str[i] && str[i] != ' ' && str[i] != '\t')
-			i = arg_find2(str, i, &flag);
+		while (str[i] && str[i] != ' ' && str[i] != '\t')
+		{
+			if (str[i] == 34 || str[i] == 39)
+				i = quotes_skip(str, i,1,&flag);
+			i++;
+		}
 		ipt->arg[k]->str[l] = malloc((i - j) - flag + 1);
 		flag = 0;
 		arg_create(str, &ipt->arg[k]->str[l], i - 1, j);
@@ -103,5 +90,5 @@ void	arg_convert(t_shell *ipt, char *str, int k)
 	if (!ipt->arg[k]->str)
 		return ;
 	ipt->arg[k]->str[count] = NULL;
-	arg_find(str, ipt, k);
+	arg_find(str, ipt, k,0);
 }

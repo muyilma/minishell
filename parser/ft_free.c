@@ -4,20 +4,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	quotes_skip(char *str, int j, int flag)
+int	quotes_skip(char *str, int j, int flag,int *quotes)
 {
 	int		i;
 	char	qut;
-
+	
 	i = j;
 	if (str[i] == 34 || str[i] == 39)
 	{
 		qut = str[i++];
 		while (str[i] && str[i] != qut)
-			i++;
+		i++;
 		if (str[i] == qut)
-			i++;
+		i++;
 	}
+	if (quotes)
+		*quotes +=2;
 	if (flag == 1)
 		return (i - 1);
 	return (i);

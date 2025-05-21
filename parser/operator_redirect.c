@@ -5,11 +5,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
 int	redirect_control(char *redirect, int flag)
 {
-	int fd;
+	int	fd;
 
+	if (flag == -1)
+		return (0);
 	if (flag == 0)
 	{
 		if (access(redirect, R_OK) == -1)
@@ -20,9 +21,9 @@ int	redirect_control(char *redirect, int flag)
 	}
 	else if (flag == 1 || flag == 2)
 	{
-		if(flag==1)
+		if (flag == 1)
 			fd = open(redirect, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else 
+		else
 			fd = open(redirect, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 			return (1);
@@ -34,9 +35,9 @@ int	redirect_control(char *redirect, int flag)
 
 char	*strcut(char *str, int start, int *end, int size)
 {
-	int i;
-	int j;
-	char *newstr;
+	int		i;
+	int		j;
+	char	*newstr;
 
 	if (size <= 0)
 		return (NULL);
@@ -60,10 +61,10 @@ char	*strcut(char *str, int start, int *end, int size)
 
 char	*redirect_create(char *s, int start, int len, int flag)
 {
-	char *a;
-	int i;
-	char qut;
-	int j;
+	char	*a;
+	int		i;
+	char	qut;
+	int		j;
 
 	j = 0;
 	i = 0;
@@ -89,9 +90,10 @@ char	*redirect_create(char *s, int start, int len, int flag)
 
 char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 {
-	int j;
-	int k;
-	int quotes;
+	int		j;
+	int		k;
+	int		quotes;
+	char	*temp;
 
 	quotes = 0;
 	j = *t;
@@ -104,40 +106,40 @@ char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 	while (str[*t] != ' ' && str[*t] != '\0')
 	{
 		if (str[*t] == 34 || str[*t] == 39)
-		{
-			*t = quotes_skip(str, *t, 1);
-			quotes += 2;
-		}
+			*t = quotes_skip(str, *t, 1, &quotes);
 		(*t)++;
 	}
+	temp = *redirect;
 	*redirect = redirect_create(str, k, (*t) - k, quotes);
-	if (*flag != -1)
-		*flag = redirect_control(*redirect, *flag);
+	free(temp);
+	*flag = redirect_control(*redirect, *flag);
 	return (strcut(str, j, t, ft_strlen(str) - (*t - j)));
 }
 
 char	*redirect_find(char **redirect, char *str, int *i, int *flag)
 {
-	int j;
-
-	j = *i;
-	if (str[j] == '<' && str[j + 1] == '<')
+	if (str[*i] == '<' && str[*i + 1] == '<')
 	{
 		*flag = -1;
 		str = redirect_skip(redirect, str, i, flag);
 		*flag = 0;
 	}
-	else if (str[j] == '<')
+	else if (str[*i] == '<')
 		str = redirect_skip(redirect, str, i, flag);
-	else if (str[j] == '>' && str[j + 1] == '>')
+	else if (str[*i] == '>' && str[*i + 1] == '>')
 	{
 		*flag = 2;
 		str = redirect_skip(redirect, str, i, flag);
 	}
-	else if (str[j] == '>')
+	else if (str[*i] == '>')
 	{
 		*flag = 1;
 		str = redirect_skip(redirect, str, i, flag);
+	}
+	if (*flag != 0)
+	{
+		free(str);
+		return (NULL);
 	}
 	return (str);
 }

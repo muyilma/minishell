@@ -25,7 +25,7 @@ int	quotes_operator_counter(t_shell *a, int i)
 	}
 	if (a->input[i] == 39)
 	{
-		i = quotes_skip(a->input, i, 0);
+		i = quotes_skip(a->input, i, 0,0);
 		a->isprint++;
 	}
 	return (i - 1);
@@ -54,16 +54,13 @@ void	check_empty_line(t_shell *a)
 		a->error = 1;
 }
 
-int	op_checker2(t_shell *input, int i, int j)
+int	op_checker2(t_shell *input, int i, int j,int flag)
 {
-	int flag;
-
-	flag = 0;
 	while (input->input[++i] && input->input[i] != '|')
 	{
 		if (input->input[i] == 34 || input->input[i] == 39)
 		{
-			i = quotes_skip(input->input, i, 0);
+			i = quotes_skip(input->input, i, 0,0);
 			input->after_str++;
 		}
 		if (input->input[i] == '<' || input->input[i] == '>')
@@ -86,13 +83,18 @@ int	op_checker2(t_shell *input, int i, int j)
 int	op_checker(t_shell *input, int i)
 {
 	int j;
+	int flag;
 
+	flag=1;
 	j = i;
 	input->after_str = 0;
 	if (input->input[i] == '|' && input->isalpha == 0)
 		return (input->error = 3, i);
 	if (input->input[i] == '|')
+	{
 		input->isalpha = 0;
+		flag=0;
+	}
 	if (input->input[i] == '<' || input->input[i] == '>')
 	{
 		if (input->input[i + 1] == '<' || input->input[i + 1] == '>')
@@ -101,7 +103,7 @@ int	op_checker(t_shell *input, int i)
 			j++;
 		}
 	}
-	return (op_checker2(input, i, j));
+	return (op_checker2(input, i, j,flag));
 }
 
 void	operator_control(t_shell *a)
