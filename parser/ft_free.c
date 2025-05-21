@@ -52,7 +52,7 @@ void	redirect_free(t_shell *input, int i)
 	if (input->arg[i]->heradock)
 		free(input->arg[i]->heradock);
 	if (input->arg[i]->infile)
-		free(input->arg[i]->infile);
+        free(input->arg[i]->infile);
 	if (input->arg[i]->outfile)
 		free(input->arg[i]->outfile);
 }

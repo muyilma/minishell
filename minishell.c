@@ -18,7 +18,6 @@ void	handle_sigint(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		return;
 	}
 	else if (g_signal_exit == 2)
 	{
@@ -79,7 +78,9 @@ int	ft_error(t_shell *input)
 			57);
 	free(input->input);
 	free(input);
-	return (2);
+	if (input->error==2 || input->error==3)
+		return (2);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -98,9 +99,7 @@ int	main(int ac, char **av, char **env)
 		read_line(input, env, exit_code);
 		ft_parser(input);
 		if (input->error == 0)
-		{
 			exit_code = ft_executer(input);
-		}
 		else
 			exit_code=ft_error(input);
 	}

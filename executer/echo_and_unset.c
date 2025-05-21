@@ -49,7 +49,6 @@ void	ft_echo(char **args)
 		i++;
 	}
 	ft_echo2(args, i, newline);
-	exit(0);
 }
 
 void	ft_unset2(t_shell *pro, int j)
