@@ -33,14 +33,14 @@ void	handle_sigint(int sig)
 	}
 }
 
-char **copy_env(char **env)
+char **copy_env(char **env, int b)
 {
 	int i = 0;
 	char **copy;
 
 	while (env[i])
 		i++;
-	copy = malloc(sizeof(char *) * (i + 1));
+	copy = malloc(sizeof(char *) * (i + b + 1));
 	if (!copy)
 		return (NULL);
 	i = 0;
@@ -120,7 +120,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT,SIG_IGN);
 	exit_code = 0;
-	new_env = copy_env(env);
+	new_env = copy_env(env,0);
 	while (1)
 	{
 		input = malloc(sizeof(t_shell));
@@ -131,6 +131,7 @@ int	main(int ac, char **av, char **env)
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
 			{
+				ft_free(new_env);
 				new_env = input->env;
 			}
 			free(input);
