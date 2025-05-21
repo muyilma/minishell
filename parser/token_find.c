@@ -43,11 +43,14 @@ int	token_find(t_shell *ipt, int i, int j, int k)
 	fakestr = ft_substr(ipt->input, j, i - j);
 	ipt->arg[k] = ft_calloc(1, sizeof(t_cmd));
 	if (!ipt->arg[k])
+	{
+		free(fakestr);
 		return (0);
-	//temp = fakestr;
+	}
+	 //temp = fakestr;
 	fakestr = redirect_convert(ipt, fakestr, k, &flag);
-	// if (temp !=fakestr)
-	// 	free(temp);
+	// if (!fakestr && temp)
+	//	free(temp);
 	if (flag == 0)
 		arg_convert(ipt, fakestr, k);
 	free(fakestr);
@@ -64,7 +67,7 @@ void	token_create(t_shell *ipt, int len, int k,int flag)
 	ipt->arg = malloc(sizeof(t_cmd *) * (ipt->pipe + 2)); // burası +1di
 	if (!ipt->arg)
 		return ;
-	while (ipt->input[++i] && i < len)// len'i koymayınca fazladan 1 kere daha giriyor
+	while (i < len&& ipt->input[++i] )// len'i koymayınca fazladan 1 kere daha giriyor
 	{
 		flag++;
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)
