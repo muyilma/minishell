@@ -8,13 +8,15 @@
 
 char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 {
+	char *temp;
 	int i;
 
 	i = -1;
 	while (str[++i])
 	{
+		temp = str;
 		if (str[i] == 34 || str[i] == 39)
-			i = quotes_skip(str, i, 0);
+			i = quotes_skip(str, i, 0,0);
 		if (str[i] == '<' && str[i + 1] == '<')
 			str = redirect_find(&ipt->arg[k]->heradock, str, &i, flag);
 		else if (str[i] == '<')
@@ -24,9 +26,11 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 		else if (str[i] == '>')
 			str = redirect_find(&ipt->arg[k]->outfile, str, &i, flag);
 		if (!str)
+		{
+			if (*flag == 0)
+				free(temp);
 			return (NULL);
-		if (*flag != 0)
-			return (NULL);
+		}
 	}
 	return (str);
 }
@@ -34,7 +38,6 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 int	token_find(t_shell *ipt, int i, int j, int k)
 {
 	char *fakestr;
-	//char *temp;
 	int flag;
 
 	flag = 0;
@@ -43,21 +46,15 @@ int	token_find(t_shell *ipt, int i, int j, int k)
 	fakestr = ft_substr(ipt->input, j, i - j);
 	ipt->arg[k] = ft_calloc(1, sizeof(t_cmd));
 	if (!ipt->arg[k])
-	{
-		free(fakestr);
 		return (0);
-	}
-	 //temp = fakestr;
 	fakestr = redirect_convert(ipt, fakestr, k, &flag);
-	// if (!fakestr && temp)
-	//	free(temp);
 	if (flag == 0)
 		arg_convert(ipt, fakestr, k);
 	free(fakestr);
 	return (i);
 }
 
-void	token_create(t_shell *ipt, int len, int k,int flag)
+void	token_create(t_shell *ipt, int len, int k, int flag)
 {
 	int i;
 	int j;
@@ -67,11 +64,12 @@ void	token_create(t_shell *ipt, int len, int k,int flag)
 	ipt->arg = malloc(sizeof(t_cmd *) * (ipt->pipe + 2)); // burası +1di
 	if (!ipt->arg)
 		return ;
-	while (i < len&& ipt->input[++i] )// len'i koymayınca fazladan 1 kere daha giriyor
+	while (i < len && ipt->input[++i])
+	// len'i koymayınca fazladan 1 kere daha giriyor
 	{
 		flag++;
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)
-			i = quotes_skip(ipt->input, i, 1);
+			i = quotes_skip(ipt->input, i, 1,0);
 		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || ipt->input[i
 			+ 1] == '\0')
 		{
