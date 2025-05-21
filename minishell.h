@@ -38,7 +38,7 @@ void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	quotes_control(t_shell *input);
 void	ft_executer_free(t_shell *input);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
-
+char **copy_env(char **env);
 
 
 void	handle_redirections(t_shell *shell,t_cmd *pro);
@@ -49,7 +49,7 @@ void	ft_pwd(void);
 int	built_in2(char **args, t_shell *pro, t_cmd *arg);
 void ft_echo(char **args);
 int	ft_unset(char **args, t_shell *pro);
-void	ft_env(char **env, char **args, t_shell *pro);
+void	ft_env(char **args, t_shell *pro);
 int ft_exit(char **args);
 int	ft_cd(char **args, t_shell *pro);
 int	ft_export(char **args, t_shell *pro, int envflag);
@@ -65,3 +65,4 @@ int heredoc_control(t_cmd *pro);
 int check_redirect_access_input(char *filename, char **error_msg);
 int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status);
 void error_and_allocate(t_shell *pro, int exit_code);
+void	ft_free(char **str);

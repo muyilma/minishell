@@ -25,38 +25,53 @@ char	*ft_getenv(char **env, char *name)
 	return (NULL);
 }
 
-char	**ft_setenv2(char **env, char *variable, int e, int j)
+char **ft_setenv2(char **env, char *variable, int e, int j)
 {
-	int		i;
-	char	*new_var;
+	int i = 0;
+	int env_len = 0;
+	char *new_var;
+	char **new_env;
 
-	i = 0;
-	while (env[i])
+	while (env[env_len])
+		env_len++;
+	while (i < env_len)
 	{
 		if (ft_strncmp(env[i], variable, j) == 0 && env[i][j] == '=')
 		{
-			env[i] = ft_strdup(variable);
-			return (env);
+			new_env = copy_env(env);
+			if (!new_env)
+				return NULL;
+			free(new_env[i]);
+			new_env[i] = ft_strdup(variable);
+			return (new_env);
 		}
 		i++;
 	}
+	new_env = malloc(sizeof(char *) * (env_len + 2));
+	if (!new_env)
+		return NULL;
+	i = 0;
+	while (i < env_len)
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
 	if (e == 1)
-	{
 		new_var = ft_substr(variable, 0, j);
-		env[i] = new_var;
-	}
 	else
-	{
-		env[i] = ft_strdup(variable);
-	}
-	env[i + 1] = NULL;
-	return (env);
+		new_var = ft_strdup(variable);
+
+	new_env[i] = new_var;
+	new_env[i + 1] = NULL;
+
+	return (new_env);
 }
 
-char	**ft_setenv(char **env, char *variable, int e)
+
+char **ft_setenv(char **env, char *variable, int e)
 {
-	int		j;
-	char	*equal_sign;
+	int j;
+	char *equal_sign;
 
 	if (!env || !variable)
 		return (env);
@@ -66,6 +81,7 @@ char	**ft_setenv(char **env, char *variable, int e)
 	j = equal_sign - variable;
 	return (ft_setenv2(env, variable, e, j));
 }
+
 
 void	ft_free(char **str)
 {

@@ -33,6 +33,34 @@ void	handle_sigint(int sig)
 	}
 }
 
+char **copy_env(char **env)
+{
+	int i = 0;
+	char **copy;
+
+	while (env[i])
+		i++;
+	copy = malloc(sizeof(char *) * (i + 1));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		copy[i] = ft_strdup(env[i]); // her satırı strdup ile kopyala
+		if (!copy[i])
+		{
+			// eğer strdup başarısız olursa, öncekileri serbest bırak
+			while (i--)
+				free(copy[i]);
+			free(copy);
+			return (NULL);
+		}
+		i++;
+	}
+	copy[i] = NULL;
+	return (copy);
+}
+
 void	read_line(t_shell *input, char **env, int code)
 {
 	input->original_stdin = dup(0);
@@ -87,19 +115,28 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell *input;
 	int exit_code;
+	char 	**new_env;
 
 	(void)av;
 	(void)ac;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT,SIG_IGN);
 	exit_code = 0;
+	new_env = copy_env(env);
 	while (1)
 	{
 		input = malloc(sizeof(t_shell));
-		read_line(input, env, exit_code);
+		read_line(input, new_env, exit_code);
 		ft_parser(input);
 		if (input->error == 0)
+		{
 			exit_code = ft_executer(input);
+			if (input->env != new_env)
+			{
+				ft_free(new_env);
+				new_env = input->env;
+			}
+		}
 		else
 			exit_code=ft_error(input);
 	}

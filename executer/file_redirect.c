@@ -7,6 +7,7 @@
 
 void error_and_allocate(t_shell *pro, int exit_code)
 {
+	ft_free(pro->env);
 	ft_executer_free(pro);
 	exit(exit_code);
 }
