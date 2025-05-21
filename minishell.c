@@ -46,10 +46,9 @@ char **copy_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		copy[i] = ft_strdup(env[i]); // her satırı strdup ile kopyala
+		copy[i] = ft_strdup(env[i]);
 		if (!copy[i])
 		{
-			// eğer strdup başarısız olursa, öncekileri serbest bırak
 			while (i--)
 				free(copy[i]);
 			free(copy);
@@ -88,7 +87,6 @@ void	read_line(t_shell *input, char **env, int code)
 
 int	ft_executer(t_shell *input)
 {
-
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
@@ -133,9 +131,9 @@ int	main(int ac, char **av, char **env)
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
 			{
-				ft_free(new_env);
 				new_env = input->env;
 			}
+			free(input);
 		}
 		else
 			exit_code=ft_error(input);
