@@ -38,7 +38,7 @@ void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	quotes_control(t_shell *input);
 void	ft_executer_free(t_shell *input);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
-char **copy_env(char **env);
+char **copy_env(char **env, int b);
 
 
 void	handle_redirections(t_shell *shell,t_cmd *pro);
