@@ -91,6 +91,6 @@ int	ft_export(char **args, t_shell *pro, int envflag)
 		i++;
 	}
 	if (envflag == 1)
-		ft_env(NULL,pro);
+		ft_env(NULL, pro);
 	return (ex);
 }

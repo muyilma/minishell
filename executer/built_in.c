@@ -13,17 +13,22 @@ void	built_in3(char **args, t_shell *pro)
 	if (ft_strncmp(args[0], "unset", 5) == 0)
 	{
 		ft_unset(&args[1], pro);
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
 	}
 	if (ft_strncmp(args[0], "export", 7) == 0)
 	{
 		ft_export(&args[1], pro, 0);
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
 	}
 	if (ft_strncmp(args[0], "pwd", 4) == 0)
 	{
 		ft_pwd();
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
+	}
+	if (ft_strncmp(args[0], "exit", 5) == 0)
+	{
+		ft_exit(&args[1], pro);
+		error_and_allocate(pro, 0);
 	}
 }
 
@@ -32,27 +37,22 @@ void	built_in(char **args, t_shell *pro)
 	if (ft_strncmp(args[0], "echo", 5) == 0)
 	{
 		ft_echo(&args[1]);
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
 	}
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
 		ft_env(&args[1], pro);
-		error_and_allocate(pro,0);
-	}
-	if (ft_strncmp(args[0], "exit", 5) == 0)
-	{
-		ft_exit(&args[1]);
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
 	}
 	if (ft_strncmp(args[0], "cd", 3) == 0)
 	{
 		if (args[1] && args[2])
 		{
 			ft_print_error(NULL, "minishell: cd: too many arguments", NULL, 1);
-			error_and_allocate(pro,1);
+			error_and_allocate(pro, 1);
 		}
 		ft_cd(&args[1], pro);
-		error_and_allocate(pro,0);
+		error_and_allocate(pro, 0);
 	}
 	built_in3(args, pro);
 }
@@ -90,7 +90,7 @@ void	built_in2_redirection(char **args, t_cmd *arg, int *original_stdout,
 				*original_stdout = dup(1);
 			if (arg->infile)
 				*original_stdin = dup(0);
-			handle_redirections(NULL,arg);
+			handle_redirections(NULL, arg);
 		}
 	}
 }
@@ -103,7 +103,7 @@ int	built_in2(char **args, t_shell *pro, t_cmd *arg)
 
 	built_in2_redirection(args, arg, &original_stdout, &original_stdin);
 	if (ft_strncmp(args[0], "exit", 5) == 0)
-		result = ft_exit(&args[1]);
+		result = ft_exit(&args[1], pro);
 	else if (ft_strncmp(args[0], "cd", 3) == 0)
 	{
 		if (args[1] && args[2])

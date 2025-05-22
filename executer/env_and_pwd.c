@@ -7,6 +7,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void	error_and_allocate(t_shell *pro, int exit_code)
+{
+	ft_executer_free(pro);
+	if (pro->env != pro->new_env)
+		ft_free(pro->new_env);
+	ft_free(pro->env);
+	free(pro);
+	exit(exit_code);
+}
+
 void	ft_pwd(void)
 {
 	char	cwd[1024];
@@ -26,8 +36,9 @@ void	ft_env(char **args, t_shell *pro)
 	{
 		if (ft_strchr(args[0], '=') == NULL)
 		{
-			perror("env:");
-			exit(0);
+			ft_print_error("minishell:", ": No such file or directory", args,
+				2);
+			error_and_allocate(pro, 127);
 		}
 		ft_export(&args[0], pro, 1);
 	}

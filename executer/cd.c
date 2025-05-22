@@ -22,7 +22,7 @@ int	ft_cd4(t_shell *pro, char *old_cwd, char *cwd)
 	free(new_pwd);
 	new_oldpwd = malloc(ft_strlen(old_cwd) + 8);
 	if (!new_oldpwd)
-	return (1);
+		return (1);
 	ft_strlcpy(new_oldpwd, "OLDPWD=", 8);
 	ft_strlcat(new_oldpwd, old_cwd, ft_strlen(old_cwd) + 8);
 	pro->env = ft_setenv(env, new_oldpwd, 0);
@@ -42,7 +42,6 @@ int	ft_cd3(t_shell *pro, char *old_cwd, char *cwd, char *path)
 			return (126);
 		return (1);
 	}
-	
 	if (chdir(path) != 0)
 	{
 		ft_print_error("minishell: cd:", ": Failed to change directory", &path,
@@ -54,7 +53,6 @@ int	ft_cd3(t_shell *pro, char *old_cwd, char *cwd, char *path)
 		ft_print_error(NULL, "pwd not found", NULL, 1);
 		return (1);
 	}
-	
 	return (ft_cd4(pro, old_cwd, cwd));
 }
 

@@ -28,30 +28,25 @@ char	*ft_getenv(char **env, char *name)
 char	**ft_setenv2(char **env, char *variable, int e, int j)
 {
 	int		i;
-	char	*new_var;
-	char    **new_env;
+	char	**new_env;
 
 	i = 0;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], variable, j) == 0 && env[i][j] == '=')
 		{
-			new_env = copy_env(env,0);
+			new_env = copy_env(env, 0);
+			free(new_env[i]);
 			new_env[i] = ft_strdup(variable);
 			return (new_env);
 		}
 		i++;
 	}
-	new_env = copy_env(env,1);
+	new_env = copy_env(env, 1);
 	if (e == 1)
-	{
-		new_var = ft_substr(variable, 0, j);
-		new_env[i] = new_var;
-	}
+		new_env[i] = ft_substr(variable, 0, j);
 	else
-	{
 		new_env[i] = ft_strdup(variable);
-	}
 	new_env[i + 1] = NULL;
 	return (new_env);
 }
@@ -70,13 +65,12 @@ char	**ft_setenv(char **env, char *variable, int e)
 	return (ft_setenv2(env, variable, e, j));
 }
 
-
 void	ft_free(char **str)
 {
 	int	i;
 
 	if (!str)
-		return;
+		return ;
 	i = 0;
 	while (str[i] != NULL)
 	{
@@ -87,7 +81,6 @@ void	ft_free(char **str)
 	free(str);
 	str = NULL;
 }
-
 
 char	*pathc(char *cmd, char **envp, int i)
 {
