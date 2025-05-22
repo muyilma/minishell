@@ -7,14 +7,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	ft_exit(char **args)
+int	ft_exit(char **args, t_shell *pro)
 {
 	int	exit_status;
 	int	i;
 
 	printf("exit\n");
 	if (!args || !args[0])
-		exit(0);
+		error_and_allocate(pro, 0);
 	exit_status = ft_atoi(args[0]);
 	if (args[1])
 	{
@@ -29,7 +29,7 @@ int	ft_exit(char **args)
 		{
 			ft_print_error("bash: exit:", ": numeric argument required", args,
 				2);
-			exit(2);
+			error_and_allocate(pro, 2);
 		}
 		i++;
 	}

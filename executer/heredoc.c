@@ -26,7 +26,7 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	{
 		input = readline("> ");
 		printf("---\n");
-		if (!input || g_signal_exit==23)
+		if (!input || g_signal_exit == 23)
 		{
 			printf("222222222\n");
 			write(2, "minishell: warning: here-document at line by", 45);
@@ -51,11 +51,11 @@ int	redirect_heredoc_to_stdin(char *delimiter)
 	int	fd[2];
 	int	heredoc_status;
 
-	g_signal_exit=1;
+	g_signal_exit = 1;
 	heredoc_status = 0;
 	if (pipe(fd) == -1)
 	{
-		perror("minishell: pipe");
+		ft_print_error(NULL, ": Permission denied", NULL, 1);
 		return (-1);
 	}
 	redirect_heredoc_write(&fd[1], delimiter, heredoc_status);

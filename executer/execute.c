@@ -8,20 +8,21 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int	wait_child(pid_t pid)
+int wait_child(pid_t pid)
 {
-	int	status;
-	int	exit_code;
+	int status;
+	int exit_code = 0;
+	pid_t ended_pid;
 
-	waitpid(pid, &status, 0);
-	wait(NULL);
-	if (WIFEXITED(status))
+	while ((ended_pid = wait(&status)) > 0)
 	{
-		exit_code = WEXITSTATUS(status);
-		if (exit_code != 0)
-			return (exit_code);
+		if (ended_pid == pid)
+		{
+			if (WIFEXITED(status))
+				exit_code = WEXITSTATUS(status);
+		}
 	}
-	return (0);
+	return (exit_code);
 }
 
 int	ft_execve(t_shell *pro, char **args)
@@ -31,29 +32,26 @@ int	ft_execve(t_shell *pro, char **args)
 
 	if (!args || !args[0])
 	{
-		ft_executer_free(pro);
-		exit(1);
+		error_and_allocate(pro, 1);
 	}
 	built_in(args, pro);
 	base = check_command_access(args[0], pro->env, &error_msg);
 	if (!base)
-	{			
+	{
 		ft_print_error("minishell:", error_msg, args, 2);
-		ft_executer_free(pro);
 		if (ft_strncmp(error_msg, ": command not found", 19) == 0
 			|| ft_strncmp(error_msg, ": No such file or directory", 19) == 0)
-			exit(127);
+			error_and_allocate(pro, 127);
 		else if (ft_strncmp(error_msg, ": Permission denied", 19) == 0
 			|| ft_strncmp(error_msg, ": Is a directory", 19) == 0)
-			exit(126);
+			error_and_allocate(pro, 126);
 		else
-			exit(1);
+			error_and_allocate(pro, 1);
 	}
 	execve(base, args, pro->env);
 	free(base);
 	ft_print_error("minishell:", ": Failed to execute command", args, 2);
-	ft_executer_free(pro);
-	exit(0);
+	error_and_allocate(pro, 1);
 }
 
 int	execute_last(t_shell *pro, int s, int prev_fd)
@@ -63,12 +61,9 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 
 	res = 2;
 	if ((pro->pipe == 0) && pro->arg[s]->str && pro->arg[s]->str[0])
-	{
 		res = built_in2(pro->arg[s]->str, pro, pro->arg[s]);
-	}
 	if (res != 2)
 		return (res);
-	
 	res = heredoc_control(pro->arg[s]);
 	pid = fork();
 	if (pid == 0)
@@ -78,7 +73,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 			dup2(prev_fd, 0);
 			close(prev_fd);
 		}
-		handle_redirections(pro,pro->arg[s]);
+		handle_redirections(pro, pro->arg[s]);
 		ft_execve(pro, pro->arg[s]->str);
 	}
 	if (prev_fd != -1)
@@ -104,9 +99,9 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 			close(*prev_fd);
 		}
 		dup2(fd[1], 1);
-		close(fd[0]);
 		close(fd[1]);
-		handle_redirections(pro,pro->arg[cmd_index]);
+		close(fd[0]);
+		handle_redirections(pro, pro->arg[cmd_index]);
 		ft_execve(pro, pro->arg[cmd_index]->str);
 	}
 	close(fd[1]);

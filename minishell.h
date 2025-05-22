@@ -12,6 +12,7 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	char *input;
+	char **new_env;
 	int original_stdin;
 	int after_str;
 	char qut;
@@ -52,7 +53,7 @@ int	built_in2(char **args, t_shell *pro, t_cmd *arg);
 void ft_echo(char **args);
 int	ft_unset(char **args, t_shell *pro);
 void	ft_env(char **args, t_shell *pro);
-int ft_exit(char **args);
+int ft_exit(char **args, t_shell *pro);
 int	ft_cd(char **args, t_shell *pro);
 int	ft_export(char **args, t_shell *pro, int envflag);
 char	**ft_setenv(char **env, char *variable, int e);
