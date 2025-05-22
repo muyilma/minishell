@@ -8,15 +8,14 @@
 
 char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 {
-	char *temp;
 	int i;
 
 	i = -1;
 	while (str[++i])
 	{
-		temp = str;
+		ipt->temp = str;
 		if (str[i] == 34 || str[i] == 39)
-			i = quotes_skip(str, i, 0,0);
+			i = quotes_skip(str, i, 0, 0);
 		if (str[i] == '<' && str[i + 1] == '<')
 			str = redirect_find(&ipt->arg[k]->heradock, str, &i, flag);
 		else if (str[i] == '<')
@@ -25,10 +24,11 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 			str = redirect_find(&ipt->arg[k]->append_outfile, str, &i, flag);
 		else if (str[i] == '>')
 			str = redirect_find(&ipt->arg[k]->outfile, str, &i, flag);
-		if (!str)
+		if (!str || *flag != 0)
 		{
-			if (*flag == 0)
-				free(temp);
+			if (!str)
+				free(ipt->temp);
+			free(str);
 			return (NULL);
 		}
 	}
@@ -39,7 +39,7 @@ int	token_find(t_shell *ipt, int i, int j, int k)
 {
 	char *fakestr;
 	int flag;
-
+	
 	flag = 0;
 	if (ipt->input[i + 1] == '\0')
 		i++;
@@ -69,7 +69,7 @@ void	token_create(t_shell *ipt, int len, int k, int flag)
 	{
 		flag++;
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)
-			i = quotes_skip(ipt->input, i, 1,0);
+			i = quotes_skip(ipt->input, i, 1, 0);
 		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || ipt->input[i
 			+ 1] == '\0')
 		{

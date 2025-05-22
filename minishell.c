@@ -60,6 +60,7 @@ char **copy_env(char **env, int b)
 	return (copy);
 }
 
+
 void	read_line(t_shell *input, char **env, int code)
 {
 	input->original_stdin = dup(0);
@@ -72,15 +73,16 @@ void	read_line(t_shell *input, char **env, int code)
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
-	input->new_env = env;
 	input->env = env;
 	input->arg = NULL;
+	input->temp = NULL;
 	input->exit_code = code;
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
 		ft_print_error(NULL, "exit", NULL, 1);
-		error_and_allocate(input,0);
+		free(input);
+		exit(0);
 	}
 	add_history(input->input);
 }

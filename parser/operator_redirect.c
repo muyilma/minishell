@@ -136,10 +136,6 @@ char	*redirect_find(char **redirect, char *str, int *i, int *flag)
 		*flag = 1;
 		str = redirect_skip(redirect, str, i, flag);
 	}
-	if (*flag != 0)
-	{
-		free(str);
-		return (NULL);
-	}
+	
 	return (str);
 }

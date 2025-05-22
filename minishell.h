@@ -13,6 +13,7 @@ typedef struct s_shell
 {
 	char *input;
 	char **new_env;
+	char *temp;
 	int original_stdin;
 	int after_str;
 	char qut;
