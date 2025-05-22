@@ -15,14 +15,12 @@ void	handle_sigint(int sig)
 	if (g_signal_exit == 1){
 		write(1, "\n", 1);
 		g_signal_exit=23;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		return;
 	}
 	else if (g_signal_exit == 2)
 	{
 		write(1, "\n", 1);
-		return ;
+		exit(130);
 	}
 	else if (g_signal_exit == 0)
 	{
@@ -80,9 +78,9 @@ void	read_line(t_shell *input, char **env, int code)
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
+		
 		ft_print_error(NULL, "exit", NULL, 1);
-		free(input);
-		exit(0);
+		error_and_allocate(input, 0);
 	}
 	add_history(input->input);
 }
@@ -133,7 +131,7 @@ int	main(int ac, char **av, char **env)
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
 			{
-				ft_free(new_env);
+				// ft_free(new_env);
 				new_env = input->env;
 			}
 			free(input);

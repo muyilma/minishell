@@ -53,6 +53,7 @@ void	ft_echo(char **args)
 
 void	ft_unset2(t_shell *pro, int j)
 {
+	free(pro->env[j]);
 	while (pro->env[j + 1])
 	{
 		pro->env[j] = pro->env[j + 1];

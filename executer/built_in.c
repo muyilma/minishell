@@ -17,7 +17,7 @@ void	built_in3(char **args, t_shell *pro)
 	}
 	if (ft_strncmp(args[0], "export", 7) == 0)
 	{
-		ft_export(&args[1], pro, 0);
+		ft_export(&args[1], pro);
 		error_and_allocate(pro, 0);
 	}
 	if (ft_strncmp(args[0], "pwd", 4) == 0)
@@ -117,7 +117,7 @@ int	built_in2(char **args, t_shell *pro, t_cmd *arg)
 	else if (ft_strncmp(args[0], "unset", 5) == 0)
 		result = ft_unset(&args[1], pro);
 	else if (ft_strncmp(args[0], "export", 7) == 0)
-		result = ft_export(&args[1], pro, 0);
+		result = ft_export(&args[1], pro);
 	else
 		result = 2;
 	built_in2_redirection2(&original_stdout, &original_stdin);

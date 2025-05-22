@@ -32,15 +32,10 @@ void	ft_env(char **args, t_shell *pro)
 	int	i;
 
 	i = 0;
-	if (args && args[0])
+	if (args[0])
 	{
-		if (ft_strchr(args[0], '=') == NULL)
-		{
-			ft_print_error("minishell:", ": No such file or directory", args,
-				2);
-			error_and_allocate(pro, 127);
-		}
-		ft_export(&args[0], pro, 1);
+		ft_print_error(NULL, "env: too many arguments", NULL, 1);
+		error_and_allocate(pro, 1);
 	}
 	while (pro->env[i])
 	{
