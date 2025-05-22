@@ -35,19 +35,19 @@ void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char *variable)
 		variable = ft_strjoin(arg, "=");
 		if (variable)
 		{
-			pro->env = ft_setenv(pro->env, variable, 1);
+			pro->env = ft_setenv(pro->env, variable);
 			free(variable);
 		}
 	}
 }
 
-int	ft_cmdcess_export_arg(char *arg, t_shell *pro, int envflag)
+int	ft_cmdcess_export_arg(char *arg, t_shell *pro)
 {
 	char	*equal_sign;
 	char	*variable;
 
 	variable = NULL;
-	if ((ft_export_parser(arg) == 1) && envflag == 0)
+	if ((ft_export_parser(arg) == 1))
 	{
 		ft_print_error("minishell: export: ", " : not a valid identifier", &arg,
 			2);
@@ -59,7 +59,7 @@ int	ft_cmdcess_export_arg(char *arg, t_shell *pro, int envflag)
 		variable = ft_strdup(arg);
 		if (variable)
 		{
-			pro->env = ft_setenv(pro->env, variable, 0);
+			pro->env = ft_setenv(pro->env, variable);
 			free(variable);
 		}
 	}
@@ -70,7 +70,7 @@ int	ft_cmdcess_export_arg(char *arg, t_shell *pro, int envflag)
 	return (0);
 }
 
-int	ft_export(char **args, t_shell *pro, int envflag)
+int	ft_export(char **args, t_shell *pro)
 {
 	int	i;
 	int	ex;
@@ -87,10 +87,8 @@ int	ft_export(char **args, t_shell *pro, int envflag)
 	}
 	while (args[i])
 	{
-		ex = ft_cmdcess_export_arg(args[i], pro, envflag);
+		ex = ft_cmdcess_export_arg(args[i], pro);
 		i++;
 	}
-	if (envflag == 1)
-		ft_env(NULL, pro);
 	return (ex);
 }

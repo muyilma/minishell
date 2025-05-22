@@ -38,7 +38,6 @@ void	dollar_expand(t_shell *input);
 void	token_create(t_shell *ipt, int len, int k,int flag);
 void	quotes_control(t_shell *input);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
-char **copy_env(char **env, int b);
 
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	ft_executer_free(t_shell *input);
@@ -56,8 +55,8 @@ int	ft_unset(char **args, t_shell *pro);
 void	ft_env(char **args, t_shell *pro);
 int ft_exit(char **args, t_shell *pro);
 int	ft_cd(char **args, t_shell *pro);
-int	ft_export(char **args, t_shell *pro, int envflag);
-char	**ft_setenv(char **env, char *variable, int e);
+int	ft_export(char **args, t_shell *pro);
+char	**ft_setenv(char **env, char *variable);
 char	*ft_getenv(char **env, char *name);
 int check_directory_access(char *path, char **error_msg);
 char *check_command_access(char *cmd, char **env, char **error_msg);
