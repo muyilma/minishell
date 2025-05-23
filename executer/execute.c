@@ -115,6 +115,7 @@ int	execute_pipe(t_shell *pro, int start_idx)
 	int	prev_fd;
 	int	i;
 
+	g_signal_exit=2;
 	prev_fd = -1;
 	i = start_idx;
 	if (!pro->arg[0])

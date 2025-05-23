@@ -15,7 +15,7 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 	{
 		ipt->temp = str;
 		if (str[i] == 34 || str[i] == 39)
-			i = quotes_skip(str, i, 0, 0);
+			i = quotes_skip(str, i, 1, 0);
 		if (str[i] == '<' && str[i + 1] == '<')
 			str = redirect_find(&ipt->arg[k]->heradock, str, &i, flag);
 		else if (str[i] == '<')

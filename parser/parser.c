@@ -60,7 +60,7 @@ int	op_checker2(t_shell *input, int i, int j,int flag)
 	{
 		if (input->input[i] == 34 || input->input[i] == 39)
 		{
-			i = quotes_skip(input->input, i, 0,0);
+			i = quotes_skip(input->input, i, 1,0);
 			input->after_str++;
 		}
 		if (input->input[i] == '<' || input->input[i] == '>')

@@ -20,7 +20,7 @@ void	handle_sigint(int sig)
 	else if (g_signal_exit == 2)
 	{
 		write(1, "\n", 1);
-		exit(130);
+		rl_on_new_line();
 	}
 	else if (g_signal_exit == 0)
 	{
@@ -106,8 +106,8 @@ int	ft_error(t_shell *input)
 	free(input->input);
 	free(input);
 	if (input->error==2 || input->error==3)
-		exit (2);
-	exit (0);
+		return (2);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -124,6 +124,7 @@ int	main(int ac, char **av, char **env)
 	new_env = copy_env(env,0);
 	while (1)
 	{
+		g_signal_exit=0;
 		input = malloc(sizeof(t_shell));
 		read_line(input, new_env, exit_code);
 		ft_parser(input);
@@ -131,10 +132,7 @@ int	main(int ac, char **av, char **env)
 		{
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
-			{
-				// ft_free(new_env);
 				new_env = input->env;
-			}
 			free(input);
 		}
 		else
