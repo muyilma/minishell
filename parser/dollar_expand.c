@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-int	convert_shell(t_shell *input, char *veriable, int plen, int i)
+int	change_input(t_shell *input, char *veriable, int plen, int i)
 {
 	char *newinput;
 	int len;
@@ -44,7 +44,7 @@ int	find_path(t_shell *input, int i, int point)
 	if (input->input[i + 1] == '?')
 	{
 		veriable = ft_itoa(input->exit_code);
-		i = convert_shell(input, veriable, 1, i);
+		i = change_input(input, veriable, 1, i);
 		free(veriable);
 		return (i + 1);
 	}
@@ -59,12 +59,12 @@ int	find_path(t_shell *input, int i, int point)
 	}
 	path = ft_substr(input->input, i + 1, j - i);
 	veriable = ft_getenv(input->env, path);
-	i = convert_shell(input, veriable, ft_strlen(path), i);
+	i = change_input(input, veriable, ft_strlen(path), i);
 	free(path);
 	return (i);
 }
 
-int	print_dollar(t_shell *ipt, char point, int i)
+int	dollar_handle(t_shell *ipt, char point, int i)
 {
 	int flag;
 
@@ -119,13 +119,13 @@ void	dollar_expand(t_shell *input)
 	while (input->input[i])
 	{
 		if (input->input[i] == '"')
-			i = print_dollar(input, input->input[i], i + 1);
+			i = dollar_handle(input, input->input[i], i + 1);
 		if (input->input[i] == '\'')
-			i = quotes_skip(input->input, i, 1,0);
+			i = quotes_skip(input->input, i, 1, 0);
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 			i = heredock_dollar(input, i);
 		if (input->input[i] == '$')
-			i = print_dollar(input, input->input[i], i);
+			i = dollar_handle(input, input->input[i], i);
 		i++;
 	}
 }
