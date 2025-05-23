@@ -64,7 +64,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 		res = built_in2(pro->arg[s]->str, pro, pro->arg[s]);
 	if (res != 2)
 		return (res);
-	res = heredoc_control(pro->arg[s]);
+	res = heredoc_control(pro->arg[s], pro->original_stdin);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -88,7 +88,7 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 	pid_t	pid;
 	int		heredoc;
 
-	heredoc = heredoc_control(pro->arg[cmd_index]);
+	heredoc = heredoc_control(pro->arg[cmd_index], pro->original_stdin);
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
