@@ -7,15 +7,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+
 int		g_signal_exit = 0;
 
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	if (g_signal_exit == 1){
+	if (g_signal_exit == 1)
+	{
 		write(1, "\n", 1);
-		g_signal_exit=23;
-		return;
+		g_signal_exit = 23;
+		return ;
 	}
 	else if (g_signal_exit == 2)
 	{
@@ -31,10 +33,11 @@ void	handle_sigint(int sig)
 	}
 }
 
-char **copy_env(char **env, int b)
+char	**copy_env(char **env, int b)
 {
 	int i = 0;
-	char **copy;
+	char **copy;int		g_signal_exit = 0;
+
 
 	while (env[i])
 		i++;
@@ -60,8 +63,8 @@ char **copy_env(char **env, int b)
 
 void	read_line(t_shell *input, char **env, int code)
 {
+	input->original_stdin = dup(0);
 	input->input = NULL;
-	input->temp=NULL;
 	input->isprint = 0;
 	input->isalpha = 0;
 	input->pipe = 0;
@@ -72,19 +75,16 @@ void	read_line(t_shell *input, char **env, int code)
 	input->dollar = 0;
 	input->env = env;
 	input->arg = NULL;
+	input->temp = NULL;
 	input->exit_code = code;
-
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
-		
 		ft_print_error(NULL, "exit", NULL, 1);
 		error_and_allocate(input, 0);
-
 	}
 	add_history(input->input);
 }
-
 
 int	ft_executer(t_shell *input)
 {
@@ -97,7 +97,6 @@ int	ft_executer(t_shell *input)
 
 int	ft_error(t_shell *input)
 {
-	
 	if (input->error == 2)
 		write(2, "minishell: open quotes \"\'", 26);
 	else if (input->error == 3)
@@ -105,7 +104,7 @@ int	ft_error(t_shell *input)
 			57);
 	free(input->input);
 	free(input);
-	if (input->error==2 || input->error==3)
+	if (input->error == 2 || input->error == 3)
 		return (2);
 	return (0);
 }
@@ -114,17 +113,17 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell *input;
 	int exit_code;
-	char 	**new_env;
+	char **new_env;
 
 	(void)av;
 	(void)ac;
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT,SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	exit_code = 0;
-	new_env = copy_env(env,0);
+	new_env = copy_env(env, 0);
 	while (1)
 	{
-		g_signal_exit=0;
+		g_signal_exit = 0;
 		input = malloc(sizeof(t_shell));
 		read_line(input, new_env, exit_code);
 		ft_parser(input);
@@ -132,10 +131,13 @@ int	main(int ac, char **av, char **env)
 		{
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
+			{
+				// ft_free(new_env);
 				new_env = input->env;
+			}
 			free(input);
 		}
 		else
-			exit_code=ft_error(input);
+			exit_code = ft_error(input);
 	}
 }

@@ -25,7 +25,7 @@ int	quotes_operator_counter(t_shell *a, int i)
 	}
 	if (a->input[i] == 39)
 	{
-		i = quotes_skip(a->input, i, 0,0);
+		i = quotes_skip(a->input, i, 0, 0);
 		a->isprint++;
 	}
 	return (i - 1);
@@ -54,13 +54,13 @@ void	check_empty_line(t_shell *a)
 		a->error = 1;
 }
 
-int	op_checker2(t_shell *input, int i, int j,int flag)
+int	operator_after(t_shell *input, int i, int j, int flag)
 {
 	while (input->input[++i] && input->input[i] != '|')
 	{
 		if (input->input[i] == 34 || input->input[i] == 39)
 		{
-			i = quotes_skip(input->input, i, 1,0);
+			i = quotes_skip(input->input, i, 1, 0);
 			input->after_str++;
 		}
 		if (input->input[i] == '<' || input->input[i] == '>')
@@ -80,12 +80,12 @@ int	op_checker2(t_shell *input, int i, int j,int flag)
 	return (j); // burdaki +1'i sildin
 }
 
-int	op_checker(t_shell *input, int i)
+int	operator_before(t_shell *input, int i)
 {
 	int j;
 	int flag;
 
-	flag=1;
+	flag = 1;
 	j = i;
 	input->after_str = 0;
 	if (input->input[i] == '|' && input->isalpha == 0)
@@ -93,17 +93,19 @@ int	op_checker(t_shell *input, int i)
 	if (input->input[i] == '|')
 	{
 		input->isalpha = 0;
-		flag=0;
+		flag = 0;
 	}
-	if (input->input[i] == '<' || input->input[i] == '>')
+	if (input->input[i] == '<')
 	{
-		if (input->input[i + 1] == '<' || input->input[i + 1] == '>')
-		{
-			i++;
-			j++;
-		}
+		if (input->input[i + 1] == '<')
+			return (operator_after(input, i + 1, j + 1, flag));
 	}
-	return (op_checker2(input, i, j,flag));
+	if (input->input[i] == '>')
+	{
+		if (input->input[i + 1] == '>')
+			return (operator_after(input, i + 1, j + 1, flag));
+	}
+	return (operator_after(input, i, j, flag));
 }
 
 void	operator_control(t_shell *a)
@@ -123,7 +125,7 @@ void	operator_control(t_shell *a)
 		}
 		else if (a->input[i] == '|' || a->input[i] == '<'
 			|| a->input[i] == '>')
-			i = op_checker(a, i);
+			i = operator_before(a, i);
 		else if (a->input[i] != ' ')
 			a->isalpha++;
 		if (a->error > 0)
