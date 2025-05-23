@@ -12,7 +12,7 @@ int	ft_exit(char **args, t_shell *pro)
 	int	exit_status;
 	int	i;
 
-	//printf("exit\n");
+	printf("exit\n");
 	if (!args || !args[0])
 		error_and_allocate(pro, 0);
 	exit_status = ft_atoi(args[0]);

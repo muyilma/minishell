@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#define BUFFER_SIZE 1
 
 int		g_signal_exit = 0;
 
@@ -59,71 +58,15 @@ char **copy_env(char **env, int b)
 	return (copy);
 }
 
-
-char	*ft_read(int fd, char *str)
-{
-	char *readstr;
-	int byte;
-	char *tmp;
-
-	readstr = ft_calloc(BUFFER_SIZE + 1, 1);
-	byte = 1;
-	if (!str)
-		str = ft_strdup("");
-	while (ft_strchr(readstr, '\n') == 0 && byte > 0)
-	{
-		byte = read(fd, readstr, BUFFER_SIZE);
-		if ((byte == -1) || (byte == 0 && !str[0]))
-		{
-			free(str);
-			free(readstr);
-			return (NULL);
-		}
-		readstr[byte] = '\0';
-		tmp = str;
-		str = ft_strjoin(str, readstr);
-		free(tmp);
-	}
-	free(readstr);
-	return (str);
-}
-
-char	*get_next_line(int fd)
-{
-	static char *afterstr;
-	int j;
-	char *beforestr;
-	char *temp;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	beforestr = NULL;
-	j = -1;
-	afterstr = ft_read(fd, afterstr);
-	while (afterstr && afterstr[++j])
-	{
-		if (afterstr[j] == '\n' || afterstr[j + 1] == '\0')
-		{
-			j++;
-			beforestr = ft_substr(afterstr, 0, j);
-			temp = afterstr;
-			afterstr = ft_strdup(afterstr + j);
-			free(temp);
-			return (beforestr);
-		}
-	}
-	return (beforestr);
-}
-
 void	read_line(t_shell *input, char **env, int code)
 {
 	input->input = NULL;
+	input->temp=NULL;
 	input->isprint = 0;
 	input->isalpha = 0;
 	input->pipe = 0;
 	input->error = 0;
 	input->operator= 0;
-	// input->dot = 0;
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
@@ -131,29 +74,13 @@ void	read_line(t_shell *input, char **env, int code)
 	input->arg = NULL;
 	input->exit_code = code;
 
-	// input->input = readline("minishell:");
-	// if (!input->input)
-	// {
-	// 	//ft_print_error(NULL, "exit", NULL, 1);
-	// 	exit(0);
-	// }
-	if (isatty(fileno(stdin)))
-		input->input = readline("minishell:");
-	// if (!input->input)
-	// {
-	// 	exit(0);
-	// }
-	else
+	input->input = readline("minishell:");
+	if (!input->input)
 	{
-		char *line;
-		line = get_next_line(fileno(stdin));
-		if (!line)
-		{
-			exit(0);
-		}
 		
-		input->input = ft_strtrim(line, "\n");
-		free(line);
+		ft_print_error(NULL, "exit", NULL, 1);
+		error_and_allocate(input, 0);
+
 	}
 	add_history(input->input);
 }
