@@ -10,8 +10,7 @@
 void	error_and_allocate(t_shell *pro, int exit_code)
 {
 	ft_executer_free(pro);
-	if (pro->env != pro->new_env)
-		ft_free(pro->new_env);
+
 	ft_free(pro->env);
 	free(pro);
 	exit(exit_code);

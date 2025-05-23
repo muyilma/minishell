@@ -45,6 +45,7 @@ int	find_path(t_shell *input, int i, int point)
 	{
 		veriable = ft_itoa(input->exit_code);
 		i = convert_shell(input, veriable, 1, i);
+		free(veriable);
 		return (i + 1);
 	}
 	while ((ft_isalnum(input->input[j + 1]) || input->input[j + 1] == '_'))
