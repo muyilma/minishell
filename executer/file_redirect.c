@@ -88,10 +88,7 @@ int	heredoc_control(t_cmd *pro, int in)
 	if (pro->heradock)
 	{
 		dup2(in, 0);
-		if (redirect_heredoc_to_stdin(pro->heradock) == -1)
-		{
-			return (0);
-		}
+		redirect_heredoc_to_stdin(pro->heradock, 0);
 		return (0);
 	}
 	return (1);

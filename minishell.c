@@ -131,10 +131,7 @@ int	main(int ac, char **av, char **env)
 		{
 			exit_code = ft_executer(input);
 			if (input->env != new_env)
-			{
-				// ft_free(new_env);
 				new_env = input->env;
-			}
 			free(input);
 		}
 		else

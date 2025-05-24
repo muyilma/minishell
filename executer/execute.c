@@ -25,7 +25,7 @@ int wait_child(pid_t pid)
 	return (exit_code);
 }
 
-int	ft_execve(t_shell *pro, char **args)
+void	ft_execve(t_shell *pro, char **args)
 {
 	char	*base;
 	char	*error_msg;
