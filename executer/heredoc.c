@@ -48,19 +48,13 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 }
 
 
-int	redirect_heredoc_to_stdin(char *delimiter)
+void	redirect_heredoc_to_stdin(char *delimiter, int built_in)
 {
 	int		fd[2];
 	pid_t	pid;
-	int		status;
 
-	if (pipe(fd) == -1)
-		return (perror("pipe"), -1);
-
+	pipe(fd);
 	pid = fork();
-	if (pid == -1)
-		return (perror("fork"), -1);
-
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -73,15 +67,16 @@ int	redirect_heredoc_to_stdin(char *delimiter)
 	else
 	{
 		close(fd[1]);
-		status = wait_child(pid);  // kendi fonksiyonunu çağırdık
-		if (status == 130) // SIGINT ile çıkış (128 + SIGINT)
+		if (wait_child(pid) == 130)
 		{
 			close(fd[0]);
-			return (-1);
+			return;
 		}
-		dup2(fd[0], 0);
-		close(fd[0]);
-		return (0);
+		if (built_in == 0)
+		{
+			dup2(fd[0], 0);
+			close(fd[0]);
+		}
 	}
 }
 

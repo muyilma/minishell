@@ -74,8 +74,6 @@ void	built_in2_redirection2(int *original_stdout, int *original_stdin)
 void	built_in2_redirection(char **args, t_cmd *arg, int *original_stdout,
 		int *original_stdin)
 {
-	int	fd;
-
 	*original_stdin = -1;
 	*original_stdout = -1;
 	if (ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "cd",
@@ -83,7 +81,7 @@ void	built_in2_redirection(char **args, t_cmd *arg, int *original_stdout,
 		|| ft_strncmp(args[0], "export", 7) == 0)
 	{
 		if (arg->heradock)
-			redirect_heredoc_write(&fd, arg->heradock, 0);
+			redirect_heredoc_to_stdin(arg->heradock, 1);
 		if (arg->infile || arg->outfile || arg->append_outfile)
 		{
 			if (arg->outfile || arg->append_outfile)
