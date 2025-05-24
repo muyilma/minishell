@@ -4,7 +4,10 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -44,26 +47,41 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	return (heredoc_status);
 }
 
+
 int	redirect_heredoc_to_stdin(char *delimiter)
 {
-	int	fd[2];
-	int	heredoc_status;
+	int		fd[2];
+	pid_t	pid;
+	int		status;
 
-	g_signal_exit = 1;
-	heredoc_status = 0;
 	if (pipe(fd) == -1)
+		return (perror("pipe"), -1);
+
+	pid = fork();
+	if (pid == -1)
+		return (perror("fork"), -1);
+
+	if (pid == 0)
 	{
-		ft_print_error(NULL, ": Permission denied", NULL, 1);
-		return (-1);
-	}
-	redirect_heredoc_write(&fd[1], delimiter, heredoc_status);
-	close(fd[1]);
-	if (heredoc_status == -1)
-	{
+		signal(SIGINT, SIG_DFL);
 		close(fd[0]);
-		return (-1);
+		if (redirect_heredoc_write(&fd[1], delimiter, 0) == -1)
+			exit(1);
+		close(fd[1]);
+		exit(0);
 	}
-	dup2(fd[0], 0);
-	close(fd[0]);
-	return (0);
+	else
+	{
+		close(fd[1]);
+		status = wait_child(pid);  // kendi fonksiyonunu çağırdık
+		if (status == 130) // SIGINT ile çıkış (128 + SIGINT)
+		{
+			close(fd[0]);
+			return (-1);
+		}
+		dup2(fd[0], 0);
+		close(fd[0]);
+		return (0);
+	}
 }
+

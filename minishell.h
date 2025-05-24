@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 extern int g_signal_exit;
 
 typedef struct s_cmd
@@ -70,3 +71,4 @@ int redirect_heredoc_write(int *fd ,char *delimiter, int  heredoc_status);
 void error_and_allocate(t_shell *pro, int exit_code);
 void	ft_free(char **str);
 int	ft_strcmp(char *s1, char *s2);
+int wait_child(pid_t pid);
