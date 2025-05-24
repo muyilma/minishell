@@ -39,8 +39,8 @@ int	quotes_skip(char *str, int j, int flag, int *quotes);
 void	ft_parser(t_shell *input);
 void	dollar_expand(t_shell *input);
 void	token_parse(t_shell *ipt, int len, int k, int flag);
-void	quotes_control(t_shell *input);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
+void	check_empty_line(t_shell *a);
 
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	ft_executer_free(t_shell *input);

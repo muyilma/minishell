@@ -81,13 +81,16 @@ void	read_line(t_shell *input, char **env, int code)
 	add_history(input->input);
 }
 
-int	ft_executer(t_shell *input)
+int	ft_executer(t_shell *input, char ***new_env)
 {
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
 	ft_executer_free(input);
 	g_signal_exit = 0;
+	if (input->env != *new_env)
+		*new_env = input->env;
+	free(input);
 	return (exit);
 }
 
@@ -124,12 +127,7 @@ int	main(int ac, char **av, char **env)
 		read_line(input, new_env, exit_code);
 		ft_parser(input);
 		if (input->error == 0)
-		{
-			exit_code = ft_executer(input);
-			if (input->env != new_env)
-				new_env = input->env;
-			free(input);
-		}
+			exit_code = ft_executer(input, &new_env);
 		else
 			exit_code = ft_error(input);
 		if (g_signal_exit != 0)

@@ -5,54 +5,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-int	quotes_operator_counter(t_shell *a, int i)
+void	quotes_control(t_shell *input)
 {
-	if (a->input[i] == 34)
+	int	i;
+
+	i = -1;
+	while (input->input[++i])
 	{
-		i++;
-		a->isprint++;
-		while (a->input[i] != 34 && a->input[i] != '\0')
+		if (input->input[i] == 34 || input->input[i] == 39)
 		{
-			if (a->input[i] == '$')
-				a->dollar++;
+			input->quotes++;
+			input->qut = input->input[i];
 			i++;
-		}
-		if (a->input[i] == 34)
-		{
-			i++;
+			while (input->input[i] != input->qut && input->input[i] != '\0')
+				i++;
+			if (input->input[i] == input->qut)
+				input->quotes++;
 		}
 	}
-	if (a->input[i] == 39)
-	{
-		i = quotes_skip(a->input, i, 0, 0);
-		a->isprint++;
-	}
-	return (i - 1);
+	if (input->quotes % 2 != 0)
+		input->error = 2;
 }
 
-void	check_empty_line(t_shell *a)
-{
-	int i;
-
-	i = 0;
-	while (a->input[i])
-	{
-		if (a->input[i] == 34 || a->input[i] == 39)
-			i = quotes_operator_counter(a, i);
-		if (a->input[i] != ' ')
-			a->isprint++;
-		if (a->input[i] == '$')
-			a->dollar++;
-		if (a->input[i] == '|' || a->input[i] == '<' || a->input[i] == '>')
-			a->operator++;
-		if (a->input[i] == '|')
-			a->pipe++;
-		i++;
-	}
-	if (a->isprint == 0)
-		a->error = 1;
-}
 
 int	operator_after(t_shell *input, int i, int j, int flag)
 {

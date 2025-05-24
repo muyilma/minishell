@@ -6,6 +6,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int	quotes_skip(char *str, int j, int flag, int *quotes)
+{
+	int i;
+	char qut;
+
+	i = j;
+	if (str[i] == 34 || str[i] == 39)
+	{
+		qut = str[i++];
+		while (str[i] && str[i] != qut)
+			i++;
+		if (str[i] == qut)
+			i++;
+	}
+	if (quotes)
+		*quotes += 2;
+	if (flag == 1)
+		return (i - 1);
+	return (i);
+}
 
 int	change_input(t_shell *input, char *veriable, int plen, int i)
 {
@@ -48,15 +68,11 @@ int	find_path(t_shell *input, int i, int point)
 		free(veriable);
 		return (i + 1);
 	}
-	while ((ft_isalnum(input->input[j + 1]) || input->input[j + 1] == '_'))
-	{
-		if (point == 1)
-		{
-			j++;
-			break ;
-		}
+	while (point != 1 && (ft_isalnum(input->input[j + 1]) || input->input[j
+			+ 1] == '_'))
 		j++;
-	}
+	if (point == 1)
+		j++;
 	path = ft_substr(input->input, i + 1, j - i);
 	veriable = ft_getenv(input->env, path);
 	i = change_input(input, veriable, ft_strlen(path), i);
@@ -90,42 +106,31 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 	return (i);
 }
 
-int	heredock_dollar(t_shell *input, int i)
-{
-	i += 2;
-	while (input->input[i] == ' ')
-		i++;
-	while (input->input[i] != ' ' && input->input[i] != '|'
-		&& input->input[i] != '\0')
-	{
-		if (input->input[i] == 34 || input->input[i] == 39)
-		{
-			input->qut = input->input[i];
-			i++;
-			while (input->input[i] != input->qut && input->input[i] != '\0')
-				i++;
-		}
-		i++;
-	}
-	i++;
-	return (i);
-}
-
 void	dollar_expand(t_shell *input)
 {
 	int i;
 
-	i = 0;
-	while (input->input[i])
+	i = -1;
+	while (input->input[++i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);
 		if (input->input[i] == '\'')
 			i = quotes_skip(input->input, i, 1, 0);
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
-			i = heredock_dollar(input, i);
+		{
+			i += 2;
+			while (input->input[i] == ' ')
+				i++;
+			while (input->input[i] != ' ' && input->input[i] != '|'
+				&& input->input[i] != '\0')
+			{
+				if (input->input[i] == 34 || input->input[i] == 39)
+					i = quotes_skip(input->input, i, 1, 0);
+				i++;
+			}
+		}
 		if (input->input[i] == '$')
 			i = dollar_handle(input, input->input[i], i);
-		i++;
 	}
 }
