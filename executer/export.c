@@ -35,7 +35,7 @@ void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char *variable)
 		variable = ft_strjoin(arg, "=");
 		if (variable)
 		{
-			pro->env = ft_setenv(pro->env, variable);
+			pro->env = ft_setenv(pro->env, variable, 1);
 			free(variable);
 		}
 	}
@@ -59,7 +59,7 @@ int	ft_cmdcess_export_arg(char *arg, t_shell *pro)
 		variable = ft_strdup(arg);
 		if (variable)
 		{
-			pro->env = ft_setenv(pro->env, variable);
+			pro->env = ft_setenv(pro->env, variable, 0);
 			free(variable);
 		}
 	}
