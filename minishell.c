@@ -13,32 +13,27 @@ int		g_signal_exit = 0;
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	if (g_signal_exit == 1)
-	{
-		write(1, "\n", 1);
-		g_signal_exit = 23;
-		return ;
-	}
-	else if (g_signal_exit == 2)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-	}
-	else if (g_signal_exit == 0)
+	if (g_signal_exit == 0 || g_signal_exit == 130)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	else if (g_signal_exit == 2)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+	}
+	g_signal_exit = 130;
 }
 
 char	**copy_env(char **env, int b)
 {
-	int i = 0;
-	char **copy;int		g_signal_exit = 0;
+	int i;
+	char **copy;
 
-
+	i = 0;
 	while (env[i])
 		i++;
 	copy = malloc(sizeof(char *) * (i + b + 1));
@@ -92,6 +87,7 @@ int	ft_executer(t_shell *input)
 	free(input->input);
 	exit = execute_pipe(input, 0);
 	ft_executer_free(input);
+	g_signal_exit = 0;
 	return (exit);
 }
 
@@ -119,8 +115,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	exit_code = 0;
 	new_env = copy_env(env, 0);
+	exit_code = 0;
 	while (1)
 	{
 		g_signal_exit = 0;
@@ -136,5 +132,7 @@ int	main(int ac, char **av, char **env)
 		}
 		else
 			exit_code = ft_error(input);
+		if (g_signal_exit != 0)
+			exit_code = g_signal_exit;
 	}
 }
