@@ -79,7 +79,7 @@ void	arg_find(char *str, t_shell *ipt, int k,int i)
 	ipt->arg[k]->str[l] = NULL;
 }
 
-void	arg_convert(t_shell *ipt, char *str, int k)
+void	token_create(t_shell *ipt, char *str, int k)
 {
 	int count;
 

@@ -144,5 +144,5 @@ void	ft_parser(t_shell *input)
 	if (input->operator> 0 && input->error == 0)
 		operator_control(input);
 	if (input->error == 0)
-		token_create(input, ft_strlen(input->input), 0, 0);
+		token_parse(input, ft_strlen(input->input), 0, 0);
 }
