@@ -25,7 +25,7 @@ char	*ft_getenv(char **env, char *name)
 	return (NULL);
 }
 
-char	**ft_setenv2(char **env, char *variable,int j)
+char	**ft_setenv2(char **env, char *variable,int j, int e)
 {
 	int		i;
 	char	**new_env;
@@ -44,13 +44,16 @@ char	**ft_setenv2(char **env, char *variable,int j)
 		i++;
 	}
 	new_env = copy_env(env, 1);
-	new_env[i] = ft_strdup(variable);
+	if (e == 1)
+		new_env[i] = ft_substr(variable, 0, j);
+	else
+		new_env[i] = ft_strdup(variable);
 	new_env[i + 1] = NULL;
 	ft_free(env);
 	return (new_env);
 }
 
-char	**ft_setenv(char **env, char *variable)
+char	**ft_setenv(char **env, char *variable, int e)
 {
 	int		j;
 	char	*equal_sign;
@@ -60,7 +63,7 @@ char	**ft_setenv(char **env, char *variable)
 	if (!equal_sign)
 		return (env);
 	j = equal_sign - variable;
-	return (ft_setenv2(env, variable,j));
+	return (ft_setenv2(env, variable,j, e));
 }
 
 void	ft_free(char **str)

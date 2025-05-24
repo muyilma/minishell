@@ -17,14 +17,14 @@ int	ft_cd4(t_shell *pro, char *old_cwd, char *cwd)
 		return (1);
 	ft_strlcpy(new_pwd, "PWD=", 5);
 	ft_strlcat(new_pwd, cwd, ft_strlen(cwd) + 5);
-	pro->env = ft_setenv(pro->env, new_pwd);
+	pro->env = ft_setenv(pro->env, new_pwd, 0);
 	free(new_pwd);
 	new_oldpwd = malloc(ft_strlen(old_cwd) + 8);
 	if (!new_oldpwd)
 		return (1);
 	ft_strlcpy(new_oldpwd, "OLDPWD=", 8);
 	ft_strlcat(new_oldpwd, old_cwd, ft_strlen(old_cwd) + 8);
-	pro->env = ft_setenv(pro->env, new_oldpwd);
+	pro->env = ft_setenv(pro->env, new_oldpwd, 0);
 	free(new_oldpwd);
 	return (0);
 }
@@ -89,7 +89,7 @@ int	ft_cd(char **args, t_shell *pro)
 		ft_print_error(NULL, "pwd not found", NULL, 1);
 		return (1);
 	}
-	if (!args || !args[0])
+	if ((!args || !args[0]) || (ft_strcmp(args[0], "~") == 0))
 	{
 		if (ft_cd_home_control(args, pro, &path) == 1)
 			return (1);
