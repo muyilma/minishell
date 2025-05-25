@@ -57,49 +57,25 @@ void	built_in(char **args, t_shell *pro)
 	built_in3(args, pro);
 }
 
-void	built_in2_redirection2(int *original_stdout, int *original_stdin)
+void	built_in2_redirection(char **args, t_cmd *arg, t_shell *pro)
 {
-	if (*original_stdout != -1)
-	{
-		dup2(*original_stdout, 1);
-		close(*original_stdout);
-	}
-	if (*original_stdin != -1)
-	{
-		dup2(*original_stdin, 0);
-		close(*original_stdin);
-	}
-}
 
-void	built_in2_redirection(char **args, t_cmd *arg, int *original_stdout,
-		int *original_stdin)
-{
-	*original_stdin = -1;
-	*original_stdout = -1;
 	if (ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "cd",
 			3) == 0 || ft_strncmp(args[0], "unset", 5) == 0
 		|| ft_strncmp(args[0], "export", 7) == 0)
 	{
 		if (arg->heradock)
-			redirect_heredoc_to_stdin(arg->heradock, 1);
+			redirect_heredoc_to_stdin(arg->heradock, 1, pro);
 		if (arg->infile || arg->outfile || arg->append_outfile)
-		{
-			if (arg->outfile || arg->append_outfile)
-				*original_stdout = dup(1);
-			if (arg->infile)
-				*original_stdin = dup(0);
 			handle_redirections(NULL, arg);
-		}
 	}
 }
 
 int	built_in2(char **args, t_shell *pro, t_cmd *arg)
 {
 	int	result;
-	int	original_stdout;
-	int	original_stdin;
 
-	built_in2_redirection(args, arg, &original_stdout, &original_stdin);
+	built_in2_redirection(args, arg,pro);
 	if (ft_strncmp(args[0], "exit", 5) == 0)
 		result = ft_exit(&args[1], pro);
 	else if (ft_strncmp(args[0], "cd", 3) == 0)
@@ -118,6 +94,7 @@ int	built_in2(char **args, t_shell *pro, t_cmd *arg)
 		result = ft_export(&args[1], pro);
 	else
 		result = 2;
-	built_in2_redirection2(&original_stdout, &original_stdin);
+	dup2(pro->original_stdout, 1);
+	dup2(pro->original_stdin, 0);
 	return (result);
 }

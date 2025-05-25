@@ -8,19 +8,19 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int wait_child(pid_t pid)
+int	wait_child(pid_t pid)
 {
-	int status;
-	int exit_code = 0;
-	pid_t ended_pid;
+	int		status;
+	int		exit_code;
+	pid_t	ended_pid;
 
-	while ((ended_pid = wait(&status)) > 0)
+	exit_code = 0;
+	ended_pid = wait(&status);
+	while (ended_pid > 0)
 	{
-		if (ended_pid == pid)
-		{
-			if (WIFEXITED(status))
-				exit_code = WEXITSTATUS(status);
-		}
+		if (ended_pid == pid && WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		ended_pid = wait(&status);
 	}
 	return (exit_code);
 }
@@ -64,7 +64,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd)
 		res = built_in2(pro->arg[s]->str, pro, pro->arg[s]);
 	if (res != 2)
 		return (res);
-	res = heredoc_control(pro->arg[s], pro->original_stdin);
+	res = heredoc_control(pro->arg[s], pro->original_stdin, pro);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -88,7 +88,7 @@ void	execute_command(t_shell *pro, int cmd_index, int *prev_fd)
 	pid_t	pid;
 	int		heredoc;
 
-	heredoc = heredoc_control(pro->arg[cmd_index], pro->original_stdin);
+	heredoc = heredoc_control(pro->arg[cmd_index], pro->original_stdin, pro);
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
@@ -115,7 +115,7 @@ int	execute_pipe(t_shell *pro, int start_idx)
 	int	prev_fd;
 	int	i;
 
-	g_signal_exit=2;
+	g_signal_exit = 2;
 	prev_fd = -1;
 	i = start_idx;
 	if (!pro->arg[0])

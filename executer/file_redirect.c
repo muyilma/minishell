@@ -83,12 +83,12 @@ void	redirect_output(char *filename, t_shell *pro)
 	}
 }
 
-int	heredoc_control(t_cmd *pro, int in)
+int	heredoc_control(t_cmd *pro, int in, t_shell *input)
 {
 	if (pro->heradock)
 	{
 		dup2(in, 0);
-		redirect_heredoc_to_stdin(pro->heradock, 0);
+		redirect_heredoc_to_stdin(pro->heradock,0,input);
 		return (0);
 	}
 	return (1);

@@ -19,6 +19,7 @@ typedef struct s_shell
 	char **new_env;
 	char *temp;
 	int original_stdin;
+	int original_stdout;
 	int after_str;
 	char qut;
 	int isprint;
@@ -42,6 +43,7 @@ void	token_parse(t_shell *ipt, int len, int k, int flag);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
 void	check_empty_line(t_shell *a);
 
+
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	ft_executer_free(t_shell *input);
 char	**copy_env(char **env, int b);
@@ -49,7 +51,7 @@ char	**copy_env(char **env, int b);
 void	handle_redirections(t_shell *shell, t_cmd *pro);
 void	built_in(char **args, t_shell *pro);
 char	*pathc(char *cmd, char **envp, int i);
-;
+
 int	execute_pipe(t_shell *pro, int start_idx);
 void	ft_pwd(void);
 int	built_in2(char **args, t_shell *pro, t_cmd *arg);
@@ -66,8 +68,8 @@ char	*check_command_access(char *cmd, char **env, char **error_msg);
 int	check_redirect_access(char *filename, char **error_msg);
 int	check_access(char *path, int mode);
 int	file_exists(char *path);
-void	redirect_heredoc_to_stdin(char *delimiter, int built_in);
-int	heredoc_control(t_cmd *pro, int in);
+void	redirect_heredoc_to_stdin(char *delimiter, int built_in, t_shell *pro);
+int	heredoc_control(t_cmd *pro, int in, t_shell *input);
 int	check_redirect_access_input(char *filename, char **error_msg);
 void	error_and_allocate(t_shell *pro, int exit_code);
 void	ft_free(char **str);
