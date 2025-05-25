@@ -12,7 +12,8 @@ void	error_and_allocate(t_shell *pro, int exit_code)
 	ft_executer_free(pro);
 	ft_free(pro->env);
 	free(pro);
-	exit(exit_code);
+	set_exit_status_code(exit_code);
+	exit(*get_exit_status_code());
 }
 
 void	ft_pwd(void)

@@ -10,6 +10,18 @@
 
 int		g_signal_exit = 0;
 
+int	*get_exit_status_code(void)
+{
+	static int exit_status_code = 0;
+	return (&exit_status_code);
+}
+
+void	set_exit_status_code(int exit_code)
+{
+	int *static_exit_code = get_exit_status_code();
+	*static_exit_code = exit_code;
+}
+
 void	handle_sigint(int sig)
 {
 	(void)sig;
@@ -25,6 +37,12 @@ void	handle_sigint(int sig)
 		write(1, "\n", 1);
 		rl_on_new_line();
 	}
+	else if (g_signal_exit == 1)
+	{
+		set_exit_status_code(130);
+		exit(*get_exit_status_code());
+	}
+	set_exit_status_code(130);
 	g_signal_exit = 130;
 }
 
@@ -84,6 +102,7 @@ void	read_line(t_shell *input, char **env, int code)
 
 int	ft_executer(t_shell *input, char ***new_env)
 {
+
 	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
@@ -115,27 +134,25 @@ int	ft_error(t_shell *input)
 
 int	main(int ac, char **av, char **env)
 {
-	t_shell	*input;
-	int		exit_code;
-	char	**new_env;
+	t_shell *input;
+	char **new_env;
 
 	(void)av;
 	(void)ac;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	new_env = copy_env(env, 0);
-	 exit_code = 0;
 	while (1)
 	{
 		g_signal_exit = 0;
 		input = malloc(sizeof(t_shell));
-		read_line(input, new_env, exit_code);
+		read_line(input, new_env, *get_exit_status_code());
 		ft_parser(input);
 		if (input->error == 0)
-			exit_code = ft_executer(input, &new_env);
+			set_exit_status_code(ft_executer(input, &new_env));
 		else
-			exit_code = ft_error(input);
+			set_exit_status_code(ft_error(input));
 		if (g_signal_exit == 130)
-			exit_code = 130;
+			set_exit_status_code(130);
 	}
 }

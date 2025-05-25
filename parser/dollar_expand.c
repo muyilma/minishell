@@ -63,7 +63,7 @@ int	find_path(t_shell *input, int i, int point)
 	j = i;
 	if (input->input[i + 1] == '?')
 	{
-		veriable = ft_itoa(input->exit_code);
+		veriable = ft_itoa(*get_exit_status_code());
 		i = change_input(input, veriable, 1, i);
 		free(veriable);
 		return (i + 1);

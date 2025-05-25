@@ -11,18 +11,17 @@
 int	wait_child(pid_t pid)
 {
 	int		status;
-	int		exit_code;
 	pid_t	ended_pid;
 
-	exit_code = 0;
+	set_exit_status_code(0);
 	ended_pid = wait(&status);
 	while (ended_pid > 0)
 	{
 		if (ended_pid == pid && WIFEXITED(status))
-			exit_code = WEXITSTATUS(status);
+			set_exit_status_code( WEXITSTATUS(status));
 		ended_pid = wait(&status);
 	}
-	return (exit_code);
+	return(*get_exit_status_code());
 }
 
 void	ft_execve(t_shell *pro, char **args)
@@ -32,7 +31,7 @@ void	ft_execve(t_shell *pro, char **args)
 
 	if (!args || !args[0])
 	{
-		error_and_allocate(pro, 1);
+		error_and_allocate(pro, *get_exit_status_code());
 	}
 	built_in(args, pro);
 	base = check_command_access(args[0], pro->env, &error_msg);

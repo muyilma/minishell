@@ -71,11 +71,12 @@ void	redirect_heredoc_to_stdin(char *delimiter, int built_in, t_shell *pro)
 	pid = fork();
 	if (pid == 0)
 	{
+		
 		str = cpy_heredock(delimiter, pro);
-		signal(SIGINT, SIG_DFL);
+		g_signal_exit =1 ;
 		close(fd[0]);
 		if (redirect_heredoc_write(&fd[1], str, 0) == -1)
-			exit(1);
+			exit(0);
 		close(fd[1]);
 			exit(0);
 	}
