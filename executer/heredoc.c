@@ -2,12 +2,11 @@
 #include "../minishell.h"
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
-#include <unistd.h>
 #include <sys/wait.h>
-
+#include <unistd.h>
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -28,14 +27,14 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	while (1)
 	{
 		input = readline("> ");
-		if (!input || g_signal_exit == 23)
+		if (!input)
 		{
 			write(2, "minishell: warning: here-document at line by", 45);
 			ft_print_error("end-of-file (wanted `", "')", &delimiter, 2);
 			heredoc_status = -1;
 			break ;
 		}
-		if (ft_strcmp(input, delimiter) == 0)
+		if (ft_strcmp(input, delimiter) == 0 )
 		{
 			free(input);
 			break ;
@@ -47,36 +46,45 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	return (heredoc_status);
 }
 
+char *cpy_heredock(char *str, t_shell *pro)
+{
+	static char delimiter[10000];
+	int i;
 
-void	redirect_heredoc_to_stdin(char *delimiter, int built_in)
+	i=-1;
+	while (str[++i])
+		delimiter[i]=str[i];
+	delimiter[i]='\0';
+	ft_executer_free(pro);
+	ft_free(pro->env);
+	free(pro);
+	return (delimiter);
+}
+
+void	redirect_heredoc_to_stdin(char *delimiter, int built_in, t_shell *pro)
 {
 	int		fd[2];
 	pid_t	pid;
+	char *str;
 
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
+		str = cpy_heredock(delimiter, pro);
 		signal(SIGINT, SIG_DFL);
 		close(fd[0]);
-		if (redirect_heredoc_write(&fd[1], delimiter, 0) == -1)
+		if (redirect_heredoc_write(&fd[1], str, 0) == -1)
 			exit(1);
 		close(fd[1]);
-		exit(0);
+			exit(0);
 	}
 	else
 	{
 		close(fd[1]);
 		if (wait_child(pid) == 130)
-		{
-			close(fd[0]);
-			return;
-		}
+			return ;
 		if (built_in == 0)
-		{
 			dup2(fd[0], 0);
-			close(fd[0]);
-		}
 	}
 }
-

@@ -25,7 +25,7 @@ char	*ft_getenv(char **env, char *name)
 	return (NULL);
 }
 
-char	**ft_setenv2(char **env, char *variable,int j, int e)
+char	**ft_setenv2(char **env, char *variable, int j, int e)
 {
 	int		i;
 	char	**new_env;
@@ -57,13 +57,14 @@ char	**ft_setenv(char **env, char *variable, int e)
 {
 	int		j;
 	char	*equal_sign;
+
 	if (!env || !variable)
 		return (env);
 	equal_sign = ft_strchr(variable, '=');
 	if (!equal_sign)
 		return (env);
 	j = equal_sign - variable;
-	return (ft_setenv2(env, variable,j, e));
+	return (ft_setenv2(env, variable, j, e));
 }
 
 void	ft_free(char **str)

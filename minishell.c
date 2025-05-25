@@ -59,6 +59,7 @@ char	**copy_env(char **env, int b)
 void	read_line(t_shell *input, char **env, int code)
 {
 	input->original_stdin = dup(0);
+	input->original_stdout = dup(1);
 	input->input = NULL;
 	input->isprint = 0;
 	input->isalpha = 0;
