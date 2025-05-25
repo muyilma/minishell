@@ -9,8 +9,8 @@ void	quotes_control(t_shell *input)
 {
 	int	i;
 
-	i = -1;
-	while (input->input[++i])
+	i = 0;
+	while (input->input[i])
 	{
 		if (input->input[i] == 34 || input->input[i] == 39)
 		{
@@ -22,6 +22,7 @@ void	quotes_control(t_shell *input)
 			if (input->input[i] == input->qut)
 				input->quotes++;
 		}
+		i++;
 	}
 	if (input->quotes % 2 != 0)
 		input->error = 2;
@@ -114,7 +115,7 @@ void	ft_parser(t_shell *input)
 	if (input->error == 0)
 		quotes_control(input);
 	if (input->dollar > 0 && input->error == 0)
-		dollar_expand(input);
+		dollar_expand(input,ft_strlen(input->input));
 	if (input->operator> 0 && input->error == 0)
 		operator_control(input);
 	if (input->error == 0)

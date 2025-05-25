@@ -98,29 +98,33 @@ int	ft_executer(t_shell *input, char ***new_env)
 int	ft_error(t_shell *input)
 {
 	if (input->error == 2)
-		write(2, "minishell: open quotes \"\'", 26);
+		write(2, "minishell: open quotes \"\'\n", 27);
 	else if (input->error == 3)
 		write(2, "minishell: syntax error near unexpected token `newline'\n",
 			57);
+	if (input->error == 2 || input->error == 3)
+	{
+		free(input->input);
+		free(input);
+		return (2);
+	}
 	free(input->input);
 	free(input);
-	if (input->error == 2 || input->error == 3)
-		return (2);
 	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_shell *input;
-	int exit_code;
-	char **new_env;
+	t_shell	*input;
+	int		exit_code;
+	char	**new_env;
 
 	(void)av;
 	(void)ac;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	new_env = copy_env(env, 0);
-	exit_code = 0;
+	 exit_code = 0;
 	while (1)
 	{
 		g_signal_exit = 0;
@@ -131,7 +135,7 @@ int	main(int ac, char **av, char **env)
 			exit_code = ft_executer(input, &new_env);
 		else
 			exit_code = ft_error(input);
-		if (g_signal_exit != 0)
-			exit_code = g_signal_exit;
+		if (g_signal_exit == 130)
+			exit_code = 130;
 	}
 }
