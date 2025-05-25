@@ -42,6 +42,8 @@ void	dollar_expand(t_shell *input,int len);
 void	token_parse(t_shell *ipt, int len, int k, int flag);
 char	*redirect_find(char **redirect, char *str, int *i, int *flag);
 void	check_empty_line(t_shell *a);
+int 	*get_exit_status_code();
+void 	set_exit_status_code(int exit_code);
 
 void	ft_print_error(char *base, char *str, char **arg, int flag);
 void	ft_executer_free(t_shell *input);
