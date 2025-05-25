@@ -6,15 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:56:17 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:23:34 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 int	quotes_skip(char *str, int j, int flag, int *quotes)

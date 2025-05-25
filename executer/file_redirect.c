@@ -6,15 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:31 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:38:35 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:30:41 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 void	redirect_shell(char *filename, t_shell *pro)
