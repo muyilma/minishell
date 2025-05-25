@@ -106,12 +106,12 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 	return (i);
 }
 
-void	dollar_expand(t_shell *input)
+void	dollar_expand(t_shell *input,int len)
 {
 	int i;
 
 	i = -1;
-	while (input->input[++i])
+	while (i<=len && input->input[++i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);
