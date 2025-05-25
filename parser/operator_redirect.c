@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operator_redirect.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:39:50 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:39:54 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
@@ -136,6 +148,5 @@ char	*redirect_find(char **redirect, char *str, int *i, int *flag)
 		*flag = 1;
 		str = redirect_skip(redirect, str, i, flag);
 	}
-	
 	return (str);
 }

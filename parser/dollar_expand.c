@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dollar_expand.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:56:17 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
@@ -8,8 +19,8 @@
 
 int	quotes_skip(char *str, int j, int flag, int *quotes)
 {
-	int i;
-	char qut;
+	int		i;
+	char	qut;
 
 	i = j;
 	if (str[i] == 34 || str[i] == 39)
@@ -29,11 +40,11 @@ int	quotes_skip(char *str, int j, int flag, int *quotes)
 
 int	change_input(t_shell *input, char *veriable, int plen, int i)
 {
-	char *newinput;
-	int len;
-	int vlen;
-	int j;
-	int k;
+	char	*newinput;
+	int		len;
+	int		vlen;
+	int		j;
+	int		k;
 
 	j = -1;
 	k = i;
@@ -56,9 +67,9 @@ int	change_input(t_shell *input, char *veriable, int plen, int i)
 
 int	find_path(t_shell *input, int i, int point)
 {
-	char *path;
-	char *veriable;
-	int j;
+	char	*path;
+	char	*veriable;
+	int		j;
 
 	j = i;
 	if (input->input[i + 1] == '?')
@@ -82,7 +93,7 @@ int	find_path(t_shell *input, int i, int point)
 
 int	dollar_handle(t_shell *ipt, char point, int i)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	while (ipt->input[i] && ipt->input[i++] != '"' && flag == 0)
@@ -106,12 +117,12 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 	return (i);
 }
 
-void	dollar_expand(t_shell *input,int len)
+void	dollar_expand(t_shell *input, int len)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while (i<=len && input->input[++i])
+	while (i <= len && input->input[++i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);

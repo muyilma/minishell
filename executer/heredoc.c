@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:38:39 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:49:37 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <readline/history.h>
@@ -34,7 +46,7 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 			heredoc_status = -1;
 			break ;
 		}
-		if (ft_strcmp(input, delimiter) == 0 )
+		if (ft_strcmp(input, delimiter) == 0)
 		{
 			free(input);
 			break ;
@@ -46,15 +58,15 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	return (heredoc_status);
 }
 
-char *cpy_heredock(char *str, t_shell *pro)
+char	*cpy_heredock(char *str, t_shell *pro)
 {
-	static char delimiter[10000];
-	int i;
+	static char	delimiter[10000];
+	int			i;
 
-	i=-1;
+	i = -1;
 	while (str[++i])
-		delimiter[i]=str[i];
-	delimiter[i]='\0';
+		delimiter[i] = str[i];
+	delimiter[i] = '\0';
 	ft_executer_free(pro);
 	ft_free(pro->env);
 	free(pro);
@@ -65,20 +77,19 @@ void	redirect_heredoc_to_stdin(char *delimiter, int built_in, t_shell *pro)
 {
 	int		fd[2];
 	pid_t	pid;
-	char *str;
+	char	*str;
 
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
-		
 		str = cpy_heredock(delimiter, pro);
-		g_signal_exit =1 ;
+		g_signal_exit = 1;
 		close(fd[0]);
 		if (redirect_heredoc_write(&fd[1], str, 0) == -1)
 			exit(0);
 		close(fd[1]);
-			exit(0);
+		exit(0);
 	}
 	else
 	{

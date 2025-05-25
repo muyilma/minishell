@@ -1,11 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:39:40 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:39:42 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-
-
 
 int	quotes_operator_counter(t_shell *a, int i)
 {
@@ -34,7 +43,7 @@ int	quotes_operator_counter(t_shell *a, int i)
 
 void	check_empty_line(t_shell *a)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (a->input[i])
@@ -62,7 +71,7 @@ void	redirect_free(t_shell *input, int i)
 	if (input->arg[i]->heradock)
 		free(input->arg[i]->heradock);
 	if (input->arg[i]->infile)
-        free(input->arg[i]->infile);
+		free(input->arg[i]->infile);
 	if (input->arg[i]->outfile)
 		free(input->arg[i]->outfile);
 }
