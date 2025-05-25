@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:50:38 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:53:54 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "minishell.h"
 #include <readline/history.h>
@@ -7,20 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
 int		g_signal_exit = 0;
-
-int	*get_exit_status_code(void)
-{
-	static int exit_status_code = 0;
-	return (&exit_status_code);
-}
-
-void	set_exit_status_code(int exit_code)
-{
-	int *static_exit_code = get_exit_status_code();
-	*static_exit_code = exit_code;
-}
 
 void	handle_sigint(int sig)
 {
@@ -46,34 +45,6 @@ void	handle_sigint(int sig)
 	g_signal_exit = 130;
 }
 
-char	**copy_env(char **env, int b)
-{
-	int i;
-	char **copy;
-
-	i = 0;
-	while (env[i])
-		i++;
-	copy = malloc(sizeof(char *) * (i + b + 1));
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		copy[i] = ft_strdup(env[i]);
-		if (!copy[i])
-		{
-			while (i--)
-				free(copy[i]);
-			free(copy);
-			return (NULL);
-		}
-		i++;
-	}
-	copy[i] = NULL;
-	return (copy);
-}
-
 void	read_line(t_shell *input, char **env, int code)
 {
 	input->original_stdin = dup(0);
@@ -83,7 +54,7 @@ void	read_line(t_shell *input, char **env, int code)
 	input->isalpha = 0;
 	input->pipe = 0;
 	input->error = 0;
-	input->operator= 0;
+	input->operator = 0;
 	input->after_str = 0;
 	input->quotes = 0;
 	input->dollar = 0;
@@ -102,8 +73,8 @@ void	read_line(t_shell *input, char **env, int code)
 
 int	ft_executer(t_shell *input, char ***new_env)
 {
+	int	exit;
 
-	int exit;
 	free(input->input);
 	exit = execute_pipe(input, 0);
 	ft_executer_free(input);
@@ -134,8 +105,8 @@ int	ft_error(t_shell *input)
 
 int	main(int ac, char **av, char **env)
 {
-	t_shell *input;
-	char **new_env;
+	t_shell	*input;
+	char	**new_env;
 
 	(void)av;
 	(void)ac;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_parse.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:42:27 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:52:25 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
@@ -5,10 +17,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int	*get_exit_status_code(void)
+{
+	static int	exit_status_code = 0;
+
+	return (&exit_status_code);
+}
+
+void	set_exit_status_code(int exit_code)
+{
+	int	*static_exit_code;
+
+	static_exit_code = get_exit_status_code();
+	*static_exit_code = exit_code;
+}
 
 char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 {
-	int i;
+	int	i;
+
 	i = -1;
 	while (str[++i])
 	{
@@ -36,8 +63,8 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 
 int	token_handle_parsing(t_shell *ipt, int i, int j, int k)
 {
-	char *fakestr;
-	int flag;
+	char	*fakestr;
+	int		flag;
 
 	flag = 0;
 	if (ipt->input[i + 1] == '\0')
@@ -55,8 +82,8 @@ int	token_handle_parsing(t_shell *ipt, int i, int j, int k)
 
 void	token_parse(t_shell *ipt, int len, int k, int flag)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	j = 0;
@@ -64,7 +91,6 @@ void	token_parse(t_shell *ipt, int len, int k, int flag)
 	if (!ipt->arg)
 		return ;
 	while (i < len && ipt->input[++i])
-	// len'i koymayınca fazladan 1 kere daha giriyor
 	{
 		flag++;
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)

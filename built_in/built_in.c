@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:36:49 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:36:54 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
@@ -59,7 +71,6 @@ void	built_in(char **args, t_shell *pro)
 
 void	built_in2_redirection(char **args, t_cmd *arg, t_shell *pro)
 {
-
 	if (ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "cd",
 			3) == 0 || ft_strncmp(args[0], "unset", 5) == 0
 		|| ft_strncmp(args[0], "export", 7) == 0)
@@ -75,7 +86,7 @@ int	built_in2(char **args, t_shell *pro, t_cmd *arg)
 {
 	int	result;
 
-	built_in2_redirection(args, arg,pro);
+	built_in2_redirection(args, arg, pro);
 	if (ft_strncmp(args[0], "exit", 5) == 0)
 		result = ft_exit(&args[1], pro);
 	else if (ft_strncmp(args[0], "cd", 3) == 0)

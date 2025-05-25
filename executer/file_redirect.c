@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_redirect.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:38:31 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:38:35 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
@@ -88,7 +100,7 @@ int	heredoc_control(t_cmd *pro, int in, t_shell *input)
 	if (pro->heradock)
 	{
 		dup2(in, 0);
-		redirect_heredoc_to_stdin(pro->heradock,0,input);
+		redirect_heredoc_to_stdin(pro->heradock, 0, input);
 		return (0);
 	}
 	return (1);

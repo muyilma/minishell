@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/25 18:38:10 by musyilma          #+#    #+#             */
+/*   Updated: 2025/05/25 18:38:15 by musyilma         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
@@ -18,10 +30,10 @@ int	wait_child(pid_t pid)
 	while (ended_pid > 0)
 	{
 		if (ended_pid == pid && WIFEXITED(status))
-			set_exit_status_code( WEXITSTATUS(status));
+			set_exit_status_code(WEXITSTATUS(status));
 		ended_pid = wait(&status);
 	}
-	return(*get_exit_status_code());
+	return (*get_exit_status_code());
 }
 
 void	ft_execve(t_shell *pro, char **args)
