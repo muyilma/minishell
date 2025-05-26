@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void	redirect_shell(char *filename, t_shell *pro)
+void	redirect_input(char *filename, t_shell *pro)
 {
 	int		fd;
 	char	*error_msg;
@@ -106,7 +106,7 @@ int	heredoc_control(t_cmd *pro, int in, t_shell *input)
 void	handle_redirections(t_shell *shell, t_cmd *pro)
 {
 	if (pro->infile)
-		redirect_shell(pro->infile, shell);
+		redirect_input(pro->infile, shell);
 	if (pro->outfile)
 		redirect_output(pro->outfile, shell);
 	if (pro->append_outfile)
