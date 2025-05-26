@@ -59,7 +59,7 @@ int	change_input(t_shell *input, char *veriable, int plen, int i)
 		+ 1);
 	free(input->input);
 	input->input = newinput;
-	return (i - 1);
+	return (i);
 }
 
 int	find_path(t_shell *input, int i, int point)
@@ -109,9 +109,7 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 				i = find_path(ipt, i - 1, 0);
 		}
 	}
-	if (point == '$')
-		return (i - 1);
-	return (i);
+	return (i - 1);
 }
 
 void	dollar_expand(t_shell *input, int len)
@@ -119,7 +117,7 @@ void	dollar_expand(t_shell *input, int len)
 	int	i;
 
 	i = -1;
-	while (i <= len && input->input[++i])
+	while (i < len && input->input[++i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);
