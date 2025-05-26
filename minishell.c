@@ -6,16 +6,14 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:50:38 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:53:54 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:29:53 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 

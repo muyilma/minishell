@@ -6,18 +6,14 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:39 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:49:37 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:15:01 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <readline/history.h>
 #include <readline/readline.h>
-#include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 int	ft_strcmp(char *s1, char *s2)

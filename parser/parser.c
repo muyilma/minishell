@@ -6,16 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:40:33 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:47:50 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:10:13 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 void	quotes_control(t_shell *input)
 {
@@ -126,7 +122,7 @@ void	ft_parser(t_shell *input)
 		quotes_control(input);
 	if (input->dollar > 0 && input->error == 0)
 		dollar_expand(input, ft_strlen(input->input));
-	if (input->operator > 0 && input->error == 0)
+	if (input->operator> 0 && input->error == 0)
 		operator_control(input);
 	if (input->error == 0)
 		token_parse(input, ft_strlen(input->input), 0, 0);

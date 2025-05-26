@@ -6,15 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:22 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:38:24 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:29:24 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "../minishell.h"
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -37,7 +34,7 @@ int	is_directory(char *path)
 	result = stat(path, &path_stat);
 	if (result != 0)
 		return (0);
-	if (S_ISDIR(path_stat.st_mode))
+	if (S_ISDIR(path_stat.st_mode)) // ne bu amk
 		return (1);
 	return (0);
 }

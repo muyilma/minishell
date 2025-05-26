@@ -6,16 +6,13 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:42:27 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:52:25 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:23:18 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 int	*get_exit_status_code(void)
 {

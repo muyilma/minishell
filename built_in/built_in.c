@@ -6,18 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:36:49 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:36:54 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:28:39 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <fcntl.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 void	built_in3(char **args, t_shell *pro)

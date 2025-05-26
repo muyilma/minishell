@@ -6,13 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:41:23 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:52:03 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:23:22 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 char	**copy_env(char **env, int b)

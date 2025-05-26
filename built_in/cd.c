@@ -6,15 +6,12 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:00 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 18:37:05 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:28:03 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
-#include <fcntl.h>
-#include <readline/history.h>
-#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
