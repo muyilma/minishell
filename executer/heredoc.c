@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:39 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:15:01 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:16:27 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	redirect_heredoc_to_stdin(char *delimiter, int built_in, t_shell *pro)
 	if (pid == 0)
 	{
 		str = cpy_heredock(delimiter, pro);
-		g_signal_exit = 1;
+			g_signal_exit = 1;
 		close(fd[0]);
 		if (redirect_heredoc_write(&fd[1], str, 0) == -1)
 			exit(0);
