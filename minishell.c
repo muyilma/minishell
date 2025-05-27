@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:50:38 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:29:53 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:17:25 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	handle_sigint(int sig)
 	}
 	else if (g_signal_exit == 2)
 	{
+		
 		write(1, "\n", 1);
 		rl_on_new_line();
 	}
