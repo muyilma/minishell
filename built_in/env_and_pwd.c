@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:13 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 12:50:02 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:54:33 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 
 int	space_op(int c, int flag)
 {

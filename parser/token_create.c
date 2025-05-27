@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:41:23 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 12:53:32 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:47:38 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static int	word_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (space_op(str[i],1))
+		while (space_op(str[i], 1))
 			i++;
 		if (!str[i])
 			break ;
 		count++;
-		while (str[i] && space_op(str[i],0))
+		while (str[i] && space_op(str[i], 0))
 		{
 			if (str[i] == 34 || str[i] == 39)
 				i = quotes_skip(str, i, 0, 0);
@@ -72,6 +72,8 @@ void	arg_create(char *str, char **newstr, int i, int j)
 	int		k;
 	char	qut;
 
+	if (!newstr)
+		return ;
 	k = 0;
 	while (j <= i)
 	{
@@ -99,12 +101,12 @@ void	arg_find(char *str, t_shell *ipt, int k, int i)
 	flag = 0;
 	while (str[i])
 	{
-		while (space_op(str[i],1))
+		while (space_op(str[i], 1))
 			i++;
 		if (!str[i])
 			break ;
 		j = i;
-		while (str[i] && space_op(str[i],0))
+		while (str[i] && space_op(str[i], 0))
 		{
 			if (str[i] == 34 || str[i] == 39)
 				i = quotes_skip(str, i, 1, &flag);

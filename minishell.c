@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:50:38 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 15:17:25 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:55:41 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	handle_sigint(int sig)
 	}
 	else if (g_signal_exit == 2)
 	{
-		
 		write(1, "\n", 1);
 		rl_on_new_line();
 	}
@@ -44,7 +43,7 @@ void	handle_sigint(int sig)
 	g_signal_exit = 130;
 }
 
-void	read_line(t_shell *input, char **env, int code)
+void	read_line(t_shell *input, char **env)
 {
 	input->original_stdin = dup(0);
 	input->original_stdout = dup(1);
@@ -60,7 +59,6 @@ void	read_line(t_shell *input, char **env, int code)
 	input->env = env;
 	input->arg = NULL;
 	input->temp = NULL;
-	input->exit_code = code;
 	input->input = readline("minishell:");
 	if (!input->input)
 	{
@@ -116,7 +114,9 @@ int	main(int ac, char **av, char **env)
 	{
 		g_signal_exit = 0;
 		input = malloc(sizeof(t_shell));
-		read_line(input, new_env, *get_exit_status_code());
+		if (!input)
+			return (0);
+		read_line(input, new_env);
 		ft_parser(input);
 		if (input->error == 0)
 			set_exit_status_code(ft_executer(input, &new_env));

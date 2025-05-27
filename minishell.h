@@ -6,14 +6,13 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:43:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 12:16:37 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:43:40 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include <sys/wait.h>
 
 # define MAX_SIGNED_LONG_LONG 9223372036854775807
@@ -45,8 +44,6 @@ typedef struct s_shell
 	int		error;
 	int		dollar;
 	int		quotes;
-	int		exit_code;
-	int		redirect_error;
 	char	**env;
 	t_cmd	**arg;
 }			t_shell;

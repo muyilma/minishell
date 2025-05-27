@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:42:27 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:23:18 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:53:32 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	token_parse(t_shell *ipt, int len, int k, int flag)
 
 	i = -1;
 	j = 0;
-	ipt->arg = malloc(sizeof(t_cmd *) * (ipt->pipe + 2)); // burası +1di
+	ipt->arg = malloc(sizeof(t_cmd *) * (ipt->pipe + 2));
 	if (!ipt->arg)
 		return ;
 	while (i < len && ipt->input[++i])
@@ -93,7 +93,7 @@ void	token_parse(t_shell *ipt, int len, int k, int flag)
 		if (ipt->input[i] == 34 || ipt->input[i] == 39)
 			i = quotes_skip(ipt->input, i, 1, 0);
 		if (ipt->input[i] == '\0' || ipt->input[i] == '|' || ipt->input[i
-			+ 1] == '\0')
+				+ 1] == '\0')
 		{
 			i = token_handle_parsing(ipt, i, j, k);
 			k++;

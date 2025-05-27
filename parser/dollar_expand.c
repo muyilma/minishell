@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 14:28:42 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:49:34 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	change_input(t_shell *input, char *veriable, int plen, int i)
 	len = ft_strlen(input->input);
 	newinput = malloc((len - plen) + vlen + 1);
 	if (!newinput)
-		return (i);
+		return (-1);
 	ft_strlcpy(newinput, input->input, i + 1);
 	while (veriable && veriable[++j])
 		newinput[i++] = veriable[j];
@@ -77,7 +77,7 @@ int	find_path(t_shell *input, int i, int point)
 		return (i);
 	}
 	while (point != 1 && (ft_isalnum(input->input[j + 1]) || input->input[j
-			+ 1] == '_'))
+				+ 1] == '_'))
 		j++;
 	if (point == 1)
 		j++;
@@ -85,7 +85,7 @@ int	find_path(t_shell *input, int i, int point)
 	veriable = ft_getenv(input->env, path);
 	i = change_input(input, veriable, ft_strlen(path), i);
 	free(path);
-	return (i-1);
+	return (i - 1);
 }
 
 int	dollar_handle(t_shell *ipt, char point, int i)
@@ -109,7 +109,7 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 				i = find_path(ipt, i - 1, 2);
 		}
 	}
-	return (i-1);
+	return (i - 1);
 }
 
 void	dollar_expand(t_shell *input, int len)
@@ -117,7 +117,7 @@ void	dollar_expand(t_shell *input, int len)
 	int	i;
 
 	i = -1;
-	while (++i < len && i>=0 && input->input[i])
+	while (++i < len && i >= 0 && input->input[i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);
@@ -126,9 +126,9 @@ void	dollar_expand(t_shell *input, int len)
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 		{
 			i += 2;
-			while (space_op(input->input[i] ,1))
+			while (space_op(input->input[i], 1))
 				i++;
-			while (space_op(input->input[i] ,0) && input->input[i] != '|'
+			while (space_op(input->input[i], 0) && input->input[i] != '|'
 				&& input->input[i] != '\0')
 			{
 				if (input->input[i] == 34 || input->input[i] == 39)
@@ -138,5 +138,5 @@ void	dollar_expand(t_shell *input, int len)
 		}
 		if (input->input[i] == '$')
 			i = dollar_handle(input, input->input[i], i);
-	}			
+	}
 }

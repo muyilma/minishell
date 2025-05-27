@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:31 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 15:30:16 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:53:59 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	heredoc_control(t_cmd *pro, int in, t_shell *input)
 		dup2(in, 0);
 		redirect_heredoc_to_stdin(pro->heradock, 0, input);
 		if (*get_exit_status_code() == 130)
-			return(130);
+			return (130);
 		return (0);
 	}
 	return (1);

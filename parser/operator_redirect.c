@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:50 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 12:56:21 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:50:14 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 	(*t)++;
 	if (str[*t] == '<' || str[*t] == '>')
 		(*t)++;
-	while (space_op(str[*t],1))
+	while (space_op(str[*t], 1))
 		(*t)++;
 	k = *t;
-	while (space_op(str[*t],0)  && str[*t] != '\0')
+	while (space_op(str[*t], 0) && str[*t] != '\0')
 	{
 		if (str[*t] == 34 || str[*t] == 39)
 			*t = quotes_skip(str, *t, 1, &quotes);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:32 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 11:32:34 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:54:20 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	ft_exit(char **args, t_shell *pro)
 	}
 	if (!is_numeric(args[0]) || is_longlong_overflow(args[0]))
 	{
-		ft_print_error("minishell: exit:", ": numeric argument required", args, 2);
+		ft_print_error("minishell: exit:", ": numeric argument required", args,
+			2);
 		error_and_allocate(pro, 2);
 	}
 	error_and_allocate(pro, exit_status);

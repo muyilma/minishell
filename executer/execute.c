@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:10 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 15:38:50 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:54:07 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	ft_execve(t_shell *pro, char **args)
 	}
 	execve(base, args, pro->env);
 	free(base);
-	ft_print_error("minishell:", ": Failed to execute command", args, 2);
+	ft_print_error("minishell:", ": command not found", args, 2);
 	error_and_allocate(pro, 1);
 }
 
-int	execute_last(t_shell *pro, int s, int prev_fd, int	res)
+int	execute_last(t_shell *pro, int s, int prev_fd, int res)
 {
 	pid_t	pid;
 
@@ -67,7 +67,7 @@ int	execute_last(t_shell *pro, int s, int prev_fd, int	res)
 	if (res != 2)
 		return (res);
 	res = heredoc_control(pro->arg[s], pro->original_stdin, pro);
-	if(res == 130)
+	if (res == 130)
 		return (res);
 	pid = fork();
 	if (pid == 0)
@@ -86,13 +86,13 @@ int	execute_last(t_shell *pro, int s, int prev_fd, int	res)
 	return (wait_child(pid));
 }
 
-void	execute_command(t_shell *pro, int cmd_index, int *prev_fd, int	*heredoc)
+void	execute_command(t_shell *pro, int cmd_index, int *prev_fd, int *heredoc)
 {
 	int		fd[2];
 	pid_t	pid;
 
 	*heredoc = heredoc_control(pro->arg[cmd_index], pro->original_stdin, pro);
-	if(*heredoc == 130)
+	if (*heredoc == 130)
 		return ;
 	pipe(fd);
 	pid = fork();
@@ -119,7 +119,7 @@ int	execute_pipe(t_shell *pro, int start_idx)
 {
 	int	prev_fd;
 	int	i;
-	int heredoc;
+	int	heredoc;
 
 	g_signal_exit = 2;
 	prev_fd = -1;
@@ -131,7 +131,7 @@ int	execute_pipe(t_shell *pro, int start_idx)
 	while (pro->arg[i] && pro->arg[i + 1])
 	{
 		execute_command(pro, i, &prev_fd, &heredoc);
-		if(heredoc == 130)
+		if (heredoc == 130)
 			return (130);
 		i++;
 	}
