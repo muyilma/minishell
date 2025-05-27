@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:40 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:49:52 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:16:13 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	quotes_operator_counter(t_shell *a, int i)
+static int	quotes_operator_counter(t_shell *a, int i)
 {
 	if (a->input[i] == 34)
 	{
@@ -63,7 +63,7 @@ void	check_empty_line(t_shell *a)
 		a->error = 1;
 }
 
-void	redirect_free(t_shell *input, int i)
+static void	redirect_free(t_shell *input, int i)
 {
 	if (input->arg[i]->append_outfile)
 		free(input->arg[i]->append_outfile);

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:39 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:53:47 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:59:16 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
+static int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 {
 	char	*input;
 
@@ -54,7 +54,7 @@ int	redirect_heredoc_write(int *fd, char *delimiter, int heredoc_status)
 	return (heredoc_status);
 }
 
-char	*cpy_heredock(char *str, t_shell *pro)
+static char	*cpy_heredock(char *str, t_shell *pro)
 {
 	static char	delimiter[10000];
 	int			i;

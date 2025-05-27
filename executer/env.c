@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:06 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:21:11 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:19:57 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_getenv(char **env, char *name)
 	return (NULL);
 }
 
-char	**ft_setenv2(char **env, char *variable, int j, int e)
+static char	**ft_setenv2(char **env, char *variable, int j, int e)
 {
 	int		i;
 	char	**new_env;

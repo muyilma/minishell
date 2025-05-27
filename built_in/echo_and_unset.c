@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:27:00 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:10:09 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	is_valid_n_flag(char *str)
+static int	is_valid_n_flag(char *str)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ int	is_valid_n_flag(char *str)
 	return (1);
 }
 
-void	ft_echo2(char **args, int i, int newline)
+static void	ft_echo2(char **args, int i, int newline)
 {
 	while (args[i])
 	{
@@ -59,7 +59,7 @@ void	ft_echo(char **args)
 	ft_echo2(args, i, newline);
 }
 
-void	ft_unset2(t_shell *pro, int j)
+static void	ft_unset2(t_shell *pro, int j)
 {
 	free(pro->env[j]);
 	while (pro->env[j + 1])

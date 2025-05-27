@@ -12,10 +12,8 @@ all: $(NAME)
 
 $(NAME): $(SRCS) 
 	make -C ./libft -s
-	gcc  -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline -lncurses $(LIBFT)
+	cc  -o  $(NAME)  $(CFLAGS) $(SRCS) -lreadline  $(LIBFT)
 
-leak: 
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 clean:
 	make clean -C ./libft -s
 
@@ -24,8 +22,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-run:
-	./${NAME}
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:50:38 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:55:41 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:13:25 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int		g_signal_exit = 0;
 
-void	handle_sigint(int sig)
+static void	handle_sigint(int sig)
 {
 	(void)sig;
 	if (g_signal_exit == 0 || g_signal_exit == 130)
@@ -43,7 +43,7 @@ void	handle_sigint(int sig)
 	g_signal_exit = 130;
 }
 
-void	read_line(t_shell *input, char **env)
+static void	read_line(t_shell *input, char **env)
 {
 	input->original_stdin = dup(0);
 	input->original_stdout = dup(1);
@@ -68,7 +68,7 @@ void	read_line(t_shell *input, char **env)
 	add_history(input->input);
 }
 
-int	ft_executer(t_shell *input, char ***new_env)
+static int	ft_executer(t_shell *input, char ***new_env)
 {
 	int	exit;
 
@@ -82,7 +82,7 @@ int	ft_executer(t_shell *input, char ***new_env)
 	return (exit);
 }
 
-int	ft_error(t_shell *input)
+static int	ft_error(t_shell *input)
 {
 	if (input->error == 2)
 		write(2, "minishell: open quotes \"\'\n", 27);

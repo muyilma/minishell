@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:41:23 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:47:38 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:14:45 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	word_count(char *str)
 	return (count);
 }
 
-void	arg_create(char *str, char **newstr, int i, int j)
+static void	arg_create(char *str, char **newstr, int i, int j)
 {
 	int		k;
 	char	qut;
@@ -91,7 +91,7 @@ void	arg_create(char *str, char **newstr, int i, int j)
 	(*newstr)[k] = '\0';
 }
 
-void	arg_find(char *str, t_shell *ipt, int k, int i)
+static void	arg_find(char *str, t_shell *ipt, int k, int i)
 {
 	int	j;
 	int	l;

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:50 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:50:14 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:15:51 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	redirect_control(char *redirect, int flag)
+static int	redirect_control(char *redirect, int flag)
 {
 	int	fd;
 
@@ -40,7 +40,7 @@ int	redirect_control(char *redirect, int flag)
 	return (0);
 }
 
-char	*strcut(char *str, int start, int *end, int size)
+static char	*strcut(char *str, int start, int *end, int size)
 {
 	int		i;
 	int		j;
@@ -66,7 +66,7 @@ char	*strcut(char *str, int start, int *end, int size)
 	return (newstr);
 }
 
-char	*redirect_create(char *s, int start, int len, int flag)
+static char	*redirect_create(char *s, int start, int len, int flag)
 {
 	char	*a;
 	int		i;
@@ -95,7 +95,7 @@ char	*redirect_create(char *s, int start, int len, int flag)
 	return (a);
 }
 
-char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
+static char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 {
 	int		j;
 	int		k;

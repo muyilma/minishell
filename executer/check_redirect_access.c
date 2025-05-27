@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:53 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:22:51 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:04:50 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-char	*check_command_cmd_access(char *cmd)
+static char	*check_command_cmd_access(char *cmd)
 {
 	struct stat	cmd_stat;
 	int			stat_result;

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:36:49 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:55:23 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:13:35 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../minishell.h"
 #include <unistd.h>
 
-void	built_in3(char **args, t_shell *pro)
+static void	built_in3(char **args, t_shell *pro)
 {
 	if (ft_strncmp(args[0], "unset", 5) == 0)
 	{
@@ -69,10 +69,10 @@ void	built_in(char **args, t_shell *pro)
 	built_in3(args, pro);
 }
 
-void	built_in2_redirection(char **args, t_cmd *arg, t_shell *pro)
+static void	built_in2_redirection(char **args, t_cmd *arg, t_shell *pro)
 {
 	if (ft_strncmp(args[0], "unset", 5) == 0 || ft_strncmp(args[0], "cd",
-			3) == 0 || ft_strncmp(args[0], "unset", 5) == 0
+			3) == 0 || ft_strncmp(args[0], "exit", 5) == 0
 		|| ft_strncmp(args[0], "export", 7) == 0)
 	{
 		if (arg->heradock)
