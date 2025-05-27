@@ -6,14 +6,14 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:40:33 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:53:11 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:15:08 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
 
-void	quotes_control(t_shell *input)
+static void	quotes_control(t_shell *input)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ void	quotes_control(t_shell *input)
 		input->error = 2;
 }
 
-int	operator_after(t_shell *input, int i, int j, int flag)
+static int	operator_after(t_shell *input, int i, int j, int flag)
 {
 	while (input->input[++i] && input->input[i] != '|')
 	{
@@ -64,7 +64,7 @@ int	operator_after(t_shell *input, int i, int j, int flag)
 	return (j);
 }
 
-int	operator_before(t_shell *input, int i)
+static int	operator_before(t_shell *input, int i)
 {
 	int	j;
 	int	flag;
@@ -92,7 +92,7 @@ int	operator_before(t_shell *input, int i)
 	return (operator_after(input, i, j, flag));
 }
 
-void	operator_control(t_shell *a)
+static void	operator_control(t_shell *a)
 {
 	int	i;
 

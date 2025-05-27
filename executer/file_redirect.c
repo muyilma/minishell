@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:31 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:53:59 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:16:30 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void	redirect_input(char *filename, t_shell *pro)
+static void	redirect_input(char *filename, t_shell *pro)
 {
 	int		fd;
 	char	*error_msg;
@@ -40,7 +40,7 @@ void	redirect_input(char *filename, t_shell *pro)
 	}
 }
 
-void	redirect_output_append(char *filename, t_shell *pro)
+static void	redirect_output_append(char *filename, t_shell *pro)
 {
 	int		fd;
 	char	*error_msg;
@@ -66,7 +66,7 @@ void	redirect_output_append(char *filename, t_shell *pro)
 	}
 }
 
-void	redirect_output(char *filename, t_shell *pro)
+static void	redirect_output(char *filename, t_shell *pro)
 {
 	int		fd;
 	char	*error_msg;

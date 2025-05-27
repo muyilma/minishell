@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:00 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:28:03 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:11:41 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	update_pwd_and_oldpwd(t_shell *pro, char *old_cwd, char *cwd)
+static int	update_pwd_and_oldpwd(t_shell *pro, char *old_cwd, char *cwd)
 {
 	char	*new_pwd;
 	char	*new_oldpwd;
@@ -38,7 +38,7 @@ int	update_pwd_and_oldpwd(t_shell *pro, char *old_cwd, char *cwd)
 	return (0);
 }
 
-int	ft_cd_chdir(t_shell *pro, char *old_cwd, char *cwd, char *path)
+static int	ft_cd_chdir(t_shell *pro, char *old_cwd, char *cwd, char *path)
 {
 	char	*error_msg;
 
@@ -63,7 +63,7 @@ int	ft_cd_chdir(t_shell *pro, char *old_cwd, char *cwd, char *path)
 	return (update_pwd_and_oldpwd(pro, old_cwd, cwd));
 }
 
-int	ft_cd_oldpwd_control(t_shell *pro, char **path)
+static int	ft_cd_oldpwd_control(t_shell *pro, char **path)
 {
 	path[0] = ft_getenv(pro->env, "OLDPWD");
 	if (!path[0])
@@ -75,7 +75,7 @@ int	ft_cd_oldpwd_control(t_shell *pro, char **path)
 	return (0);
 }
 
-int	ft_cd_home_control(char **args, t_shell *pro, char **path)
+static int	ft_cd_home_control(char **args, t_shell *pro, char **path)
 {
 	*path = ft_getenv(pro->env, "HOME");
 	if (!*path)

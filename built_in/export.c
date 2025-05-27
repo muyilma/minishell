@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:45 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:24:30 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:05:30 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	ft_export_parser(char *args)
+static int	ft_export_parser(char *args)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ int	ft_export_parser(char *args)
 	return (0);
 }
 
-void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char *variable)
+static void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char *variable)
 {
 	if (!ft_getenv(pro->env, arg))
 	{
@@ -50,7 +50,7 @@ void	ft_cmdcess_export_arg2(char *arg, t_shell *pro, char *variable)
 	}
 }
 
-int	ft_cmdcess_export_arg(char *arg, t_shell *pro)
+static int	ft_cmdcess_export_arg(char *arg, t_shell *pro)
 {
 	char	*equal_sign;
 	char	*variable;

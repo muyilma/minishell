@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:22 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 11:05:27 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:03:00 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	file_exists(char *path)
 	return (0);
 }
 
-int	is_directory(char *path)
+static int	is_directory(char *path)
 {
 	struct stat	path_stat;
 	int			result;

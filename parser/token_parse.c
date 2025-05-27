@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:42:27 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:53:32 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:16:10 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_exit_status_code(int exit_code)
 	*static_exit_code = exit_code;
 }
 
-char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
+static char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ char	*redirect_convert(t_shell *ipt, char *str, int k, int *flag)
 	return (str);
 }
 
-int	token_handle_parsing(t_shell *ipt, int i, int j, int k)
+static int	token_handle_parsing(t_shell *ipt, int i, int j, int k)
 {
 	char	*fakestr;
 	int		flag;

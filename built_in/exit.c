@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:32 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:54:20 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:06:00 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	is_longlong_overflow(char *str)
+static int	is_longlong_overflow(char *str)
 {
 	int					i;
 	int					sign;
@@ -41,7 +41,7 @@ int	is_longlong_overflow(char *str)
 	return (0);
 }
 
-int	is_numeric(char *str)
+static int	is_numeric(char *str)
 {
 	int	i;
 

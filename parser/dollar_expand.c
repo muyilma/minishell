@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:49:34 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:16:40 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	quotes_skip(char *str, int j, int flag, int *quotes)
 	return (i);
 }
 
-int	change_input(t_shell *input, char *veriable, int plen, int i)
+static int	change_input(t_shell *input, char *veriable, int plen, int i)
 {
 	char	*newinput;
 	int		len;
@@ -62,7 +62,7 @@ int	change_input(t_shell *input, char *veriable, int plen, int i)
 	return (i);
 }
 
-int	find_path(t_shell *input, int i, int point)
+static int	find_path(t_shell *input, int i, int point)
 {
 	char	*path;
 	char	*veriable;
@@ -88,7 +88,7 @@ int	find_path(t_shell *input, int i, int point)
 	return (i - 1);
 }
 
-int	dollar_handle(t_shell *ipt, char point, int i)
+static int	dollar_handle(t_shell *ipt, char point, int i)
 {
 	int	flag;
 

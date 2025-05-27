@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:10 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:54:07 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:03:42 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	wait_child(pid_t pid)
 	return (*get_exit_status_code());
 }
 
-void	ft_execve(t_shell *pro, char **args)
+static void	ft_execve(t_shell *pro, char **args)
 {
 	char	*base;
 	char	*error_msg;
@@ -58,7 +58,7 @@ void	ft_execve(t_shell *pro, char **args)
 	error_and_allocate(pro, 1);
 }
 
-int	execute_last(t_shell *pro, int s, int prev_fd, int res)
+static int	execute_last(t_shell *pro, int s, int prev_fd, int res)
 {
 	pid_t	pid;
 
@@ -86,7 +86,8 @@ int	execute_last(t_shell *pro, int s, int prev_fd, int res)
 	return (wait_child(pid));
 }
 
-void	execute_command(t_shell *pro, int cmd_index, int *prev_fd, int *heredoc)
+static void	execute_command(t_shell *pro, int cmd_index, int *prev_fd,
+		int *heredoc)
 {
 	int		fd[2];
 	pid_t	pid;
