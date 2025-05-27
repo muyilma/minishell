@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:23:34 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:18:18 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	find_path(t_shell *input, int i, int point)
 		veriable = ft_itoa(*get_exit_status_code());
 		i = change_input(input, veriable, 1, i);
 		free(veriable);
-		return (i + 1);
+		return (i);
 	}
 	while (point != 1 && (ft_isalnum(input->input[j + 1]) || input->input[j
 			+ 1] == '_'))
@@ -109,7 +109,7 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 				i = find_path(ipt, i - 1, 0);
 		}
 	}
-	return (i - 1);
+	return (i-1);
 }
 
 void	dollar_expand(t_shell *input, int len)
@@ -138,5 +138,5 @@ void	dollar_expand(t_shell *input, int len)
 		}
 		if (input->input[i] == '$')
 			i = dollar_handle(input, input->input[i], i);
-	}
+	}			
 }
