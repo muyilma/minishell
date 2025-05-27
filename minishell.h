@@ -6,7 +6,7 @@
 /*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:43:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 10:07:57 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:32:52 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <sys/wait.h>
 # include <stdio.h>
+
+#define MAX_SIGNED_LONG_LONG 9223372036854775807
 
 extern int	g_signal_exit;
 
