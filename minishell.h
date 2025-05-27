@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:43:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:19:49 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:07:57 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <sys/wait.h>
+# include <stdio.h>
 
 extern int	g_signal_exit;
 
