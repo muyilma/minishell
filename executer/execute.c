@@ -1,34 +1,28 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/25 18:38:10 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:19:23 by musyilma         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../libft/libft.h"
 #include "../minishell.h"
+#include <fcntl.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 int	wait_child(pid_t pid)
 {
 	int		status;
+	int		exit_code;
 	pid_t	ended_pid;
 
-	set_exit_status_code(0);
+	exit_code = 0;
 	ended_pid = wait(&status);
 	while (ended_pid > 0)
 	{
 		if (ended_pid == pid && WIFEXITED(status))
-			set_exit_status_code(WEXITSTATUS(status));
+			exit_code = WEXITSTATUS(status);
 		ended_pid = wait(&status);
 	}
-	return (*get_exit_status_code());
+	return (exit_code);
 }
 
 void	ft_execve(t_shell *pro, char **args)
@@ -37,9 +31,7 @@ void	ft_execve(t_shell *pro, char **args)
 	char	*error_msg;
 
 	if (!args || !args[0])
-	{
-		error_and_allocate(pro, *get_exit_status_code());
-	}
+		error_and_allocate(pro, 1);
 	built_in(args, pro);
 	base = check_command_access(args[0], pro->env, &error_msg);
 	if (!base)

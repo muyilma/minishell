@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:36:49 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:28:39 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:40:24 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	built_in(char **args, t_shell *pro)
 	}
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
+		if(ft_getenv(pro->env, "PATH") == NULL)
+		{
+			ft_print_error("minishell:", ": No such file or directory", args,
+			2);
+			error_and_allocate(pro, 127);
+		}
 		ft_env(&args[1], pro);
 		error_and_allocate(pro, 0);
 	}
