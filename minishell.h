@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:43:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 11:32:52 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:16:37 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <sys/wait.h>
 # include <stdio.h>
+# include <sys/wait.h>
 
-#define MAX_SIGNED_LONG_LONG 9223372036854775807
+# define MAX_SIGNED_LONG_LONG 9223372036854775807
 
 extern int	g_signal_exit;
 
@@ -54,6 +54,7 @@ typedef struct s_shell
 void		token_create(t_shell *ipt, char *str, int k);
 int			quotes_skip(char *str, int j, int flag, int *quotes);
 void		ft_parser(t_shell *input);
+int			space_op(int c, int flag);
 void		dollar_expand(t_shell *input, int len);
 void		token_parse(t_shell *ipt, int len, int k, int flag);
 char		*redirect_find(char **redirect, char *str, int *i, int *flag);

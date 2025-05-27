@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:50 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:23:28 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:56:21 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	redirect_control(char *redirect, int flag)
 		return (0);
 	if (flag == 0)
 	{
-		if (access(redirect, R_OK) == -1)
-			return (1);
 		fd = open(redirect, O_RDONLY);
 		if (fd == -1)
 			return (1);
@@ -37,8 +35,6 @@ int	redirect_control(char *redirect, int flag)
 		else
 			fd = open(redirect, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-			return (1);
-		if (access(redirect, W_OK) == -1)
 			return (1);
 	}
 	return (0);
@@ -111,10 +107,10 @@ char	*redirect_skip(char **redirect, char *str, int *t, int *flag)
 	(*t)++;
 	if (str[*t] == '<' || str[*t] == '>')
 		(*t)++;
-	while (str[*t] == ' ')
+	while (space_op(str[*t],1))
 		(*t)++;
 	k = *t;
-	while (str[*t] != ' ' && str[*t] != '\0')
+	while (space_op(str[*t],0)  && str[*t] != '\0')
 	{
 		if (str[*t] == 34 || str[*t] == 39)
 			*t = quotes_skip(str, *t, 1, &quotes);

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:40:33 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:10:13 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:46:10 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ void	quotes_control(t_shell *input)
 			input->quotes++;
 			input->qut = input->input[i];
 			i++;
-			while (input->input[i] != input->qut && input->input[i] != '\0')
+			while (input->input[i] != '\0' && input->input[i] != input->qut)
 				i++;
 			if (input->input[i] == input->qut)
 				input->quotes++;
+			if (input->input[i] == '\0')
+				continue ;
 		}
 		i++;
 	}
@@ -54,7 +56,7 @@ int	operator_after(t_shell *input, int i, int j, int flag)
 			}
 			flag++;
 		}
-		if (input->input[i] != ' ')
+		if (space_op(input->input[i], 0))
 			input->after_str++;
 	}
 	if (input->after_str == 0)
@@ -107,7 +109,7 @@ void	operator_control(t_shell *a)
 		}
 		else if (a->input[i] == '|' || a->input[i] == '<' || a->input[i] == '>')
 			i = operator_before(a, i);
-		else if (a->input[i] != ' ')
+		else if (space_op(a->input[i], 0))
 			a->isalpha++;
 		if (a->error > 0)
 			return ;

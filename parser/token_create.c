@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:41:23 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:23:22 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:53:32 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static int	word_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '\t')
+		while (space_op(str[i],1))
 			i++;
 		if (!str[i])
 			break ;
 		count++;
-		while (str[i] && str[i] != ' ' && str[i] != '\t')
+		while (str[i] && space_op(str[i],0))
 		{
 			if (str[i] == 34 || str[i] == 39)
 				i = quotes_skip(str, i, 0, 0);
@@ -99,12 +99,12 @@ void	arg_find(char *str, t_shell *ipt, int k, int i)
 	flag = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '\t')
+		while (space_op(str[i],1))
 			i++;
 		if (!str[i])
 			break ;
 		j = i;
-		while (str[i] && str[i] != ' ' && str[i] != '\t')
+		while (str[i] && space_op(str[i],0))
 		{
 			if (str[i] == 34 || str[i] == 39)
 				i = quotes_skip(str, i, 1, &flag);

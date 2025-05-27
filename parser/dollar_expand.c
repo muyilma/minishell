@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 10:18:18 by omgorege         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:28:42 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	find_path(t_shell *input, int i, int point)
 	veriable = ft_getenv(input->env, path);
 	i = change_input(input, veriable, ft_strlen(path), i);
 	free(path);
-	return (i);
+	return (i-1);
 }
 
 int	dollar_handle(t_shell *ipt, char point, int i)
@@ -93,7 +93,7 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 	int	flag;
 
 	flag = 0;
-	while (ipt->input[i] && ipt->input[i++] != '"' && flag == 0)
+	while (i >= 0 && ipt->input[i] && ipt->input[i++] != '"' && flag == 0)
 	{
 		if (point == '$')
 			flag = 1;
@@ -106,7 +106,7 @@ int	dollar_handle(t_shell *ipt, char point, int i)
 			else if (ipt->input[i] == '?')
 				i = find_path(ipt, i - 1, 0);
 			else if (flag == 1 && (ipt->input[i] == 34 || ipt->input[i] == 39))
-				i = find_path(ipt, i - 1, 0);
+				i = find_path(ipt, i - 1, 2);
 		}
 	}
 	return (i-1);
@@ -117,7 +117,7 @@ void	dollar_expand(t_shell *input, int len)
 	int	i;
 
 	i = -1;
-	while (i < len && input->input[++i])
+	while (++i < len && i>=0 && input->input[i])
 	{
 		if (input->input[i] == '"')
 			i = dollar_handle(input, input->input[i], i + 1);
@@ -126,9 +126,9 @@ void	dollar_expand(t_shell *input, int len)
 		if (input->input[i] == '<' && input->input[i + 1] == '<')
 		{
 			i += 2;
-			while (input->input[i] == ' ')
+			while (space_op(input->input[i] ,1))
 				i++;
-			while (input->input[i] != ' ' && input->input[i] != '|'
+			while (space_op(input->input[i] ,0) && input->input[i] != '|'
 				&& input->input[i] != '\0')
 			{
 				if (input->input[i] == 34 || input->input[i] == 39)

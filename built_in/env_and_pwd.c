@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:13 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:26:18 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:50:02 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+
+int	space_op(int c, int flag)
+{
+	if (flag == 0)
+	{
+		if ((c >= 9 && c <= 13) || c == ' ')
+			return (0);
+		return (1);
+	}
+	if (flag == 1)
+	{
+		if ((c >= 9 && c <= 13) || c == ' ')
+			return (1);
+	}
+	return (0);
+}
 
 void	error_and_allocate(t_shell *pro, int exit_code)
 {

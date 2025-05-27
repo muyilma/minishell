@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:40 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/25 19:23:31 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/27 12:21:12 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_empty_line(t_shell *a)
 	{
 		if (a->input[i] == 34 || a->input[i] == 39)
 			i = quotes_operator_counter(a, i);
-		if (a->input[i] != ' ')
+		if (space_op(a->input[i],0))
 			a->isprint++;
 		if (a->input[i] == '$')
 			a->dollar++;
