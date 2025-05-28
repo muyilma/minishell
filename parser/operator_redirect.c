@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:50 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 17:15:51 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:27:39 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../minishell.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 static int	redirect_control(char *redirect, int flag)
 {

@@ -6,12 +6,10 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:22 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 18:03:00 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 10:30:14 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
