@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:43:08 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 16:43:40 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:11:13 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		ft_print_error(char *base, char *str, char **arg, int flag);
 void		ft_executer_free(t_shell *input);
 char		**copy_env(char **env, int b);
 void		handle_redirections(t_shell *shell, t_cmd *pro);
-void		built_in(char **args, t_shell *pro);
+void		built_in(char **args, t_shell *pro, char *base);
 char		*pathc(char *cmd, char **envp, int i);
 int			execute_pipe(t_shell *pro, int start_idx);
 void		ft_pwd(void);

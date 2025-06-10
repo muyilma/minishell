@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:39:16 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/27 17:16:40 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:04:54 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,12 @@ static int	dollar_handle(t_shell *ipt, char point, int i)
 				i = find_path(ipt, i - 1, 0);
 			else if (flag == 1 && (ipt->input[i] == 34 || ipt->input[i] == 39))
 				i = find_path(ipt, i - 1, 2);
+			else
+				return (i);
 		}
 	}
+	if (point == '$')
+		return (0);
 	return (i - 1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:37:32 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/28 10:33:50 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:32:51 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_exit(char **args, t_shell *pro)
 	if (!args || !args[0])
 		error_and_allocate(pro, 0);
 	exit_status = ft_atoi(args[0]);
-	if (args[1])
+	if (args[1] && is_numeric(args[0]))
 	{
 		ft_print_error(NULL, "exit: too many arguments", NULL, 1);
 		return (1);
