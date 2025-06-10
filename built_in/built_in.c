@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omgorege <omgorege@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:36:49 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/28 10:35:55 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:11:00 by omgorege         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../minishell.h"
+#include <stdlib.h>
 #include <unistd.h>
 
 static void	built_in3(char **args, t_shell *pro)
@@ -43,16 +44,18 @@ static void	built_in3(char **args, t_shell *pro)
 	}
 }
 
-void	built_in(char **args, t_shell *pro)
+void	built_in(char **args, t_shell *pro, char *base)
 {
 	if (ft_strncmp(args[0], "env", 4) == 0)
 	{
-		if (ft_getenv(pro->env, "PATH") == NULL)
+		base = pathc("ls", pro->env, -1);
+		if (base == NULL)
 		{
 			ft_print_error("minishell:", ": No such file or directory", args,
 				2);
 			error_and_allocate(pro, 127);
 		}
+		free(base);
 		ft_env(&args[1], pro);
 		error_and_allocate(pro, 0);
 	}

@@ -6,7 +6,7 @@
 /*   By: musyilma <musyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:38:10 by musyilma          #+#    #+#             */
-/*   Updated: 2025/05/28 10:31:16 by musyilma         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:58:48 by musyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	ft_execve(t_shell *pro, char **args)
 
 	if (!args || !args[0])
 		error_and_allocate(pro, *get_exit_status_code());
-	built_in(args, pro);
+	built_in(args, pro, NULL);
 	base = check_command_access(args[0], pro->env, &error_msg);
 	if (!base)
 	{
